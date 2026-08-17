@@ -4,13 +4,22 @@ Agent skills for building and customizing [SurveyJS](https://surveyjs.io) forms.
 
 ## Skills
 
-| Skill | Scope |
-| :---- | :---- |
-| `surveyjs:surveyjs-form-json` | Authoring and validating survey/form JSON definitions |
-| `surveyjs:surveyjs-integration` | Form Library integration in React, Angular, Vue, and vanilla JS |
-| `surveyjs:surveyjs-creator-customization` | Survey Creator customization |
+| Skill | Scope | Status |
+| :---- | :---- | :---- |
+| `surveyjs:surveyjs-form-json` | Authoring and validating survey/form JSON definitions | Placeholder |
+| `surveyjs:surveyjs-integration` | Form Library integration in React, Angular, Vue, and vanilla JS | Authored |
+| `surveyjs:surveyjs-creator-customization` | Survey Creator customization | Placeholder |
 
-All three are placeholders at `0.1.0` — the content is authored in follow-up tasks.
+## Staying current
+
+`surveyjs-integration` is written against SurveyJS v3 and hashes the upstream doc pages it
+depends on. A weekly Action runs `scripts/check-upstream-docs.mjs` and opens an issue when
+one of those pages changes, so the reference files get reviewed rather than silently drifting.
+
+```
+node scripts/check-upstream-docs.mjs            # report drift
+node scripts/check-upstream-docs.mjs --update   # accept the new baseline
+```
 
 ## Install
 

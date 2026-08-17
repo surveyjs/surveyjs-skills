@@ -1,0 +1,36 @@
+name: Check upstream docs
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Compare skills against surveyjs.io
+        id: check
+        run: |
+          set +e
+          node scripts/check-upstream-docs.mjs | tee drift.txt
+          echo "status=$?" >> "$GITHUB_OUTPUT"
+
+      - name: Open a review issue
+        if: steps.check.outputs.status == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create \
+            --title "SurveyJS docs changed — review skill reference files" \
+            --body-file drift.txt \
+            --label documentation
