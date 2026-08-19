@@ -4,11 +4,11 @@ Agent skills for building and customizing [SurveyJS](https://surveyjs.io) forms.
 
 ## Skills
 
-| Skill | Scope | Status |
-| :---- | :---- | :---- |
-| `surveyjs:surveyjs-form-json` | Authoring and validating survey/form JSON definitions | Placeholder |
-| `surveyjs:surveyjs-integration` | Form Library integration in React, Angular, Vue, and vanilla JS | Authored |
-| `surveyjs:surveyjs-creator-customization` | Survey Creator customization | Placeholder |
+| Skill | Use it for |
+| :---- | :---- |
+| `surveyjs:surveyjs-form-json` | Writing and debugging the survey JSON itself — question types, validators, `visibleIf` and expressions, triggers, matrices, localization, quiz scoring |
+| `surveyjs:surveyjs-integration` | Getting the Form Library into a React, Next.js, Angular, Vue, vanilla JS, or jQuery app — install, render, theme, handle events, save results |
+| `surveyjs:surveyjs-creator-customization` | Embedding the drag-and-drop builder — toolbox and property grid, creator events, UI presets, builder theming |
 
 ## Staying current
 
