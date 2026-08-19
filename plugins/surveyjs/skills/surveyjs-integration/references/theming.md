@@ -58,7 +58,12 @@ matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
 
 ## Design tokens
 
-Tokens are CSS custom properties in a layered system, prefixed `--sjs2-`:
+Tokens are CSS custom properties in a layered system, prefixed `--sjs2-`. The layer is
+**shared across all four products** — Form Library, Survey Creator, Dashboard, and PDF
+Generator all read the same tokens. A brand token set applied at `:root` therefore restyles
+an embedded builder and its dashboards along with the form. That is normally the goal; when
+the builder chrome needs to diverge from the form, see `applyCreatorTheme` in
+`surveyjs-creator-customization/references/theming.md`.
 
 | Layer | Purpose | Example |
 | :-- | :-- | :-- |
