@@ -1,7 +1,7 @@
 # SurveyJS plugin
 
 Portable agent skills for building and customizing [SurveyJS](https://surveyjs.io) forms. This
-package includes manifests for OpenAI Codex and Claude Code.
+package includes manifests for OpenAI Codex, Claude Code, Google Gemini CLI, and xAI Grok Build.
 
 ## Skills
 
@@ -36,6 +36,33 @@ for example: `Use $surveyjs-integration to add this form to my React app.`
 ```
 /plugin marketplace add surveyjs/surveyjs-skills
 /plugin install surveyjs@surveyjs-skills
+```
+
+## Google Gemini CLI
+
+From the repository root, install or link this directory as a Gemini extension:
+
+```
+gemini extensions install ./plugins/surveyjs
+# Development checkout:
+gemini extensions link ./plugins/surveyjs
+```
+
+Gemini discovers all three skills automatically from `skills/`.
+
+## xAI Grok Build
+
+Install through the repository's Grok marketplace:
+
+```
+grok plugin marketplace add surveyjs/surveyjs-skills
+grok plugin install surveyjs
+```
+
+Or load this directory directly during local development:
+
+```
+grok --plugin-dir ./plugins/surveyjs
 ```
 
 ## License

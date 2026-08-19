@@ -1,0 +1,33 @@
+{
+  "name": "surveyjs-skills",
+  "description": "Agent skills for building and customizing SurveyJS forms.",
+  "owner": {
+    "name": "Devsoft Baltic OÜ",
+    "email": "info@devsoftbaltic.com"
+  },
+  "plugins": [
+    {
+      "name": "surveyjs",
+      "description": "Build and customize SurveyJS forms: survey JSON authoring, framework integration, and Survey Creator customization.",
+      "category": "development",
+      "source": {
+        "type": "local",
+        "path": "./plugins/surveyjs"
+      },
+      "version": "0.1.0",
+      "author": {
+        "name": "Devsoft Baltic OÜ"
+      },
+      "homepage": "https://surveyjs.io",
+      "keywords": [
+        "surveyjs",
+        "forms",
+        "surveys",
+        "form-builder",
+        "react",
+        "angular",
+        "vue"
+      ]
+    }
+  ]
+}

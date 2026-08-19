@@ -3,9 +3,9 @@
 Agent skills that teach AI coding agents to build with [SurveyJS](https://surveyjs.io) — writing
 survey JSON, embedding the Form Library in a web app, and customizing Survey Creator.
 
-This repository packages one `surveyjs` plugin for OpenAI Codex and Claude Code. The plugin
-contains three portable skills. Each skill loads only when the work calls for it and carries
-reference files the agent reads on demand.
+This repository packages one `surveyjs` plugin for OpenAI Codex, Claude Code, Google Gemini CLI,
+and xAI Grok Build. The plugin contains three portable skills. Each skill loads only when the work
+calls for it and carries reference files the agent reads on demand.
 
 ## Why
 
@@ -34,6 +34,29 @@ page to this survey.`
 Restart Claude Code, and the skills activate on their own when a task matches. You can also
 invoke one directly, for example: `Use surveyjs-form-json to add a conditional page to this
 survey.`
+
+## Install with Google Gemini CLI
+
+Clone this repository, then install the plugin directory as a Gemini extension:
+
+```
+gemini extensions install ./plugins/surveyjs
+```
+
+For local extension development, use `gemini extensions link ./plugins/surveyjs`. Gemini discovers
+the skills automatically from the extension's `skills/` directory.
+
+## Install with xAI Grok Build
+
+Add this repository as a Grok marketplace and install the plugin:
+
+```
+grok plugin marketplace add surveyjs/surveyjs-skills
+grok plugin install surveyjs
+```
+
+For local development, load the plugin directory directly with
+`grok --plugin-dir ./plugins/surveyjs`.
 
 ## Skills
 
@@ -67,9 +90,12 @@ mistakes to warn about, what to check first — that a scraper would destroy.
 
 ```
 .claude-plugin/marketplace.json     marketplace manifest
+.grok-plugin/marketplace.json       xAI Grok marketplace manifest
 plugins/surveyjs/                   the plugin
   .codex-plugin/plugin.json         OpenAI Codex plugin manifest
   .claude-plugin/plugin.json        Claude Code plugin manifest
+  gemini-extension.json             Google Gemini CLI extension manifest
+  plugin.json                       xAI Grok plugin manifest
   skills/<skill>/SKILL.md           what the agent loads first
   skills/<skill>/references/        deeper material, read on demand
 scripts/check-upstream-docs.mjs     upstream doc drift checker
