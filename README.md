@@ -87,8 +87,24 @@ link the same skill directories into its native location, such as `.cursor/skill
 
 The skills are written against **SurveyJS v3**.
 
-Note on licensing: the Form Library is MIT, but **Survey Creator, the PDF Generator, and the
-Dashboard are commercial products**. The creator skill says so wherever it matters — see
+## Product coverage
+
+| Product or area | Status | Skill |
+| :---- | :---- | :---- |
+| SurveyJS JSON schemas | Supported | `surveyjs-form-json` |
+| Form Library | Supported | `surveyjs-integration` |
+| Survey Creator | Supported | `surveyjs-creator-customization` |
+| Dashboard | Not currently included | — |
+| PDF Generator | Not currently included | — |
+| AI Form Response Extractor | Not currently included | — |
+
+The unsupported products are intentional scope boundaries, not features of
+`surveyjs-integration`. They should receive dedicated skills before this plugin claims to cover
+their installation or APIs.
+
+Note on licensing: Form Library and AI Form Response Extractor are MIT-licensed. **Survey Creator,
+Dashboard, and PDF Generator require commercial developer licenses** when integrated into a
+commercial application. The relevant skills state licensing requirements where they matter — see
 [surveyjs.io/licensing](https://surveyjs.io/licensing).
 
 ## Staying current

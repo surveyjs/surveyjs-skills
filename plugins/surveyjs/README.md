@@ -12,6 +12,24 @@ xAI Grok Build.
 | `surveyjs-integration` | Getting the Form Library into a React, Next.js, Angular, Vue, vanilla JS, or jQuery app — install, render, theme, handle events, save results |
 | `surveyjs-creator-customization` | Embedding the drag-and-drop builder — toolbox and property grid, creator events, UI presets, builder theming |
 
+## Product coverage
+
+| Product or area | Status | Skill |
+| :---- | :---- | :---- |
+| SurveyJS JSON schemas | Supported | `surveyjs-form-json` |
+| Form Library | Supported | `surveyjs-integration` |
+| Survey Creator | Supported | `surveyjs-creator-customization` |
+| Dashboard | Not currently included | — |
+| PDF Generator | Not currently included | — |
+| AI Form Response Extractor | Not currently included | — |
+
+Dashboard, PDF Generator, and AI Form Response Extractor are separate product areas and are not
+handled by the Form Library integration skill.
+
+Form Library and AI Form Response Extractor are MIT-licensed. Survey Creator, Dashboard, and PDF
+Generator require commercial developer licenses when integrated into a commercial application.
+See [SurveyJS licensing](https://surveyjs.io/licensing).
+
 ## Staying current
 
 `surveyjs-integration` is written against SurveyJS v3 and hashes the upstream doc pages it

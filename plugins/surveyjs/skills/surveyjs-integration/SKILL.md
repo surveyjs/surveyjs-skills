@@ -18,6 +18,8 @@ Not this skill:
 
 - Writing the survey JSON itself (question types, validators, conditional logic) → `surveyjs-form-json`
 - Embedding the drag-and-drop form builder → `surveyjs-creator-customization`
+- Integrating Dashboard, PDF Generator, or AI Form Response Extractor — these are separate
+  SurveyJS products and are not currently covered by this plugin
 
 ## Read this first: corrections
 
@@ -64,8 +66,9 @@ server. Schemas and responses live in the host application's own database and AP
 legacy `surveyPostId` property targets a discontinued service — do not use it.
 
 **Form Library is MIT-licensed and needs no license key.** Do not add `setLicenseKey` to a
-Form Library integration. (Survey Creator, Dashboard, and PDF Generator *do* require one —
-that belongs in their own setup, not here.)
+Form Library integration. AI Form Response Extractor is also MIT-licensed but is a separate,
+server-side product. Survey Creator, Dashboard, and PDF Generator require commercial developer
+licenses; their license setup does not belong here.
 
 **Create the `Model` once.** Rebuilding it on every render wipes answers on each keystroke.
 This is the single most common integration bug; each framework file shows the correct form.
