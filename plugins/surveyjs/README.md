@@ -1,7 +1,8 @@
 # SurveyJS plugin
 
 Portable agent skills for building and customizing [SurveyJS](https://surveyjs.io) forms. This
-package includes manifests for OpenAI Codex, Claude Code, Google Gemini CLI, and xAI Grok Build.
+package includes manifests for OpenAI Codex, Claude Code, GitHub Copilot, Google Gemini CLI, and
+xAI Grok Build.
 
 ## Skills
 
@@ -50,6 +51,17 @@ gemini extensions link ./plugins/surveyjs
 
 Gemini discovers all three skills automatically from `skills/`.
 
+## GitHub Copilot CLI
+
+Install this plugin directly from its repository subdirectory:
+
+```
+copilot plugin install surveyjs/surveyjs-skills:plugins/surveyjs
+```
+
+The shared `plugin.json` manifest registers all three skills. Copilot can also consume the
+repository's `.claude-plugin/marketplace.json` marketplace.
+
 ## xAI Grok Build
 
 Install through the repository's Grok marketplace:
@@ -64,6 +76,13 @@ Or load this directory directly during local development:
 ```
 grok --plugin-dir ./plugins/surveyjs
 ```
+
+## Other compatible agents
+
+The directories under `skills/` use the portable `SKILL.md` convention. Copy or link those
+directories into `.agents/skills/` for agents that support the shared location. Provider-specific
+locations such as `.cursor/skills/` and `.cline/skills/` work with the same files and require no
+content changes.
 
 ## License
 

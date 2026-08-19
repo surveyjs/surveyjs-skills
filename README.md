@@ -3,9 +3,9 @@
 Agent skills that teach AI coding agents to build with [SurveyJS](https://surveyjs.io) — writing
 survey JSON, embedding the Form Library in a web app, and customizing Survey Creator.
 
-This repository packages one `surveyjs` plugin for OpenAI Codex, Claude Code, Google Gemini CLI,
-and xAI Grok Build. The plugin contains three portable skills. Each skill loads only when the work
-calls for it and carries reference files the agent reads on demand.
+This repository packages one `surveyjs` plugin for OpenAI Codex, Claude Code, GitHub Copilot,
+Google Gemini CLI, and xAI Grok Build. The plugin contains three portable skills. Each skill loads
+only when the work calls for it and carries reference files the agent reads on demand.
 
 ## Why
 
@@ -46,6 +46,17 @@ gemini extensions install ./plugins/surveyjs
 For local extension development, use `gemini extensions link ./plugins/surveyjs`. Gemini discovers
 the skills automatically from the extension's `skills/` directory.
 
+## Install with GitHub Copilot CLI
+
+Install the plugin directly from its repository subdirectory:
+
+```
+copilot plugin install surveyjs/surveyjs-skills:plugins/surveyjs
+```
+
+The shared `plugin.json` manifest registers all three skills. The existing Claude-compatible
+marketplace can also be added with `copilot plugin marketplace add surveyjs/surveyjs-skills`.
+
 ## Install with xAI Grok Build
 
 Add this repository as a Grok marketplace and install the plugin:
@@ -57,6 +68,14 @@ grok plugin install surveyjs
 
 For local development, load the plugin directory directly with
 `grok --plugin-dir ./plugins/surveyjs`.
+
+## Other compatible agents
+
+The skills follow the portable `SKILL.md` convention. Agents that support shared skill discovery,
+including Cursor, can load the three directories under `plugins/surveyjs/skills/` from a project or
+user-level `.agents/skills/` directory. If an agent does not read that shared location, copy or
+link the same skill directories into its native location, such as `.cursor/skills/` for Cursor or
+`.cline/skills/` for Cline. No changes to the skill files are required.
 
 ## Skills
 
@@ -95,7 +114,7 @@ plugins/surveyjs/                   the plugin
   .codex-plugin/plugin.json         OpenAI Codex plugin manifest
   .claude-plugin/plugin.json        Claude Code plugin manifest
   gemini-extension.json             Google Gemini CLI extension manifest
-  plugin.json                       xAI Grok plugin manifest
+  plugin.json                       GitHub Copilot and xAI Grok plugin manifest
   skills/<skill>/SKILL.md           what the agent loads first
   skills/<skill>/references/        deeper material, read on demand
 scripts/check-upstream-docs.mjs     upstream doc drift checker
