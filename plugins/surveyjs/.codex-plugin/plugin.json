@@ -1,0 +1,42 @@
+{
+  "name": "surveyjs",
+  "version": "0.1.0",
+  "description": "Build and customize SurveyJS forms: survey JSON authoring, Form Library integration in React/Angular/Vue/vanilla JS, and Survey Creator customization.",
+  "author": {
+    "name": "Devsoft Baltic OÜ",
+    "email": "info@devsoftbaltic.com",
+    "url": "https://surveyjs.io"
+  },
+  "homepage": "https://surveyjs.io",
+  "repository": "https://github.com/surveyjs/surveyjs-skills",
+  "license": "MIT",
+  "keywords": [
+    "surveyjs",
+    "survey",
+    "form",
+    "form-builder",
+    "questionnaire",
+    "json-schema",
+    "react",
+    "angular",
+    "vue"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "SurveyJS",
+    "shortDescription": "Build and customize SurveyJS forms",
+    "longDescription": "Create SurveyJS form JSON, integrate the Form Library with web frameworks, and customize Survey Creator using current SurveyJS APIs.",
+    "developerName": "Devsoft Baltic OÜ",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Instructions"
+    ],
+    "websiteURL": "https://surveyjs.io",
+    "defaultPrompt": [
+      "Create a SurveyJS form from my requirements.",
+      "Integrate SurveyJS into my web application.",
+      "Customize Survey Creator for my application."
+    ],
+    "brandColor": "#19B394"
+  }
+}

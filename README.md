@@ -1,11 +1,11 @@
 # SurveyJS Agent Skills
 
-Agent skills that teach coding agents to build with [SurveyJS](https://surveyjs.io) — writing
+Agent skills that teach AI coding agents to build with [SurveyJS](https://surveyjs.io) — writing
 survey JSON, embedding the Form Library in a web app, and customizing Survey Creator.
 
-This repository is a [Claude Code](https://claude.com/claude-code) plugin marketplace containing
-one plugin, `surveyjs`, with three skills. Each skill loads only when the work calls for it, and
-carries reference files the agent reads on demand.
+This repository packages one `surveyjs` plugin for OpenAI Codex and Claude Code. The plugin
+contains three portable skills. Each skill loads only when the work calls for it and carries
+reference files the agent reads on demand.
 
 ## Why
 
@@ -14,7 +14,17 @@ names, APIs that were renamed in v3, styling hooks that are now internal. These 
 current facts and list the specific mistakes to check generated code against, so answers stop
 drifting toward whatever was true a few major versions ago.
 
-## Install
+## Install with OpenAI Codex
+
+The OpenAI plugin package is [`plugins/surveyjs`](plugins/surveyjs). It includes a native
+`.codex-plugin/plugin.json` manifest and can be installed from a Codex plugin marketplace or
+uploaded as a skills-only plugin through the OpenAI plugin submission flow.
+
+After installation, Codex selects a skill automatically when a request matches its description.
+You can also request one explicitly, for example: `Use $surveyjs-form-json to add a conditional
+page to this survey.`
+
+## Install with Claude Code
 
 ```
 /plugin marketplace add surveyjs/surveyjs-skills
@@ -22,15 +32,16 @@ drifting toward whatever was true a few major versions ago.
 ```
 
 Restart Claude Code, and the skills activate on their own when a task matches. You can also
-invoke one directly, e.g. `Use surveyjs-form-json to add a conditional page to this survey`.
+invoke one directly, for example: `Use surveyjs-form-json to add a conditional page to this
+survey.`
 
 ## Skills
 
 | Skill | Use it for |
 | :---- | :---- |
-| `surveyjs:surveyjs-form-json` | Writing and debugging the survey JSON itself — question types, validators, `visibleIf` and expressions, triggers, matrices, localization, quiz scoring |
-| `surveyjs:surveyjs-integration` | Getting the Form Library into a React, Next.js, Angular, Vue, vanilla JS, or jQuery app — install, render, theme, handle events, save results |
-| `surveyjs:surveyjs-creator-customization` | Embedding the drag-and-drop builder — toolbox and property grid, creator events, UI presets, builder theming |
+| `surveyjs-form-json` | Writing and debugging the survey JSON itself — question types, validators, `visibleIf` and expressions, triggers, matrices, localization, quiz scoring |
+| `surveyjs-integration` | Getting the Form Library into a React, Next.js, Angular, Vue, vanilla JS, or jQuery app — install, render, theme, handle events, save results |
+| `surveyjs-creator-customization` | Embedding the drag-and-drop builder — toolbox and property grid, creator events, UI presets, builder theming |
 
 The skills are written against **SurveyJS v3**.
 
@@ -57,7 +68,8 @@ mistakes to warn about, what to check first — that a scraper would destroy.
 ```
 .claude-plugin/marketplace.json     marketplace manifest
 plugins/surveyjs/                   the plugin
-  .claude-plugin/plugin.json        plugin manifest
+  .codex-plugin/plugin.json         OpenAI Codex plugin manifest
+  .claude-plugin/plugin.json        Claude Code plugin manifest
   skills/<skill>/SKILL.md           what the agent loads first
   skills/<skill>/references/        deeper material, read on demand
 scripts/check-upstream-docs.mjs     upstream doc drift checker
