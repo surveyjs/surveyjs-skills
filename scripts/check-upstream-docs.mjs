@@ -23,7 +23,10 @@ const SNAPSHOT_DIR = join(HERE, ".doc-snapshots");
 
 /** Upstream page -> the skill files whose content depends on it. */
 const WATCHED = {
-  "https://surveyjs.io/llms.txt": ["surveyjs-integration/SKILL.md"],
+  "https://surveyjs.io/llms.txt": [
+    "surveyjs-integration/SKILL.md",
+    "surveyjs-dashboard/SKILL.md"
+  ],
   "https://surveyjs.io/form-library/documentation/get-started-react.md": [
     "surveyjs-integration/references/react.md"
   ],
@@ -37,7 +40,8 @@ const WATCHED = {
     "surveyjs-integration/references/vanilla-js.md"
   ],
   "https://surveyjs.io/documentation/themes-and-custom-styles.md": [
-    "surveyjs-integration/references/theming.md"
+    "surveyjs-integration/references/theming.md",
+    "surveyjs-dashboard/references/theming.md"
   ],
   "https://surveyjs.io/documentation/design-tokens-css-customization.md": [
     "surveyjs-integration/references/theming.md"
@@ -47,6 +51,50 @@ const WATCHED = {
   ],
   "https://surveyjs.io/documentation/backend-integration.md": [
     "surveyjs-integration/references/data-and-events.md"
+  ],
+  "https://surveyjs.io/dashboard/documentation/get-started-react.md": [
+    "surveyjs-dashboard/references/frameworks.md",
+    "surveyjs-dashboard/references/setup-and-data.md"
+  ],
+  "https://surveyjs.io/dashboard/documentation/get-started-angular.md": [
+    "surveyjs-dashboard/references/frameworks.md"
+  ],
+  "https://surveyjs.io/dashboard/documentation/get-started-vue.md": [
+    "surveyjs-dashboard/references/frameworks.md"
+  ],
+  "https://surveyjs.io/dashboard/documentation/get-started-html-css-javascript.md": [
+    "surveyjs-dashboard/references/frameworks.md"
+  ],
+  "https://surveyjs.io/dashboard/documentation/chart-types.md": [
+    "surveyjs-dashboard/references/setup-and-data.md"
+  ],
+  "https://surveyjs.io/dashboard/documentation/api-reference/dashboard.md": [
+    "surveyjs-dashboard/references/customization.md"
+  ],
+  "https://surveyjs.io/dashboard/documentation/api-reference/idashboardoptions.md": [
+    "surveyjs-dashboard/references/setup-and-data.md",
+    "surveyjs-dashboard/references/customization.md"
+  ],
+  "https://surveyjs.io/dashboard/documentation/api-reference/idashboarditemoptions.md": [
+    "surveyjs-dashboard/references/setup-and-data.md"
+  ],
+  "https://surveyjs.io/dashboard/documentation/api-reference/ivisualizationpaneloptions.md": [
+    "surveyjs-dashboard/references/customization.md"
+  ],
+  "https://surveyjs.io/dashboard/documentation/api-reference/visualizationpanel.md": [
+    "surveyjs-dashboard/SKILL.md"
+  ],
+  "https://surveyjs.io/dashboard/documentation/set-up-table-view/react.md": [
+    "surveyjs-dashboard/references/customization.md"
+  ],
+  "https://surveyjs.io/dashboard/examples/localize-survey-data-dashboard-ui/documentation.md": [
+    "surveyjs-dashboard/references/customization.md"
+  ],
+  "https://surveyjs.io/dashboard/examples/save-dashboard-state-to-local-storage/documentation.md": [
+    "surveyjs-dashboard/references/customization.md"
+  ],
+  "https://raw.githubusercontent.com/surveyjs/surveyjs-howtos-and-troubleshooting/main/categories/data-visualization/custom-survey-data-visualizer.md": [
+    "surveyjs-dashboard/references/customization.md"
   ]
 };
 

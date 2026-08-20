@@ -18,8 +18,9 @@ Not this skill:
 
 - Writing the survey JSON itself (question types, validators, conditional logic) → `surveyjs-form-json`
 - Embedding the drag-and-drop form builder → `surveyjs-creator-customization`
-- Integrating Dashboard, PDF Generator, or AI Form Response Extractor — these are separate
-  SurveyJS products and are not currently covered by this plugin
+- Visualizing collected responses with charts and tables → `surveyjs-dashboard`
+- Integrating PDF Generator or AI Form Response Extractor — these are separate SurveyJS
+  products and are not currently covered by this plugin
 
 ## Read this first: corrections
 

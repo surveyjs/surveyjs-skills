@@ -11,6 +11,7 @@ xAI Grok Build.
 | `surveyjs-form-json` | Writing and debugging the survey JSON itself — question types, validators, `visibleIf` and expressions, triggers, matrices, localization, quiz scoring |
 | `surveyjs-integration` | Getting the Form Library into a React, Next.js, Angular, Vue, vanilla JS, or jQuery app — install, render, theme, handle events, save results |
 | `surveyjs-creator-customization` | Embedding the drag-and-drop builder — toolbox and property grid, creator events, UI presets, builder theming |
+| `surveyjs-dashboard` | Visualizing collected responses with Dashboard — install `survey-analytics`, configure charts and tables, filtering, theming, localization, custom visualizers, table view export |
 
 ## Product coverage
 
@@ -19,12 +20,12 @@ xAI Grok Build.
 | SurveyJS JSON schemas | Supported | `surveyjs-form-json` |
 | Form Library | Supported | `surveyjs-integration` |
 | Survey Creator | Supported | `surveyjs-creator-customization` |
-| Dashboard | Not currently included | — |
+| Dashboard | Supported | `surveyjs-dashboard` |
 | PDF Generator | Not currently included | — |
 | AI Form Response Extractor | Not currently included | — |
 
-Dashboard, PDF Generator, and AI Form Response Extractor are separate product areas and are not
-handled by the Form Library integration skill.
+PDF Generator and AI Form Response Extractor are separate product areas and are not handled by
+the Form Library integration skill.
 
 Form Library and AI Form Response Extractor are MIT-licensed. Survey Creator, Dashboard, and PDF
 Generator require commercial developer licenses when integrated into a commercial application.
@@ -32,9 +33,10 @@ See [SurveyJS licensing](https://surveyjs.io/licensing).
 
 ## Staying current
 
-`surveyjs-integration` is written against SurveyJS v3 and hashes the upstream doc pages it
-depends on. A weekly Action runs `scripts/check-upstream-docs.mjs` and opens an issue when
-one of those pages changes, so the reference files get reviewed rather than silently drifting.
+`surveyjs-integration` and `surveyjs-dashboard` are written against SurveyJS v3 and hash the
+upstream doc pages they depend on. A weekly Action runs `scripts/check-upstream-docs.mjs` and
+opens an issue when one of those pages changes, so the reference files get reviewed rather than
+silently drifting.
 
 ```
 node scripts/check-upstream-docs.mjs            # report drift
@@ -67,7 +69,7 @@ gemini extensions install ./plugins/surveyjs
 gemini extensions link ./plugins/surveyjs
 ```
 
-Gemini discovers all three skills automatically from `skills/`.
+Gemini discovers all four skills automatically from `skills/`.
 
 ## GitHub Copilot CLI
 
@@ -77,7 +79,7 @@ Install this plugin directly from its repository subdirectory:
 copilot plugin install surveyjs/surveyjs-skills:plugins/surveyjs
 ```
 
-The shared `plugin.json` manifest registers all three skills. Copilot can also consume the
+The shared `plugin.json` manifest registers all four skills. Copilot can also consume the
 repository's `.claude-plugin/marketplace.json` marketplace.
 
 ## xAI Grok Build

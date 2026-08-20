@@ -1,10 +1,11 @@
 # SurveyJS Agent Skills
 
 Agent skills that teach AI coding agents to build with [SurveyJS](https://surveyjs.io) — writing
-survey JSON, embedding the Form Library in a web app, and customizing Survey Creator.
+survey JSON, embedding the Form Library in a web app, customizing Survey Creator, and visualizing
+collected responses with Dashboard.
 
 This repository packages one `surveyjs` plugin for OpenAI Codex, Claude Code, GitHub Copilot,
-Google Gemini CLI, and xAI Grok Build. The plugin contains three portable skills. Each skill loads
+Google Gemini CLI, and xAI Grok Build. The plugin contains four portable skills. Each skill loads
 only when the work calls for it and carries reference files the agent reads on demand.
 
 ## Why
@@ -54,7 +55,7 @@ Install the plugin directly from its repository subdirectory:
 copilot plugin install surveyjs/surveyjs-skills:plugins/surveyjs
 ```
 
-The shared `plugin.json` manifest registers all three skills. The existing Claude-compatible
+The shared `plugin.json` manifest registers all four skills. The existing Claude-compatible
 marketplace can also be added with `copilot plugin marketplace add surveyjs/surveyjs-skills`.
 
 ## Install with xAI Grok Build
@@ -72,7 +73,7 @@ For local development, load the plugin directory directly with
 ## Other compatible agents
 
 The skills follow the portable `SKILL.md` convention. Agents that support shared skill discovery,
-including Cursor, can load the three directories under `plugins/surveyjs/skills/` from a project or
+including Cursor, can load the four directories under `plugins/surveyjs/skills/` from a project or
 user-level `.agents/skills/` directory. If an agent does not read that shared location, copy or
 link the same skill directories into its native location, such as `.cursor/skills/` for Cursor or
 `.cline/skills/` for Cline. No changes to the skill files are required.
@@ -84,6 +85,7 @@ link the same skill directories into its native location, such as `.cursor/skill
 | `surveyjs-form-json` | Writing and debugging the survey JSON itself — question types, validators, `visibleIf` and expressions, triggers, matrices, localization, quiz scoring |
 | `surveyjs-integration` | Getting the Form Library into a React, Next.js, Angular, Vue, vanilla JS, or jQuery app — install, render, theme, handle events, save results |
 | `surveyjs-creator-customization` | Embedding the drag-and-drop builder — toolbox and property grid, creator events, UI presets, builder theming |
+| `surveyjs-dashboard` | Visualizing collected responses with Dashboard — install `survey-analytics`, configure charts and tables, filtering, theming, localization, custom visualizers, table view export |
 
 The skills are written against **SurveyJS v3**.
 
@@ -94,7 +96,7 @@ The skills are written against **SurveyJS v3**.
 | SurveyJS JSON schemas | Supported | `surveyjs-form-json` |
 | Form Library | Supported | `surveyjs-integration` |
 | Survey Creator | Supported | `surveyjs-creator-customization` |
-| Dashboard | Not currently included | — |
+| Dashboard | Supported | `surveyjs-dashboard` |
 | PDF Generator | Not currently included | — |
 | AI Form Response Extractor | Not currently included | — |
 
@@ -109,9 +111,9 @@ commercial application. The relevant skills state licensing requirements where t
 
 ## Staying current
 
-`surveyjs-integration` hashes the upstream surveyjs.io doc pages its reference files are based on.
-A weekly GitHub Action runs the checker and opens an issue when one of those pages changes, so
-the references get reviewed by hand rather than silently going stale.
+`surveyjs-integration` and `surveyjs-dashboard` hash the upstream surveyjs.io doc pages their
+reference files are based on. A weekly GitHub Action runs the checker and opens an issue when one
+of those pages changes, so the references get reviewed by hand rather than silently going stale.
 
 ```
 node scripts/check-upstream-docs.mjs            # report drift, exit 1 if any
