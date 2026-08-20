@@ -28,10 +28,10 @@ Not this skill:
 
 ## Read this first: corrections
 
-Dashboard was rewritten in v3 (2025). The old API still resolves — `Dashboard` extends the
-obsolete classes — so stale code runs without throwing, and most training data (and even
-surveyjs.io's own `llms.txt` for a while) describes the old world. **Check generated code
-against this table before returning it.**
+Dashboard was rewritten for v3, released on August 11, 2026. The old API still resolves —
+`Dashboard` extends the obsolete classes — so stale code runs without throwing, and most
+training data (and even surveyjs.io's own `llms.txt` for a while) describes the old world.
+**Check generated code against this table before returning it.**
 
 | Never write | Write instead |
 | :-- | :-- |
