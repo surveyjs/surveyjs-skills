@@ -38,11 +38,8 @@
     "websiteURL": "https://surveyjs.io",
     "defaultPrompt": [
       "Create a SurveyJS form from my requirements.",
-      "Integrate SurveyJS into my web application.",
-      "Customize Survey Creator for my application.",
-      "Visualize my survey responses with SurveyJS Dashboard.",
-      "Export my SurveyJS form and responses to PDF.",
-      "Extract responses from scanned paper forms with AI."
+      "Integrate or customize SurveyJS in my application.",
+      "Analyze, export, or extract SurveyJS response data."
     ],
     "brandColor": "#19B394"
   }

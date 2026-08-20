@@ -20,6 +20,7 @@ import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const SNAPSHOT_DIR = join(HERE, ".doc-snapshots");
+const REQUEST_TIMEOUT_MS = 20_000;
 
 /** Upstream page -> the skill files whose content depends on it. */
 const WATCHED = {
@@ -217,7 +218,10 @@ async function main() {
   for (const [url, dependents] of Object.entries(WATCHED)) {
     let body;
     try {
-      const res = await fetch(url, { headers: { accept: "text/plain, text/markdown" } });
+      const res = await fetch(url, {
+        headers: { accept: "text/plain, text/markdown" },
+        signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS)
+      });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       body = await res.text();
     } catch (err) {

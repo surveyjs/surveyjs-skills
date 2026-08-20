@@ -8,6 +8,7 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     permissions:
       contents: read
       issues: write
@@ -20,17 +21,31 @@ jobs:
 
       - name: Compare skills against surveyjs.io
         id: check
+        shell: bash
         run: |
           set +e
           node scripts/check-upstream-docs.mjs | tee drift.txt
-          echo "status=$?" >> "$GITHUB_OUTPUT"
+          status=${PIPESTATUS[0]}
+          echo "status=$status" >> "$GITHUB_OUTPUT"
 
-      - name: Open a review issue
+      - name: Create or update a review issue
         if: steps.check.outputs.status == '1'
         env:
           GH_TOKEN: ${{ github.token }}
+          ISSUE_TITLE: SurveyJS docs changed — review skill reference files
         run: |
-          gh issue create \
-            --title "SurveyJS docs changed — review skill reference files" \
-            --body-file drift.txt \
-            --label documentation
+          issue_number=$(gh issue list \
+            --state open \
+            --search "\"$ISSUE_TITLE\" in:title" \
+            --json number \
+            --jq '.[0].number')
+
+          if [[ -n "$issue_number" ]]; then
+            gh issue comment "$issue_number" --body-file drift.txt
+          else
+            gh issue create --title "$ISSUE_TITLE" --body-file drift.txt
+          fi
+
+      - name: Fail when upstream docs could not be checked
+        if: steps.check.outputs.status == '2'
+        run: exit 1

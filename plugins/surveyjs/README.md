@@ -36,9 +36,10 @@ See [SurveyJS licensing](https://surveyjs.io/licensing).
 
 ## Staying current
 
-`surveyjs-integration`, `surveyjs-creator-customization`, `surveyjs-dashboard`,
-`surveyjs-pdf-generator`, and `surveyjs-response-extractor` are written against SurveyJS v3 and
-hash the upstream doc pages and source files they depend on. A weekly Action runs
+`surveyjs-integration`, `surveyjs-creator-customization`, `surveyjs-dashboard`, and
+`surveyjs-pdf-generator` target SurveyJS v3. `surveyjs-response-extractor` follows the current,
+independently versioned `ai-form-response-extractor` package. These skills hash the upstream doc
+pages and source files they depend on. A weekly Action runs
 `scripts/check-upstream-docs.mjs` and opens an issue when one of those pages changes, so the
 reference files get reviewed rather than silently drifting. `surveyjs-form-json` reads the
 version-exact authoring guide and JSON Schema shipped inside the installed `survey-core` package
@@ -51,9 +52,16 @@ node scripts/check-upstream-docs.mjs --update   # accept the new baseline
 
 ## OpenAI Codex
 
+From the repository root, add its Codex marketplace and install this plugin:
+
+```
+codex plugin marketplace add .
+codex plugin add surveyjs@surveyjs-skills
+```
+
 This directory is the OpenAI plugin package. Its `.codex-plugin/plugin.json` manifest registers
-the skills in `skills/`. Install it through a Codex plugin marketplace or upload it as a
-skills-only plugin through the OpenAI plugin submission flow.
+the skills in `skills/` and can also be uploaded as a skills-only plugin through the OpenAI
+plugin submission flow.
 
 Codex activates matching skills automatically. To request one explicitly, refer to it by name,
 for example: `Use $surveyjs-integration to add this form to my React app.`

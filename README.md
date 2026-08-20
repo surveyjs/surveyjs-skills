@@ -18,9 +18,17 @@ drifting toward whatever was true a few major versions ago.
 
 ## Install with OpenAI Codex
 
-The OpenAI plugin package is [`plugins/surveyjs`](plugins/surveyjs). It includes a native
-`.codex-plugin/plugin.json` manifest and can be installed from a Codex plugin marketplace or
-uploaded as a skills-only plugin through the OpenAI plugin submission flow.
+Add this repository as a Codex marketplace and install the plugin:
+
+```
+codex plugin marketplace add surveyjs/surveyjs-skills
+codex plugin add surveyjs@surveyjs-skills
+```
+
+For local development, replace the first command with `codex plugin marketplace add .`. The
+OpenAI plugin package is [`plugins/surveyjs`](plugins/surveyjs); its native
+`.codex-plugin/plugin.json` manifest can also be uploaded as a skills-only plugin through the
+OpenAI plugin submission flow.
 
 After installation, Codex selects a skill automatically when a request matches its description.
 You can also request one explicitly, for example: `Use $surveyjs-form-json to add a conditional
@@ -90,7 +98,8 @@ link the same skill directories into its native location, such as `.cursor/skill
 | `surveyjs-pdf-generator` | Exporting forms and responses to PDF with `survey-pdf` — fillable or read-only PDFs, page options, fonts, headers/footers, themes and layout presets, and filling existing PDF form fields with PDFFormFiller |
 | `surveyjs-response-extractor` | Extracting structured responses from scanned or photographed paper forms and PDFs with `ai-form-response-extractor` — server-side schema-guided extraction via OpenAI, Anthropic, or local Ollama, confidence review, QR/unique-ID detection, merging paper and online submissions |
 
-The skills are written against **SurveyJS v3**.
+The browser-product skills target **SurveyJS v3**. AI Form Response Extractor follows the current,
+independently versioned `ai-form-response-extractor` package.
 
 ## Product coverage
 
@@ -135,6 +144,7 @@ mistakes to warn about, what to check first — that a scraper would destroy.
 ```
 .claude-plugin/marketplace.json     marketplace manifest
 .grok-plugin/marketplace.json       xAI Grok marketplace manifest
+.agents/plugins/marketplace.json    OpenAI Codex marketplace manifest
 plugins/surveyjs/                   the plugin
   .codex-plugin/plugin.json         OpenAI Codex plugin manifest
   .claude-plugin/plugin.json        Claude Code plugin manifest
@@ -149,7 +159,9 @@ scripts/check-upstream-docs.mjs     upstream doc drift checker
 
 Issues and pull requests are welcome — corrections to anything a skill states are especially
 useful. When changing a reference file, keep it about what an agent needs to get the code right,
-and re-run the drift checker if the change follows an upstream doc update.
+and re-run the drift checker if the change follows an upstream doc update. See
+[CONTRIBUTING.md](CONTRIBUTING.md) for validation and submission requirements. Report security
+issues according to [SECURITY.md](SECURITY.md).
 
 ## License
 

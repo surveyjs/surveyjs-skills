@@ -1,0 +1,20 @@
+{
+  "name": "surveyjs-skills",
+  "interface": {
+    "displayName": "SurveyJS Skills"
+  },
+  "plugins": [
+    {
+      "name": "surveyjs",
+      "source": {
+        "source": "local",
+        "path": "./plugins/surveyjs"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

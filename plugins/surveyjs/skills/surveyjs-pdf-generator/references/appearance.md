@@ -9,7 +9,7 @@ are configuration objects the PDF renderer reads. The three mechanisms split cle
 | Layout | Spacing, sizing, typography, border radius — dimensional properties | `applyLayout(layout, baseLayout?)` |
 | Styles config | Fine-grained, per-element-type or per-element overrides | `applyStyle(...)` + `onGet*Style` events |
 
-`applyLayout` and `applyStyle` are **new in v3 (2025)** — code that predates them styled
+`applyLayout` and `applyStyle` are **new in v3, released on August 11, 2026** — code that predates them styled
 PDFs through doc options and jsPDF hacks. Do not reproduce those patterns.
 
 ## Themes
