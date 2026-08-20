@@ -36,11 +36,13 @@ See [SurveyJS licensing](https://surveyjs.io/licensing).
 
 ## Staying current
 
-`surveyjs-integration`, `surveyjs-dashboard`, `surveyjs-pdf-generator`, and
-`surveyjs-response-extractor` are written against
-SurveyJS v3 and hash the upstream doc pages and source files they depend on. A weekly Action runs `scripts/check-upstream-docs.mjs` and
-opens an issue when one of those pages changes, so the reference files get reviewed rather than
-silently drifting.
+`surveyjs-integration`, `surveyjs-creator-customization`, `surveyjs-dashboard`,
+`surveyjs-pdf-generator`, and `surveyjs-response-extractor` are written against SurveyJS v3 and
+hash the upstream doc pages and source files they depend on. A weekly Action runs
+`scripts/check-upstream-docs.mjs` and opens an issue when one of those pages changes, so the
+reference files get reviewed rather than silently drifting. `surveyjs-form-json` reads the
+version-exact authoring guide and JSON Schema shipped inside the installed `survey-core` package
+instead.
 
 ```
 node scripts/check-upstream-docs.mjs            # report drift

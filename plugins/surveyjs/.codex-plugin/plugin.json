@@ -1,7 +1,7 @@
 {
   "name": "surveyjs",
   "version": "0.1.0",
-  "description": "Build and customize SurveyJS forms: survey JSON authoring, Form Library integration in React/Angular/Vue/vanilla JS, and Survey Creator customization.",
+  "description": "Build with every SurveyJS product: survey JSON authoring, Form Library integration in React/Angular/Vue/vanilla JS, Survey Creator customization, Dashboard response analytics, PDF export with survey-pdf, and AI extraction of responses from scanned paper forms.",
   "author": {
     "name": "Devsoft Baltic OÜ",
     "email": "info@devsoftbaltic.com",
@@ -17,6 +17,10 @@
     "form-builder",
     "questionnaire",
     "json-schema",
+    "dashboard",
+    "analytics",
+    "pdf",
+    "data-extraction",
     "react",
     "angular",
     "vue"
@@ -24,8 +28,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "SurveyJS",
-    "shortDescription": "Build and customize SurveyJS forms",
-    "longDescription": "Create SurveyJS form JSON, integrate the Form Library with web frameworks, and customize Survey Creator using current SurveyJS APIs.",
+    "shortDescription": "Build with every SurveyJS product",
+    "longDescription": "Create SurveyJS form JSON, integrate the Form Library with web frameworks, customize Survey Creator, visualize responses with Dashboard, export forms and responses to PDF, and extract responses from scanned paper forms — all using current SurveyJS APIs.",
     "developerName": "Devsoft Baltic OÜ",
     "category": "Developer Tools",
     "capabilities": [
@@ -35,7 +39,10 @@
     "defaultPrompt": [
       "Create a SurveyJS form from my requirements.",
       "Integrate SurveyJS into my web application.",
-      "Customize Survey Creator for my application."
+      "Customize Survey Creator for my application.",
+      "Visualize my survey responses with SurveyJS Dashboard.",
+      "Export my SurveyJS form and responses to PDF.",
+      "Extract responses from scanned paper forms with AI."
     ],
     "brandColor": "#19B394"
   }

@@ -1,5 +1,5 @@
 {
   "name": "surveyjs",
   "version": "0.1.0",
-  "description": "Build and customize SurveyJS forms: survey JSON authoring, Form Library integration in React/Angular/Vue/vanilla JS, and Survey Creator customization."
+  "description": "Build with every SurveyJS product: survey JSON authoring, Form Library integration in React/Angular/Vue/vanilla JS, Survey Creator customization, Dashboard response analytics, PDF export with survey-pdf, and AI extraction of responses from scanned paper forms."
 }

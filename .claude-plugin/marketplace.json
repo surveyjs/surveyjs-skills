@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "surveyjs-skills",
-  "description": "Agent skills for SurveyJS — survey/form JSON authoring, framework integration, and Survey Creator customization",
+  "description": "Agent skills for the full SurveyJS product line — form JSON authoring, Form Library integration, Survey Creator customization, Dashboard analytics, PDF generation, and AI extraction of responses from paper forms",
   "owner": {
     "name": "Devsoft Baltic OÜ",
     "email": "info@devsoftbaltic.com",
@@ -11,7 +11,7 @@
     {
       "name": "surveyjs",
       "source": "./plugins/surveyjs",
-      "description": "Build and customize SurveyJS forms: survey JSON authoring, Form Library integration in React/Angular/Vue/vanilla JS, and Survey Creator customization.",
+      "description": "Build with every SurveyJS product: survey JSON authoring, Form Library integration in React/Angular/Vue/vanilla JS, Survey Creator customization, Dashboard response analytics, PDF export with survey-pdf, and AI extraction of responses from scanned paper forms.",
       "category": "development",
       "tags": [
         "surveyjs",
@@ -19,6 +19,10 @@
         "surveys",
         "form-builder",
         "json-schema",
+        "dashboard",
+        "analytics",
+        "pdf",
+        "data-extraction",
         "react",
         "angular",
         "vue",

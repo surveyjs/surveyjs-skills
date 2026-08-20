@@ -113,11 +113,14 @@ commercial application. The relevant skills state licensing requirements where t
 
 ## Staying current
 
-`surveyjs-integration`, `surveyjs-dashboard`, `surveyjs-pdf-generator`, and
-`surveyjs-response-extractor` hash the upstream pages their reference files are based on —
-surveyjs.io doc pages plus, for the extractor, the package repository's README and core source
-files. A weekly GitHub Action runs the checker and opens an issue when one
-of those pages changes, so the references get reviewed by hand rather than silently going stale.
+`surveyjs-integration`, `surveyjs-creator-customization`, `surveyjs-dashboard`,
+`surveyjs-pdf-generator`, and `surveyjs-response-extractor` hash the upstream pages their
+reference files are based on — surveyjs.io doc pages plus, for the extractor, the package
+repository's README and core source files. A weekly GitHub Action runs the checker and opens an
+issue when one of those pages changes, so the references get reviewed by hand rather than
+silently going stale. `surveyjs-form-json` needs no watched pages: it reads the authoring guide
+and JSON Schema shipped inside the installed `survey-core` package, which are version-exact by
+construction.
 
 ```
 node scripts/check-upstream-docs.mjs            # report drift, exit 1 if any

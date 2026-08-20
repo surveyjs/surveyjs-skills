@@ -54,6 +54,37 @@ const WATCHED = {
   "https://surveyjs.io/documentation/backend-integration.md": [
     "surveyjs-integration/references/data-and-events.md"
   ],
+  "https://surveyjs.io/survey-creator/documentation/get-started-react.md": [
+    "surveyjs-creator-customization/references/setup.md"
+  ],
+  "https://surveyjs.io/survey-creator/documentation/get-started-angular.md": [
+    "surveyjs-creator-customization/references/setup.md"
+  ],
+  "https://surveyjs.io/survey-creator/documentation/get-started-vue.md": [
+    "surveyjs-creator-customization/references/setup.md"
+  ],
+  "https://surveyjs.io/survey-creator/documentation/get-started-html-css-javascript.md": [
+    "surveyjs-creator-customization/references/setup.md"
+  ],
+  "https://surveyjs.io/survey-creator/documentation/integration-with-backend.md": [
+    "surveyjs-creator-customization/references/setup.md"
+  ],
+  "https://surveyjs.io/survey-creator/documentation/api-reference/survey-creator.md": [
+    "surveyjs-creator-customization/SKILL.md",
+    "surveyjs-creator-customization/references/renamed-api.md"
+  ],
+  "https://surveyjs.io/survey-creator/documentation/toolbox-customization.md": [
+    "surveyjs-creator-customization/references/customization.md"
+  ],
+  "https://surveyjs.io/survey-creator/documentation/property-grid-customization.md": [
+    "surveyjs-creator-customization/references/customization.md"
+  ],
+  "https://surveyjs.io/survey-creator/documentation/ui-preset-editor.md": [
+    "surveyjs-creator-customization/references/ui-presets.md"
+  ],
+  "https://surveyjs.io/survey-creator/documentation/theme-editor.md": [
+    "surveyjs-creator-customization/references/theming.md"
+  ],
   "https://surveyjs.io/dashboard/documentation/get-started-react.md": [
     "surveyjs-dashboard/references/frameworks.md",
     "surveyjs-dashboard/references/setup-and-data.md"
