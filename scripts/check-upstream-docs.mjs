@@ -25,7 +25,8 @@ const SNAPSHOT_DIR = join(HERE, ".doc-snapshots");
 const WATCHED = {
   "https://surveyjs.io/llms.txt": [
     "surveyjs-integration/SKILL.md",
-    "surveyjs-dashboard/SKILL.md"
+    "surveyjs-dashboard/SKILL.md",
+    "surveyjs-pdf-generator/SKILL.md"
   ],
   "https://surveyjs.io/form-library/documentation/get-started-react.md": [
     "surveyjs-integration/references/react.md"
@@ -95,6 +96,51 @@ const WATCHED = {
   ],
   "https://raw.githubusercontent.com/surveyjs/surveyjs-howtos-and-troubleshooting/main/categories/data-visualization/custom-survey-data-visualizer.md": [
     "surveyjs-dashboard/references/customization.md"
+  ],
+  "https://surveyjs.io/pdf-generator/documentation/overview.md": [
+    "surveyjs-pdf-generator/SKILL.md",
+    "surveyjs-pdf-generator/references/troubleshooting.md"
+  ],
+  "https://surveyjs.io/pdf-generator/documentation/get-started-react.md": [
+    "surveyjs-pdf-generator/references/setup.md"
+  ],
+  "https://surveyjs.io/pdf-generator/documentation/get-started-angular.md": [
+    "surveyjs-pdf-generator/references/setup.md"
+  ],
+  "https://surveyjs.io/pdf-generator/documentation/get-started-vue.md": [
+    "surveyjs-pdf-generator/references/setup.md"
+  ],
+  "https://surveyjs.io/pdf-generator/documentation/get-started-html-css-javascript.md": [
+    "surveyjs-pdf-generator/references/setup.md"
+  ],
+  "https://surveyjs.io/pdf-generator/documentation/api-reference/idocoptions.md": [
+    "surveyjs-pdf-generator/references/setup.md",
+    "surveyjs-pdf-generator/references/appearance.md"
+  ],
+  "https://surveyjs.io/pdf-generator/documentation/pdf-appearance-customization.md": [
+    "surveyjs-pdf-generator/references/appearance.md"
+  ],
+  "https://surveyjs.io/pdf-generator/examples/customize-header-and-footer-of-pdf-form/documentation.md": [
+    "surveyjs-pdf-generator/references/appearance.md"
+  ],
+  "https://surveyjs.io/pdf-generator/examples/change-font-in-pdf-form/documentation.md": [
+    "surveyjs-pdf-generator/references/appearance.md"
+  ],
+  "https://surveyjs.io/pdf-generator/examples/special-characters-in-pdf-form/documentation.md": [
+    "surveyjs-pdf-generator/references/appearance.md",
+    "surveyjs-pdf-generator/references/troubleshooting.md"
+  ],
+  "https://surveyjs.io/pdf-generator/examples/how-to-create-read-only-pdf-form/documentation.md": [
+    "surveyjs-pdf-generator/references/setup.md"
+  ],
+  "https://surveyjs.io/pdf-generator/examples/convert-pdf-form-blob-base64-raw-pdf-javascript/documentation.md": [
+    "surveyjs-pdf-generator/references/setup.md"
+  ],
+  "https://surveyjs.io/pdf-generator/examples/map-survey-responses-to-pdf-fields-using-pdflib/documentation.md": [
+    "surveyjs-pdf-generator/references/existing-pdf-forms.md"
+  ],
+  "https://surveyjs.io/pdf-generator/examples/fill-in-pdf-form-fields-with-dynamic-survey-data-using-pdfjs/documentation.md": [
+    "surveyjs-pdf-generator/references/existing-pdf-forms.md"
   ]
 };
 
