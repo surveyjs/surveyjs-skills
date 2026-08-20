@@ -155,6 +155,20 @@ plugins/surveyjs/                   the plugin
 scripts/check-upstream-docs.mjs     upstream doc drift checker
 ```
 
+## Related repositories
+
+[surveyjs/surveyjs-howtos-and-troubleshooting](https://github.com/surveyjs/surveyjs-howtos-and-troubleshooting)
+is a companion knowledge base of task-sized how-tos — problem, working code, explanation —
+organized by category: design-time Creator recipes, custom question types, expressions and
+triggers, matrices, quizzes, data visualization, PDF generation. It complements the skills
+rather than overlapping them: the skills pin the current API and the mistakes to avoid, the
+how-tos show a specific behaviour composed end to end.
+
+The skills point agents at it as a step in their escalation order, after the official docs and
+demos and before general web search. Read it directly when you want a worked example, and
+contribute an article there when a fix is a recipe rather than a correction to what a skill
+states.
+
 ## Contributing
 
 Issues and pull requests are welcome — corrections to anything a skill states are especially

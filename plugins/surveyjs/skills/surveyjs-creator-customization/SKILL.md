@@ -116,6 +116,14 @@ Every page on surveyjs.io is available as Markdown by appending `.md`:
 Unlike `survey-core`, the Creator packages ship **no** generated authoring guide or JSON schema,
 so there is no version-exact artifact on disk to read. When a detail matters, fetch the doc.
 
+Escalation order when stuck: reference file → official `.md` doc →
+[howtos-and-troubleshooting](https://github.com/surveyjs/surveyjs-howtos-and-troubleshooting)
+→ [llms.txt](https://surveyjs.io/llms.txt) for orientation. Check that repository's
+`design-time` and `custom-question-types` categories early — they carry design-surface recipes
+the docs do not cover, such as property grid editors and their validation, question adorner
+actions, in-place editing, restricting designer operations on a question, and the translation
+tab. Prefer them over blog posts and Stack Overflow answers.
+
 ## Before you finish
 
 - [ ] Only the renderer package installed; `survey-creator-core` left implicit

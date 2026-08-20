@@ -131,6 +131,21 @@ references a question name which does not exist. Expressions are not resolved ag
 document at load time, so that JSON validates cleanly and silently misbehaves at runtime.
 Check every expression's referenced names by hand.
 
+## When the guide covers the properties but not the pattern
+
+The shipped guide and schema are the authority on *what exists*. They do not show how to
+compose several properties into a behaviour — a cut-off date on a date question, copying a
+value between matrices, requiring every row of a multi-select matrix, validating a total across
+dynamic panels, scoring a quiz without JavaScript.
+
+For those, read
+[howtos-and-troubleshooting](https://github.com/surveyjs/surveyjs-howtos-and-troubleshooting) —
+its `expressions-and-triggers`, `matrices`, `dynamic-panel`, `dropdowns-checkboxes-radiogroups`
+and `quizzes-and-scored-surveys` categories are worked examples of exactly these compositions.
+Take the shape of the solution from there, then still check every property name against the
+installed guide and validate as in Step 4: the articles are community-maintained and not
+pinned to this project's version.
+
 ## Before you finish
 
 - [ ] The guide and schema you used came from the installed version, stamp checked
