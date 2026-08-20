@@ -20,8 +20,8 @@ Not this skill:
 - Embedding the drag-and-drop form builder → `surveyjs-creator-customization`
 - Visualizing collected responses with charts and tables → `surveyjs-dashboard`
 - Exporting the form or its responses as a PDF document → `surveyjs-pdf-generator`
-- AI Form Response Extractor — a separate SurveyJS product, not currently covered by this
-  plugin
+- Extracting responses from scanned or photographed paper forms and PDFs →
+  `surveyjs-response-extractor`
 
 ## Read this first: corrections
 
@@ -69,7 +69,8 @@ legacy `surveyPostId` property targets a discontinued service — do not use it.
 
 **Form Library is MIT-licensed and needs no license key.** Do not add `setLicenseKey` to a
 Form Library integration. AI Form Response Extractor is also MIT-licensed but is a separate,
-server-side product. Survey Creator, Dashboard, and PDF Generator require commercial developer
+server-side product — see `surveyjs-response-extractor`. Survey Creator, Dashboard, and PDF
+Generator require commercial developer
 licenses; their license setup does not belong here.
 
 **Create the `Model` once.** Rebuilding it on every render wipes answers on each keystroke.

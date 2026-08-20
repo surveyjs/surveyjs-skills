@@ -30,8 +30,9 @@ Not this skill:
 - Embedding the drag-and-drop builder → `surveyjs-creator-customization`
 - Charts and tables from collected responses → `surveyjs-dashboard` (its table view has its
   own CSV/PDF/XLSX export — that is Dashboard, not this product)
-- AI Form Response Extractor — a separate SurveyJS product, not currently covered by this
-  plugin
+- Extracting responses *from* scanned or photographed paper forms and PDFs →
+  `surveyjs-response-extractor` (this skill generates output PDFs; that one reads input
+  documents)
 
 ## Read this first: corrections
 

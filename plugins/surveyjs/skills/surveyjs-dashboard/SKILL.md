@@ -25,8 +25,8 @@ Not this skill:
 - Embedding the drag-and-drop builder → `surveyjs-creator-customization`
 - Exporting a form or a single response as a PDF document → `surveyjs-pdf-generator`
   (the table view's CSV/PDF/XLSX export of aggregated data stays here)
-- AI Form Response Extractor — a separate SurveyJS product, not currently covered by this
-  plugin
+- Extracting responses from scanned or photographed paper forms and PDFs →
+  `surveyjs-response-extractor`
 
 ## Read this first: corrections
 

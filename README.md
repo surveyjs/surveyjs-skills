@@ -2,10 +2,11 @@
 
 Agent skills that teach AI coding agents to build with [SurveyJS](https://surveyjs.io) — writing
 survey JSON, embedding the Form Library in a web app, customizing Survey Creator, visualizing
-collected responses with Dashboard, and exporting forms and responses to PDF.
+collected responses with Dashboard, exporting forms and responses to PDF, and extracting
+responses from scanned paper forms with AI Form Response Extractor.
 
 This repository packages one `surveyjs` plugin for OpenAI Codex, Claude Code, GitHub Copilot,
-Google Gemini CLI, and xAI Grok Build. The plugin contains five portable skills. Each skill loads
+Google Gemini CLI, and xAI Grok Build. The plugin contains six portable skills. Each skill loads
 only when the work calls for it and carries reference files the agent reads on demand.
 
 ## Why
@@ -55,7 +56,7 @@ Install the plugin directly from its repository subdirectory:
 copilot plugin install surveyjs/surveyjs-skills:plugins/surveyjs
 ```
 
-The shared `plugin.json` manifest registers all five skills. The existing Claude-compatible
+The shared `plugin.json` manifest registers all six skills. The existing Claude-compatible
 marketplace can also be added with `copilot plugin marketplace add surveyjs/surveyjs-skills`.
 
 ## Install with xAI Grok Build
@@ -73,7 +74,7 @@ For local development, load the plugin directory directly with
 ## Other compatible agents
 
 The skills follow the portable `SKILL.md` convention. Agents that support shared skill discovery,
-including Cursor, can load the five directories under `plugins/surveyjs/skills/` from a project or
+including Cursor, can load the six directories under `plugins/surveyjs/skills/` from a project or
 user-level `.agents/skills/` directory. If an agent does not read that shared location, copy or
 link the same skill directories into its native location, such as `.cursor/skills/` for Cursor or
 `.cline/skills/` for Cline. No changes to the skill files are required.
@@ -87,6 +88,7 @@ link the same skill directories into its native location, such as `.cursor/skill
 | `surveyjs-creator-customization` | Embedding the drag-and-drop builder — toolbox and property grid, creator events, UI presets, builder theming |
 | `surveyjs-dashboard` | Visualizing collected responses with Dashboard — install `survey-analytics`, configure charts and tables, filtering, theming, localization, custom visualizers, table view export |
 | `surveyjs-pdf-generator` | Exporting forms and responses to PDF with `survey-pdf` — fillable or read-only PDFs, page options, fonts, headers/footers, themes and layout presets, and filling existing PDF form fields with PDFFormFiller |
+| `surveyjs-response-extractor` | Extracting structured responses from scanned or photographed paper forms and PDFs with `ai-form-response-extractor` — server-side schema-guided extraction via OpenAI, Anthropic, or local Ollama, confidence review, QR/unique-ID detection, merging paper and online submissions |
 
 The skills are written against **SurveyJS v3**.
 
@@ -99,11 +101,10 @@ The skills are written against **SurveyJS v3**.
 | Survey Creator | Supported | `surveyjs-creator-customization` |
 | Dashboard | Supported | `surveyjs-dashboard` |
 | PDF Generator | Supported | `surveyjs-pdf-generator` |
-| AI Form Response Extractor | Not currently included | — |
+| AI Form Response Extractor | Supported | `surveyjs-response-extractor` |
 
-The unsupported product is an intentional scope boundary, not a feature of
-`surveyjs-integration`. It should receive a dedicated skill before this plugin claims to cover
-its installation or APIs.
+Every current SurveyJS product now has a dedicated skill; each skill routes requests outside its
+own product to the right neighbor instead of guessing.
 
 Note on licensing: Form Library and AI Form Response Extractor are MIT-licensed. **Survey Creator,
 Dashboard, and PDF Generator require commercial developer licenses** when integrated into a
@@ -112,8 +113,10 @@ commercial application. The relevant skills state licensing requirements where t
 
 ## Staying current
 
-`surveyjs-integration`, `surveyjs-dashboard`, and `surveyjs-pdf-generator` hash the upstream
-surveyjs.io doc pages their reference files are based on. A weekly GitHub Action runs the checker and opens an issue when one
+`surveyjs-integration`, `surveyjs-dashboard`, `surveyjs-pdf-generator`, and
+`surveyjs-response-extractor` hash the upstream pages their reference files are based on —
+surveyjs.io doc pages plus, for the extractor, the package repository's README and core source
+files. A weekly GitHub Action runs the checker and opens an issue when one
 of those pages changes, so the references get reviewed by hand rather than silently going stale.
 
 ```

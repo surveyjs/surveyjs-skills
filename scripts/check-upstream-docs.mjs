@@ -26,7 +26,8 @@ const WATCHED = {
   "https://surveyjs.io/llms.txt": [
     "surveyjs-integration/SKILL.md",
     "surveyjs-dashboard/SKILL.md",
-    "surveyjs-pdf-generator/SKILL.md"
+    "surveyjs-pdf-generator/SKILL.md",
+    "surveyjs-response-extractor/SKILL.md"
   ],
   "https://surveyjs.io/form-library/documentation/get-started-react.md": [
     "surveyjs-integration/references/react.md"
@@ -141,6 +142,26 @@ const WATCHED = {
   ],
   "https://surveyjs.io/pdf-generator/examples/fill-in-pdf-form-fields-with-dynamic-survey-data-using-pdfjs/documentation.md": [
     "surveyjs-pdf-generator/references/existing-pdf-forms.md"
+  ],
+  "https://surveyjs.io/documentation/combine-paper-and-online-survey-form-data.md": [
+    "surveyjs-response-extractor/SKILL.md",
+    "surveyjs-response-extractor/references/review-and-merge.md"
+  ],
+  "https://raw.githubusercontent.com/surveyjs/ai-form-response-extractor/main/README.md": [
+    "surveyjs-response-extractor/SKILL.md",
+    "surveyjs-response-extractor/references/setup-and-inputs.md",
+    "surveyjs-response-extractor/references/providers-and-privacy.md",
+    "surveyjs-response-extractor/references/schemas-and-validation.md"
+  ],
+  "https://raw.githubusercontent.com/surveyjs/ai-form-response-extractor/main/src/index.ts": [
+    "surveyjs-response-extractor/SKILL.md"
+  ],
+  "https://raw.githubusercontent.com/surveyjs/ai-form-response-extractor/main/src/core/types.ts": [
+    "surveyjs-response-extractor/references/setup-and-inputs.md",
+    "surveyjs-response-extractor/references/schemas-and-validation.md"
+  ],
+  "https://raw.githubusercontent.com/surveyjs/ai-form-response-extractor/main/src/utils/merging.ts": [
+    "surveyjs-response-extractor/references/review-and-merge.md"
   ]
 };
 

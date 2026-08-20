@@ -13,6 +13,7 @@ xAI Grok Build.
 | `surveyjs-creator-customization` | Embedding the drag-and-drop builder — toolbox and property grid, creator events, UI presets, builder theming |
 | `surveyjs-dashboard` | Visualizing collected responses with Dashboard — install `survey-analytics`, configure charts and tables, filtering, theming, localization, custom visualizers, table view export |
 | `surveyjs-pdf-generator` | Exporting forms and responses to PDF with `survey-pdf` — fillable or read-only PDFs, page options, fonts, headers/footers, themes and layout presets, and filling existing PDF form fields with PDFFormFiller |
+| `surveyjs-response-extractor` | Extracting structured responses from scanned or photographed paper forms and PDFs with `ai-form-response-extractor` — server-side schema-guided extraction via OpenAI, Anthropic, or local Ollama, confidence review, QR/unique-ID detection, merging paper and online submissions |
 
 ## Product coverage
 
@@ -23,9 +24,10 @@ xAI Grok Build.
 | Survey Creator | Supported | `surveyjs-creator-customization` |
 | Dashboard | Supported | `surveyjs-dashboard` |
 | PDF Generator | Supported | `surveyjs-pdf-generator` |
-| AI Form Response Extractor | Not currently included | — |
+| AI Form Response Extractor | Supported | `surveyjs-response-extractor` |
 
-AI Form Response Extractor is a separate product area and is not handled by the Form Library
+AI Form Response Extractor is a separate, server-side product with its own dedicated skill —
+extraction requests route to `surveyjs-response-extractor`, not to the Form Library
 integration skill.
 
 Form Library and AI Form Response Extractor are MIT-licensed. Survey Creator, Dashboard, and PDF
@@ -34,8 +36,9 @@ See [SurveyJS licensing](https://surveyjs.io/licensing).
 
 ## Staying current
 
-`surveyjs-integration`, `surveyjs-dashboard`, and `surveyjs-pdf-generator` are written against
-SurveyJS v3 and hash the upstream doc pages they depend on. A weekly Action runs `scripts/check-upstream-docs.mjs` and
+`surveyjs-integration`, `surveyjs-dashboard`, `surveyjs-pdf-generator`, and
+`surveyjs-response-extractor` are written against
+SurveyJS v3 and hash the upstream doc pages and source files they depend on. A weekly Action runs `scripts/check-upstream-docs.mjs` and
 opens an issue when one of those pages changes, so the reference files get reviewed rather than
 silently drifting.
 
@@ -70,7 +73,7 @@ gemini extensions install ./plugins/surveyjs
 gemini extensions link ./plugins/surveyjs
 ```
 
-Gemini discovers all five skills automatically from `skills/`.
+Gemini discovers all six skills automatically from `skills/`.
 
 ## GitHub Copilot CLI
 
@@ -80,7 +83,7 @@ Install this plugin directly from its repository subdirectory:
 copilot plugin install surveyjs/surveyjs-skills:plugins/surveyjs
 ```
 
-The shared `plugin.json` manifest registers all five skills. Copilot can also consume the
+The shared `plugin.json` manifest registers all six skills. Copilot can also consume the
 repository's `.claude-plugin/marketplace.json` marketplace.
 
 ## xAI Grok Build
