@@ -1,6 +1,14 @@
 ---
 name: surveyjs-brand-styling
-description: Style a SurveyJS application to match a custom app design, design system, or brandbook. Four supported cases with routing, intake scripts, and acceptance criteria — (1) apply a predefined SurveyJS theme, (2) build a custom theme from branding info, (3) theme adapters for Bootstrap/MUI/shadcn hosts, (4) custom CSS file with token overrides and scoped rules — plus per-question-type (per-control) styling references. WHEN: "style my survey", "apply a SurveyJS theme", "dark theme for survey", "match survey to our brand", "apply brandbook to SurveyJS", "survey in a Bootstrap/MUI/shadcn app", "customize SurveyJS theme", "survey looks different from my app", "override survey colors/fonts", "restyle dropdown/input/slider in survey".
+description: >
+  Style a SurveyJS application so it matches a custom app design, design system, or brandbook —
+  applying one of the predefined themes, building a custom theme from brand colors and fonts,
+  mapping a Bootstrap, MUI, or shadcn host through a theme adapter, or writing a custom CSS file
+  with token overrides and scoped rules, plus per-question-type (per-control) styling references.
+  Use when asked to style a survey, apply or customize a SurveyJS theme, add a dark theme, match
+  a survey to a brand or brandbook, fit a survey into a Bootstrap, MUI, or shadcn app, override
+  survey colors or fonts, restyle an individual control such as a dropdown, input, or slider, or
+  when a survey looks different from the rest of the application.
 ---
 
 # SurveyJS brand styling
