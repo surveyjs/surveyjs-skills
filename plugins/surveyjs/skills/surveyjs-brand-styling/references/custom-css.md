@@ -67,6 +67,98 @@ Find the token in the per-control tables ([controls/](controls/_shared.md), cata
 }
 ```
 
+## Step 1b: matching a compact host design system (verified worked example)
+
+Modern design systems (similar and Tailwind-based systems) differ from SurveyJS
+defaults in four systematic ways beyond colors. All four are closable with tokens alone —
+no scoped rules needed. Verified against survey-core 3.0.1 with a side-by-side comparison.
+
+```css
+.sjs-theme-overrides {
+  /* 1. Type scale — SurveyJS default is 16px/24px; most hosts use 14px/20px.
+        One pair rescales question titles, descriptions, input text, dropdown items,
+        and buttons at once. weight-strong feeds titles AND button labels (600 → 500). */
+  --sjs2-typography-font-size-default: 0.875rem;
+  --sjs2-typography-line-height-default: 1.25rem;
+  --sjs2-typography-font-weight-strong: 500;
+  /* panel titles derive from font-size-default too — pin them if the host card title
+     is larger than body text: */
+  --sjs2-typography-font-size-component-panel-title: 1rem;
+  --sjs2-typography-line-height-component-panel-title: 1.5rem;
+
+  /* 2. Transparent inputs — hosts with bordered, unfilled inputs: */
+  --sjs2-color-bg-basic-secondary: transparent;   /* input fill + unchecked box fill */
+  --sjs2-color-component-formbox-default-border: <host input-border color>;
+
+  /* 3. Control height. Formula: height = 1lh + 2×input-padding-v + 2×formbox-padding-v
+        (defaults: 24 + 2×8 + 2×4 = 48px). For a 32px (h-8) host control: */
+  --sjs2-layout-component-formbox-medium-padding-vertical: 0px;
+  --sjs2-layout-component-formbox-medium-padding-horizontal: 0px;
+  --sjs2-layout-component-input-medium-content-padding-vertical: 6px;   /* 20+12 = 32px */
+  --sjs2-layout-component-input-medium-content-padding-horizontal: 10px;
+
+  /* 4. Selection controls — SurveyJS boxes are 24px, hosts commonly 16px (size-4): */
+  --sjs2-size-component-checkbox-box: 1rem;
+  --sjs2-size-component-checkbox-icon: 0.75rem;
+  --sjs2-size-component-radio-box: 1rem;
+  --sjs2-size-component-radio-icon: 0.625rem;
+
+  /* 5. Vertical rhythm — SurveyJS defaults: */
+  --sjs2-layout-component-question-header-gap-vertical: 8px;   /* title → description */
+  --sjs2-layout-component-question-box-gap-vertical: 8px;      /* header → input */
+  --sjs2-layout-component-panel-content-area-gap-vertical: 16px; /* question → question in a panel */
+  --sjs2-layout-component-page-content-area-gap-vertical: 8px; /* between top-level panels/questions */
+  --sjs2-layout-component-labeled-group-box-gap-vertical: 12px; /* radio/checkbox row spacing (÷2 per row) */
+  --sjs2-layout-component-labeled-group-box-padding-vertical: 0px; /* group first/last row edge padding */
+
+  /* 6. Panel/card chrome. IMPORTANT: `.sd-panel` cards consume the `panel-*` layout
+        family — the `panel-simple-*` family styles framed standalone questions, NOT
+        panels (verified in sd-panel rules: --sd-panel-* ← panel-* tokens). */
+  --sjs2-layout-component-panel-header-padding-top: 16px;
+  --sjs2-layout-component-panel-header-padding-bottom: 16px;
+  --sjs2-layout-component-panel-header-padding-left: 16px;
+  --sjs2-layout-component-panel-header-padding-right: 16px;
+  --sjs2-layout-component-panel-content-area-padding-horizontal: 16px;
+  --sjs2-layout-component-panel-content-area-padding-top: 0px;
+  --sjs2-layout-component-panel-content-area-padding-bottom: 16px;
+  --sjs2-color-component-panel-default-separator: transparent; /* framed panels draw a header
+        divider (border-bottom) — most host cards don't have one */
+
+  /* Navigation buttons (Complete/Next) are `sd-action--large` — size them with the
+     action-LARGE layout tokens; action-medium styles inline icon actions such as the
+     dropdown chevron (don't grow those). For a 32px-high button: */
+  --sjs2-layout-component-action-large-box-padding-vertical: 6px;
+  --sjs2-layout-component-action-large-box-padding-horizontal: 0px;
+  --sjs2-layout-component-action-large-label-padding-horizontal: 12px;
+
+  /* Buttons and slider thumbs carry a 1px "trigger" ring by default
+     (--sjs2-border-effect-trigger-default). Hosts with flat buttons: */
+  --sjs2-color-utility-shadow-trigger-default: transparent;
+}
+```
+
+When the host exposes its palette as CSS variables (`--primary`, `--border`, …),
+reference them directly (`--sjs2-color-project-brand-600: var(--primary)`) instead of
+copying hex values — the survey then follows host theme switches automatically. `oklch()`
+host values work inside SurveyJS's `hsl(from …)` brand-ramp derivations in all browsers
+that support relative color syntax.
+
+### Verifying tokens against the installed survey-core
+
+`survey-core.css` only *uses* `var(--sjs2-…)` — the **definitions** (defaults + reference
+chains) are injected at runtime from `base-theme.ts` into `<style>` elements, even when no
+`applyTheme` is called. To inspect a token's chain or confirm it exists, read the injected
+styles in the browser:
+
+```js
+const raw = [...document.querySelectorAll("style")]
+  .filter(s => s.textContent.includes("--sjs2-")).map(s => s.textContent).join("\n");
+raw.match(/--sjs2-typography-font-size-default\s*:\s*([^;}]+)/); // → var(--sjs2-font-size-x200)
+```
+
+Grepping node_modules/survey-core/survey-core.css for `--sjs2-…:` definitions finds nothing —
+don't conclude a token doesn't exist from that.
+
 ## Step 2: custom rules for verified token gaps
 
 Some controls have no component token family (see the notes in [controls/](controls/_shared.md)

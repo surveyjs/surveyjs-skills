@@ -45,6 +45,13 @@ rgba(brand-600/10%), `--sjs2-color-fg-brand-primary` → brand-700.
 | Tracks / tertiary fills | `--sjs2-color-bg-basic-tertiary` | gray-150 `#EDEDED` |
 | Popups / sheets | `--sjs2-color-utility-sheet` | gray-000 `#fff` |
 
+Borderless-fill vs bordered-transparent inputs: hosts whose inputs are transparent with a
+1px border (shadcn et al.) → `--sjs2-color-bg-basic-secondary: transparent` (also clears
+unchecked checkbox/radio fills) + `--sjs2-color-component-formbox-default-border: <host
+input-border color>`. Buttons and slider thumbs additionally carry a 1px ring via
+`--sjs2-border-effect-trigger-default`; kill it with
+`--sjs2-color-utility-shadow-trigger-default: transparent`.
+
 ### Typography
 
 All ~19 `--sjs2-typography-font-family-component-*` tokens reference
@@ -60,6 +67,14 @@ Scale: `--sjs2-typography-font-size-small/default/large` → `--sjs2-font-size-x
 `--sjs2-font-weight-regular/medium/semibold/bold` = 400/500/600/700; semantic hooks
 `--sjs2-typography-font-weight-basic/strong`. Per-element sizes: the
 `--sjs2-typography-font-size-component-*` families (see [controls/_shared.md](controls/_shared.md)).
+
+Compact hosts (14px base): override `--sjs2-typography-font-size-default: 0.875rem` +
+`--sjs2-typography-line-height-default: 1.25rem` — question titles, descriptions, input
+text, dropdown items and button labels all derive from this pair. `font-weight-strong`
+(600) feeds question/panel titles AND button labels; set it to 500 for shadcn-like hosts.
+Panel titles also derive from font-size-default — pin
+`--sjs2-typography-font-size-component-panel-title` separately if the host card title is
+larger than body text.
 Web-font loading is the host app's job — pair custom fonts with `survey-core.fontless.css`.
 
 ### Corner radius
@@ -88,9 +103,28 @@ Sibling base units: `--sjs2-base-unit-size` (element sizes), `-font-size`, `-lin
   paddings that must stay in sync with fixed sizes (checkbox 24px boxes, 48px touch targets)
   drift — verify controls after changing; keep `base-unit-size` untouched to preserve
   hit-target sizes.
+- Exact control heights: formbox height = 1lh + 2×`--sjs2-layout-component-input-medium-content-padding-vertical`
+  (8px) + 2×`--sjs2-layout-component-formbox-medium-padding-vertical` (4px) = 48px by
+  default. For a 32px host control: formbox padding 0, input content padding-vertical 6px
+  (with a 20px line-height). Checkbox/radio boxes: `--sjs2-size-component-checkbox-box`
+  / `-radio-box` (24px → e.g. 1rem) with `-checkbox-icon` / `-radio-icon` companions.
+- Navigation buttons (Complete/Next/Prev) are `sd-action--large` → size via
+  `--sjs2-layout-component-action-large-box-padding-vertical/-horizontal` and
+  `-large-label-padding-horizontal`. The `action-medium` layout tokens style inline icon
+  actions (dropdown chevron, clear buttons) — changing those distorts inputs, not buttons.
 - Targeted density: override layout tokens instead — question card padding
   (`--sjs2-layout-component-panel-simple-content-area-padding-*`), gaps between questions
   (`--sjs2-layout-component-page-content-area-gap-*`) — see [controls/_shared.md](controls/_shared.md) §4.
+- Vertical rhythm map (verified): `question-header-gap-vertical` = title→description,
+  `question-box-gap-vertical` = header→input, `panel-content-area-gap-vertical` =
+  question→question inside a panel, `page-content-area-gap-vertical` = between top-level
+  panels/questions, `labeled-group-box-gap-vertical` = radio/checkbox row spacing (applied
+  as ÷2 padding per row; `-box-padding-vertical` pads the group's first/last row).
+- Panel cards: `.sd-panel` consumes the **`panel-*`** layout family
+  (`panel-header-padding-top/bottom/left/right`, `panel-content-area-padding-*`,
+  `panel-content-area-gap-*`) — NOT `panel-simple-*`, which styles framed standalone
+  questions. Framed panels also draw a header divider via
+  `--sjs2-color-component-panel-default-separator` (set transparent for divider-less host cards).
 - Mobile: `.sd-root-modern--mobile` swaps several semantic paddings; test both widths.
 
 ### State colors (error / success / warning / info)
@@ -134,6 +168,10 @@ there next to each question type.
 - Legacy `--sjs-` (single-digit) variables are compat-only; new work uses `--sjs2-`.
 - Runtime-applied themes inject tokens under `:where(.sd-theme-root)` — stylesheet overrides
   at `:root` will NOT win; target `.sjs-theme-overrides` (see [custom-css.md](custom-css.md)).
+- Token definitions live in runtime-injected `<style>` elements (from `base-theme.ts`),
+  even without `applyTheme` — `survey-core.css` only consumes them. Verify a token exists
+  by reading the injected styles in the browser, not by grepping the shipped CSS
+  ([custom-css.md](custom-css.md) has a snippet).
 - Relative-color derivations (`hsl(from …)` / `rgba(from …)`) mean one brand hex fans out
   automatically — but also that pinning a downstream token (e.g. `bg-brand-primary`)
   disconnects it from the ramp; prefer overriding the source (`project-brand-600`).

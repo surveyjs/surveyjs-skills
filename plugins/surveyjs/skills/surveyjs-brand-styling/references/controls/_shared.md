@@ -88,7 +88,8 @@ Legacy bridge: `--sjs-editorpanel-backcolor` (bg), `--sjs-shadow-inner` (border 
 | Header internal gap (title↔description) | `.sd-question__header` row-gap → question-header-gap-vertical → 4px; column-gap tokens too |
 | Title/description padding | `--sd-question-title-padding-block/inline`, `--sd-question-description-padding-*` → default 0 |
 | Description under input | `.sd-question__description--under-input` margin-top → question-box-gap-vertical |
-| Card (with-frame) padding | panel-simple tokens: `--sjs2-layout-component-panel-simple-content-area-padding-horizontal` (`--sjs2-spacing-large-horizontal`) / `-top` / `-bottom` (`--sjs2-spacing-medium-vertical`) |
+| Card (with-frame **question**) padding | panel-simple tokens: `--sjs2-layout-component-panel-simple-content-area-padding-horizontal` (`--sjs2-spacing-large-horizontal`) / `-top` / `-bottom` (`--sjs2-spacing-medium-vertical`) |
+| **Panel** (`.sd-panel`) padding & gaps | `panel-*` family (NOT panel-simple): `--sjs2-layout-component-panel-header-padding-top/bottom/left/right` (24/40px), `-panel-content-area-padding-horizontal/top/bottom`, `-panel-content-area-gap-vertical` (24px, question→question); framed panels draw a header divider → `--sjs2-color-component-panel-default-separator` |
 | Gaps between questions in a row | `.sd-row--multiple` → page/panel content-area gap tokens: `--sjs2-layout-component-page-content-area-gap-horizontal/vertical` → 24px |
 | Survey vertical rhythm | `--sjs2-layout-component-survey-box-gap-vertical` → `--sjs2-spacing-large-vertical` |
 

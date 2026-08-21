@@ -119,13 +119,15 @@ Procedure: [references/custom-css.md](references/custom-css.md).
 
 **One-pass deliverable**: one `survey-brand.css` — token-override block scoped to
 `.sjs-theme-overrides` first, then per-control scoped rules only for verified token gaps —
-plus its import as the last stylesheet.
+plus its import as the last stylesheet. When the host exposes CSS variables, reference them
+(`var(--primary)`) instead of copying values so host theme switches propagate.
 
 **Acceptance criteria**:
 - [ ] Everything expressible as a token IS a token override; custom rules exist only for documented gaps (rating colors, signaturepad focus, etc.)
 - [ ] Token block scoped to `.sjs-theme-overrides` (never bare `:root` when a theme is applied)
 - [ ] Every custom rule scoped under the survey root; single BEM-class hooks; no `!important`, no DOM-mirroring descendant chains, no shared system tokens (`--sjs2-radius-x100`, `--sjs2-base-unit-*`) bent for one control
 - [ ] File loaded after `survey-core.css` (and after any adapter); survey-core version noted in a header comment
+- [ ] Type scale, control heights, checkbox/radio sizes, vertical rhythm (label/input/field gaps, choice-row spacing), and panel/card chrome (padding, header divider) matched to the host (custom-css.md §Step 1b), not just colors
 - [ ] Visual parity confirmed against the host for the used question types incl. hover/focus/error states
 
 ## Fine-tuning (any case)
