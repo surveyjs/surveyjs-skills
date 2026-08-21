@@ -115,8 +115,9 @@ If the host app already uses Bootstrap, MUI, or shadcn/ui, an adapter stylesheet
 system's variables onto SurveyJS tokens. No build setup, no custom CSS.
 
 ```js
-import "survey-core/survey-core.css";              // always first
-import "survey-core/themes/adapters/bootstrap.css";
+import "survey-core/survey-core.css";                       // always first
+import "survey-core/themes/adapters/bootstrap-default.css"; // or a Bootswatch variant:
+// bootstrap-cosmo / -darkly / -flatly / -litera / -lux / -morph / -zephyr
 ```
 
 ```js
@@ -124,7 +125,7 @@ import "survey-core/themes/adapters/mui.css";
 ```
 
 shadcn/ui ships one file per style — import exactly one:
-`shadcn-base-default`, `shadcn-new-york`, `shadcn-base-luma`, `shadcn-base-lyra`,
+`shadcn-default`, `shadcn-new-york`, `shadcn-base-luma`, `shadcn-base-lyra`,
 `shadcn-base-maia`, `shadcn-base-mira`, `shadcn-base-nova`, `shadcn-base-rhea`,
 `shadcn-base-sera`, `shadcn-base-vega`.
 
@@ -133,7 +134,10 @@ import "survey-core/themes/adapters/shadcn-base-nova.css";
 ```
 
 CDN equivalents use the `.min.css` suffix:
-`https://unpkg.com/survey-core/themes/adapters/bootstrap.min.css`
+`https://unpkg.com/survey-core/themes/adapters/bootstrap-default.min.css`
+
+There is no `adapters/bootstrap.css` or `adapters/shadcn.css` — those SCSS files are shared
+partials that are never emitted; always import a concrete variant.
 
 The adapter must load **after** `survey-core.css`. Do not also call `applyTheme` with a
 predefined theme — it will override the adapter's tokens.

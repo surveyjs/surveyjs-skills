@@ -17,6 +17,8 @@ Renders a JSON form definition in a web app and collects responses. This skill c
 Not this skill:
 
 - Writing the survey JSON itself (question types, validators, conditional logic) → `surveyjs-form-json`
+- Matching the survey to an app design, design system, or brandbook — custom themes, theme
+  adapters, per-control CSS → `surveyjs-brand-styling`
 - Embedding the drag-and-drop form builder → `surveyjs-creator-customization`
 - Visualizing collected responses with charts and tables → `surveyjs-dashboard`
 - Exporting the form or its responses as a PDF document → `surveyjs-pdf-generator`
@@ -84,7 +86,7 @@ This is the single most common integration bug; each framework file shows the co
 | Angular setup, modules vs standalone | `references/angular.md` |
 | Vue 3 setup, plugin vs direct import | `references/vue.md` |
 | Plain HTML page, CDN, or jQuery | `references/vanilla-js.md` |
-| Themes, dark mode, brand colors, Bootstrap/MUI/shadcn | `references/theming.md` |
+| Themes, dark mode, brand colors, Bootstrap/MUI/shadcn | `references/theming.md` (deeper rebranding work → `surveyjs-brand-styling`) |
 | Loading schemas, saving results, partial save, events | `references/data-and-events.md` |
 | Blank, unstyled, duplicated, or resetting survey | `references/troubleshooting.md` |
 

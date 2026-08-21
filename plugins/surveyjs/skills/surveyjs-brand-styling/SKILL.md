@@ -10,6 +10,16 @@ brandbook. Operate case-driven: route the request to ONE of the four cases below
 the missing inputs via that case's intake script, then complete the case's deliverable in a
 single pass and check it against the acceptance criteria.
 
+Not this skill:
+
+- Installing the Form Library, rendering a model, wiring events or backend saving →
+  `surveyjs-integration`
+- Theming the form **builder** UI (Creator chrome, property grid, toolbox) →
+  `surveyjs-creator-customization`
+- Theming charts and tables of collected responses → `surveyjs-dashboard`
+- Themes and layout of exported PDF documents → `surveyjs-pdf-generator`
+- Question types, choices, or conditional logic in the survey JSON → `surveyjs-form-json`
+
 ## Core principle
 
 Three levels, cheapest first. Do not skip to writing CSS.
@@ -132,11 +142,19 @@ plus its import as the last stylesheet. When the host exposes CSS variables, ref
 
 ## Fine-tuning (any case)
 
-For individual widgets, map the question type to its styling file via
-[references/question-controls-map.md](references/question-controls-map.md) → [references/controls/](references/controls/)
-(verified selectors + token chains for text, spacing, borders, focus/hover). Read
-[references/controls/_shared.md](references/controls/_shared.md) first — title/description/input
-surface/error box are shared by all types.
+Read [references/controls/_shared.md](references/controls/_shared.md) first — title, description,
+the `.sd-formbox` input surface, question spacing, error box, and focus ring are shared by all
+types. Then open the file for the question type in question (verified selectors + token chains
+for text, spacing, borders, focus/hover); [references/question-controls-map.md](references/question-controls-map.md)
+maps a brandbook's widget names ("inputs", "selects", "sliders") to these types.
+
+- Text inputs — [`text`](references/controls/text.md), [`comment`](references/controls/comment.md), [`multipletext`](references/controls/multipletext.md)
+- Selects — [`dropdown`](references/controls/dropdown.md), [`tagbox`](references/controls/tagbox.md)
+- Choice controls — [`radiogroup`](references/controls/radiogroup.md), [`checkbox`](references/controls/checkbox.md), [`boolean`](references/controls/boolean.md), [`buttongroup`](references/controls/buttongroup.md), [`imagepicker`](references/controls/imagepicker.md)
+- Ranges & scales — [`slider`](references/controls/slider.md), [`rating`](references/controls/rating.md)
+- Other widgets — [`file`](references/controls/file.md), [`signaturepad`](references/controls/signaturepad.md), [`ranking`](references/controls/ranking.md)
+- Composite — [`matrix`](references/controls/matrix.md), [`matrixdropdown`](references/controls/matrixdropdown.md), [`matrixdynamic`](references/controls/matrixdynamic.md), [`paneldynamic`](references/controls/paneldynamic.md)
+- Display content (`html`, `image`, `expression`, `imagemap`) — [display-content.md](references/controls/display-content.md)
 
 ## References
 
@@ -146,6 +164,6 @@ surface/error box are shared by all types.
 - [references/design-tokens.md](references/design-tokens.md) — token catalog and override recipes
 - [references/question-controls-map.md](references/question-controls-map.md) — question types ↔ standard web controls, links to per-control styling files
 - [references/controls/_shared.md](references/controls/_shared.md) — surfaces shared by all question types (title, description, `.sd-formbox` input surface, spacing, error box, focus ring)
-- [references/controls/](references/controls/) — one file per question type: verified selectors + token chains for text colors/sizes, spacings, borders, focus/hover states
+- [references/controls/](references/controls/) — one file per question type (indexed under **Fine-tuning** above): verified selectors + token chains for text colors/sizes, spacings, borders, focus/hover states
 - [references/brandbook-intake.md](references/brandbook-intake.md) — what to extract from a brandbook and how it maps to tokens
 - [references/custom-css.md](references/custom-css.md) — custom stylesheet workflow: `.sjs-theme-overrides` scoping (why `:root` fails), token overrides + scoped rules for token gaps, `onUpdateQuestionCssClasses`, anti-patterns

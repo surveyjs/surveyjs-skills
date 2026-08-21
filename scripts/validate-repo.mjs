@@ -9,6 +9,7 @@ const SKILLS_DIR = join(ROOT, "plugins", "surveyjs", "skills");
 const errors = [];
 
 const expectedSkills = [
+  "surveyjs-brand-styling",
   "surveyjs-creator-customization",
   "surveyjs-dashboard",
   "surveyjs-form-json",
