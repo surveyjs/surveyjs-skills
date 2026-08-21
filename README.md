@@ -93,6 +93,7 @@ link the same skill directories into its native location, such as `.cursor/skill
 | :---- | :---- |
 | `surveyjs-form-json` | Writing and debugging the survey JSON itself — question types, validators, `visibleIf` and expressions, triggers, matrices, localization, quiz scoring |
 | `surveyjs-integration` | Getting the Form Library into a React, Next.js, Angular, Vue, vanilla JS, or jQuery app — install, render, theme, handle events, save results |
+| `surveyjs-brand-styling` | Matching a survey to your app design or brandbook — picking a predefined theme, building a custom theme from brand colors and fonts, Bootstrap/MUI/shadcn theme adapters, and custom CSS with per-question-type styling references |
 | `surveyjs-creator-customization` | Embedding the drag-and-drop builder — toolbox and property grid, creator events, UI presets, builder theming |
 | `surveyjs-dashboard` | Visualizing collected responses with Dashboard — install `survey-analytics`, configure charts and tables, filtering, theming, localization, custom visualizers, table view export |
 | `surveyjs-pdf-generator` | Exporting forms and responses to PDF with `survey-pdf` — fillable or read-only PDFs, page options, fonts, headers/footers, themes and layout presets, and filling existing PDF form fields with PDFFormFiller |
@@ -107,6 +108,7 @@ independently versioned `ai-form-response-extractor` package.
 | :---- | :---- | :---- |
 | SurveyJS JSON schemas | Supported | `surveyjs-form-json` |
 | Form Library | Supported | `surveyjs-integration` |
+| Theming and brand styling | Supported | `surveyjs-brand-styling` |
 | Survey Creator | Supported | `surveyjs-creator-customization` |
 | Dashboard | Supported | `surveyjs-dashboard` |
 | PDF Generator | Supported | `surveyjs-pdf-generator` |
@@ -122,8 +124,9 @@ commercial application. The relevant skills state licensing requirements where t
 
 ## Staying current
 
-`surveyjs-integration`, `surveyjs-creator-customization`, `surveyjs-dashboard`,
-`surveyjs-pdf-generator`, and `surveyjs-response-extractor` hash the upstream pages their
+`surveyjs-integration`, `surveyjs-brand-styling`, `surveyjs-creator-customization`,
+`surveyjs-dashboard`, `surveyjs-pdf-generator`, and `surveyjs-response-extractor` hash the
+upstream pages their
 reference files are based on — surveyjs.io doc pages plus, for the extractor, the package
 repository's README and core source files. A weekly GitHub Action runs the checker and opens an
 issue when one of those pages changes, so the references get reviewed by hand rather than
