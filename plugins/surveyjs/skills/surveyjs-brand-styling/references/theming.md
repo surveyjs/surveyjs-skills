@@ -45,6 +45,10 @@ inside an existing panel in the host UI.
 
 Import only what you use; the themes are separate modules so bundlers tree-shake the rest.
 
+> Detailed procedure — verified import paths (ESM / deep / CDN), a family selection table
+> derived from the theme objects' cssVariables, dark/panelless mechanics, and framework
+> notes: [predefined-themes.md](predefined-themes.md).
+
 ## Runtime switching
 
 `applyTheme` can be called any time, including on a rendered survey:
@@ -98,10 +102,12 @@ survey.applyTheme(brandTheme, DefaultDark);
 ```
 
 Tokens can equally be set in a stylesheet, which is preferable when the host app already
-manages theming in CSS:
+manages theming in CSS — but scope them to the survey root, not `:root`: runtime-applied
+themes inject tokens under `:where(.sd-theme-root)`, which sits on the element itself and
+beats values inherited from `:root` (details: [custom-css.md](custom-css.md)):
 
 ```css
-:root {
+.sjs-theme-overrides {
   --sjs2-color-project-brand-600: #085de5;
 }
 ```
@@ -112,7 +118,11 @@ should use `--sjs2-`.
 ## Theme adapters
 
 If the host app already uses Bootstrap, MUI, or shadcn/ui, an adapter stylesheet maps that
-system's variables onto SurveyJS tokens. No build setup, no custom CSS.
+system's live CSS variables onto SurveyJS tokens. No build setup, no custom CSS.
+
+> Verified inventory, host prerequisites, icon adapters, scoping model, and tunable hooks:
+> [theme-adapters.md](theme-adapters.md). Note: there is **no** `adapters/bootstrap.css` —
+> pick a concrete variant.
 
 ```js
 import "survey-core/survey-core.css";                       // always first
@@ -121,7 +131,7 @@ import "survey-core/themes/adapters/bootstrap-default.css"; // or a Bootswatch v
 ```
 
 ```js
-import "survey-core/themes/adapters/mui.css";
+import "survey-core/themes/adapters/mui.css";               // requires createTheme({ cssVariables: true })
 ```
 
 shadcn/ui ships one file per style — import exactly one:
@@ -131,16 +141,14 @@ shadcn/ui ships one file per style — import exactly one:
 
 ```js
 import "survey-core/themes/adapters/shadcn-base-nova.css";
+import "survey-core/themes/adapters/icons/lucide";          // optional icon parity
 ```
 
 CDN equivalents use the `.min.css` suffix:
 `https://unpkg.com/survey-core/themes/adapters/bootstrap-default.min.css`
 
-There is no `adapters/bootstrap.css` or `adapters/shadcn.css` — those SCSS files are shared
-partials that are never emitted; always import a concrete variant.
-
 The adapter must load **after** `survey-core.css`. Do not also call `applyTheme` with a
-predefined theme — it will override the adapter's tokens.
+predefined theme — keep one theming mechanism.
 
 Live demos: <https://surveyjs.io/themes/theme-adapters>
 

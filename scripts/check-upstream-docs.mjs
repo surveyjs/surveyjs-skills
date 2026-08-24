@@ -44,13 +44,18 @@ const WATCHED = {
   ],
   "https://surveyjs.io/documentation/themes-and-custom-styles.md": [
     "surveyjs-integration/references/theming.md",
-    "surveyjs-dashboard/references/theming.md"
+    "surveyjs-dashboard/references/theming.md",
+    "surveyjs-brand-styling/references/theming.md",
+    "surveyjs-brand-styling/references/predefined-themes.md"
   ],
   "https://surveyjs.io/documentation/design-tokens-css-customization.md": [
-    "surveyjs-integration/references/theming.md"
+    "surveyjs-integration/references/theming.md",
+    "surveyjs-brand-styling/references/design-tokens.md",
+    "surveyjs-brand-styling/references/custom-css.md"
   ],
   "https://surveyjs.io/documentation/theme-adapters.md": [
-    "surveyjs-integration/references/theming.md"
+    "surveyjs-integration/references/theming.md",
+    "surveyjs-brand-styling/references/theme-adapters.md"
   ],
   "https://surveyjs.io/documentation/backend-integration.md": [
     "surveyjs-integration/references/data-and-events.md"

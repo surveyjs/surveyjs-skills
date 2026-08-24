@@ -10,6 +10,7 @@ xAI Grok Build.
 | :---- | :---- |
 | `surveyjs-form-json` | Writing and debugging the survey JSON itself — question types, validators, `visibleIf` and expressions, triggers, matrices, localization, quiz scoring |
 | `surveyjs-integration` | Getting the Form Library into a React, Next.js, Angular, Vue, vanilla JS, or jQuery app — install, render, theme, handle events, save results |
+| `surveyjs-brand-styling` | Matching a survey to your app design or brandbook — picking a predefined theme, building a custom theme from brand colors and fonts, Bootstrap/MUI/shadcn theme adapters, and custom CSS with per-question-type styling references |
 | `surveyjs-creator-customization` | Embedding the drag-and-drop builder — toolbox and property grid, creator events, UI presets, builder theming |
 | `surveyjs-dashboard` | Visualizing collected responses with Dashboard — install `survey-analytics`, configure charts and tables, filtering, theming, localization, custom visualizers, table view export |
 | `surveyjs-pdf-generator` | Exporting forms and responses to PDF with `survey-pdf` — fillable or read-only PDFs, page options, fonts, headers/footers, themes and layout presets, and filling existing PDF form fields with PDFFormFiller |
@@ -21,6 +22,7 @@ xAI Grok Build.
 | :---- | :---- | :---- |
 | SurveyJS JSON schemas | Supported | `surveyjs-form-json` |
 | Form Library | Supported | `surveyjs-integration` |
+| Theming and brand styling | Supported | `surveyjs-brand-styling` |
 | Survey Creator | Supported | `surveyjs-creator-customization` |
 | Dashboard | Supported | `surveyjs-dashboard` |
 | PDF Generator | Supported | `surveyjs-pdf-generator` |
@@ -36,8 +38,8 @@ See [SurveyJS licensing](https://surveyjs.io/licensing).
 
 ## Staying current
 
-`surveyjs-integration`, `surveyjs-creator-customization`, `surveyjs-dashboard`, and
-`surveyjs-pdf-generator` target SurveyJS v3. `surveyjs-response-extractor` follows the current,
+`surveyjs-integration`, `surveyjs-brand-styling`, `surveyjs-creator-customization`,
+`surveyjs-dashboard`, and `surveyjs-pdf-generator` target SurveyJS v3. `surveyjs-response-extractor` follows the current,
 independently versioned `ai-form-response-extractor` package. These skills hash the upstream doc
 pages and source files they depend on. A weekly Action runs
 `scripts/check-upstream-docs.mjs` and opens an issue when one of those pages changes, so the
