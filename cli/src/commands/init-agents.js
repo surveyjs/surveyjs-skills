@@ -44,10 +44,16 @@ export async function runInitAgents({
   if (clients === null) return { code: 1, written: [], removed: [] };
 
   const allSkills = loadSkills(skillsRoot);
-  const skills = selectSkills(allSkills, project);
+  let skills = selectSkills(allSkills, project);
   if (skills.length === 0) {
-    err.write("No skill matched the detected packages. Nothing was written.\n");
-    return { code: 1, written: [], removed: [] };
+    // Detected SurveyJS packages that no skill claims — a legacy renderer, say. Writing
+    // everything is the same answer as for a project with no SurveyJS at all, and far better
+    // than writing nothing and failing.
+    out.write(
+      `\nNo skill is specific to ${Object.keys(project.packages).join(", ")}; writing the full ` +
+        "skill set instead.\n"
+    );
+    skills = allSkills;
   }
 
   const context = { cliVersion: version, packages: project.packages, framework: project.framework };

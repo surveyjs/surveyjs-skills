@@ -121,9 +121,33 @@ describe("detect/project", () => {
     assert.deepEqual(Object.keys(detectProject(root).packages), ["survey-core"]);
   });
 
-  it("keeps the loose survey- prefix rule for packages declared in package.json", () => {
+  it("does not treat survey-cli itself as a SurveyJS product", () => {
+    const root = makeTempProject({
+      "package.json": JSON.stringify({ name: "p", devDependencies: { "survey-cli": "^0.1.0" } }),
+      "node_modules/survey-cli/package.json": JSON.stringify({ version: "0.1.0" })
+    });
+    assert.deepEqual(detectProject(root).packages, {});
+  });
+
+  it("does not claim unrelated survey- packages", () => {
     const root = makeTempProject({ "package.json": pkg({ "survey-monkey-importer": "1.0.0" }) });
-    assert.deepEqual(Object.keys(detectProject(root).packages), ["survey-monkey-importer"]);
+    assert.deepEqual(detectProject(root).packages, {});
+  });
+
+  it("detects v1-era packages without any skill claiming to describe them", () => {
+    const root = makeTempProject({
+      "package.json": pkg({ "survey-jquery": "1.9.0" }),
+      "node_modules/survey-jquery/package.json": JSON.stringify({ version: "1.9.0" })
+    });
+    const project = detectProject(root);
+
+    // Reported accurately, because it is installed...
+    assert.deepEqual(versions(project.packages), { "survey-jquery": "1.9.0" });
+    assert.equal(project.framework, "jquery");
+
+    // ...but no skill claims it: the skills describe v3, and survey-jquery is not v3. The
+    // full set is written by the caller's fallback rather than pretending one skill fits.
+    assert.deepEqual(selectSkills(loadSkills(SKILLS_ROOT), project), []);
   });
 
   it("reads a bun.lock text lockfile", () => {

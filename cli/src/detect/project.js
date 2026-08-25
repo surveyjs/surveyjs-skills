@@ -32,12 +32,26 @@ export const KNOWN_PACKAGES = [
   "ai-form-response-extractor"
 ];
 
+/**
+ * Never a SurveyJS product, whatever it is called. `survey-cli` is this package: a project
+ * that installs it as a devDependency must not be told it has a SurveyJS product called
+ * survey-cli, and — before KNOWN_PACKAGES became the only rule — a project whose sole
+ * `survey-` dependency was the CLI matched no skill at all and got nothing written.
+ */
+const EXCLUDED_PACKAGES = new Set(["survey-cli"]);
+
 const LOCKFILES = ["package-lock.json", "npm-shrinkwrap.json", "pnpm-lock.yaml", "yarn.lock", "bun.lock", "bun.lockb"];
 
 export const FRAMEWORKS = ["react", "angular", "vue3", "jquery", "vanilla"];
 
+/**
+ * Membership in KNOWN_PACKAGES is the whole rule. A `survey-` prefix match was tempting as a
+ * way to catch products added after this CLI shipped, but it also catches tooling and
+ * unrelated packages, and a false positive here ends up asserted in every written skill.
+ * An unknown SurveyJS package simply leaves `packages` empty, which writes the full skill set.
+ */
 export function isSurveyPackage(name) {
-  return KNOWN_PACKAGES.includes(name) || /^survey-/.test(name);
+  return !EXCLUDED_PACKAGES.has(name) && KNOWN_PACKAGES.includes(name);
 }
 
 /**

@@ -6,5 +6,7 @@
     "survey-creator-vue",
     "survey-creator-js"
   ],
-  "frameworks": ["*"]
+  "frameworks": [
+    "*"
+  ]
 }

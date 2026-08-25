@@ -1,4 +1,8 @@
 {
-  "packages": ["survey-pdf"],
-  "frameworks": ["*"]
+  "packages": [
+    "survey-pdf"
+  ],
+  "frameworks": [
+    "*"
+  ]
 }
