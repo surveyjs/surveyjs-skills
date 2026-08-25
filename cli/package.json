@@ -11,6 +11,8 @@
     "claude-code",
     "cursor",
     "copilot",
+    "codex",
+    "openai-codex",
     "agents-md"
   ],
   "homepage": "https://github.com/surveyjs/surveyjs-skills/tree/main/cli",
