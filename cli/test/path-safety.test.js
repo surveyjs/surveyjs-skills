@@ -32,6 +32,13 @@ function sandbox(manifest) {
   return { box, root };
 }
 
+/**
+ * Paths a manifest must never be able to act on, on any platform.
+ *
+ * `..\sibling.txt` and `C:/Windows/system.ini` are the interesting pair: each escapes on
+ * Windows and is a merely odd filename on POSIX. resolveInside refuses both everywhere so
+ * one manifest cannot mean two things on two machines — asserting that here is the point.
+ */
 const ESCAPES = [
   "../sibling.txt",
   "../../sibling.txt",
@@ -39,6 +46,7 @@ const ESCAPES = [
   "/etc/passwd",
   "C:/Windows/system.ini",
   "..\\sibling.txt",
+  "nested\\..\\..\\sibling.txt",
   "..",
   ""
 ];

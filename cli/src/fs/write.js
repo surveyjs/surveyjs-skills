@@ -28,6 +28,12 @@ export function isInside(root, absolute) {
  */
 export function resolveInside(root, rel) {
   if (typeof rel !== "string" || rel.trim() === "") return null;
+  // Recorded paths are always posix. A backslash is therefore never something this CLI
+  // wrote, and its meaning is platform-dependent: `..\x` escapes the root on Windows but is
+  // an ordinary filename on Linux. Rejecting it everywhere keeps one manifest from behaving
+  // differently on two machines, and costs nothing, since no legitimate entry contains one.
+  if (rel.includes("\\")) return null;
+  // A Windows drive letter is not absolute on POSIX, so isAbsolute alone would let it past.
   if (isAbsolute(rel) || /^[A-Za-z]:/.test(rel)) return null;
   const absolute = resolve(root, fromPosix(rel));
   if (absolute === resolve(root)) return null;

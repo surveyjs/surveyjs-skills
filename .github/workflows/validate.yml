@@ -23,7 +23,13 @@ jobs:
         run: node scripts/validate-repo.mjs
 
   cli:
-    runs-on: ubuntu-latest
+    # Both platforms, because survey-cli is mostly path handling and the two disagree:
+    # a backslash separates directories on Windows and is a legal filename character on Linux.
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
     defaults:
       run:
         working-directory: cli
