@@ -1,0 +1,8 @@
+{
+  "name": "fixture-pdf-only",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {
+    "survey-pdf": "^3.0.1"
+  }
+}

@@ -14,6 +14,9 @@ in `references/` and link it from the skill's `SKILL.md`.
 - Do not include credentials, private URLs, destructive commands, placeholders, or generated
   output that has not been reviewed.
 - Link every Markdown file under a skill's `references/` directory from `SKILL.md`.
+- Add a `skill.meta.json` beside `SKILL.md` declaring the npm `packages` and UI `frameworks`
+  the skill applies to. `survey-cli` uses it to decide which skills a project needs; `["*"]`
+  means "applies to all".
 
 ## Validation
 
@@ -22,6 +25,7 @@ Run the structural checks before opening a pull request:
 ```
 node scripts/validate-repo.mjs
 node scripts/check-upstream-docs.mjs
+cd cli && node --test
 ```
 
 If the upstream checker reports drift, review the changed source pages and update affected skill

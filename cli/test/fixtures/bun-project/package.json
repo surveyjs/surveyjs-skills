@@ -1,0 +1,9 @@
+{
+  "name": "fixture-bun-project",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {
+    "survey-core": "^3.0.1",
+    "survey-js-ui": "^3.0.1"
+  }
+}

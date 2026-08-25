@@ -1,0 +1,16 @@
+{
+  "lockfileVersion": 1,
+  "workspaces": {
+    "": {
+      "name": "fixture-bun-project",
+      "dependencies": {
+        "survey-core": "^3.0.1",
+        "survey-js-ui": "^3.0.1",
+      },
+    },
+  },
+  "packages": {
+    "survey-core": ["survey-core@3.0.1", "", {}, "sha512-aaaaaaaaaaaaaaaaaaaaaaaa=="],
+    "survey-js-ui": ["survey-js-ui@3.0.1", "", { "peerDependencies": { "survey-core": "3.0.1" } }, "sha512-bbbbbbbbbbbbbbbbbbbbbbbb=="],
+  }
+}

@@ -1,1 +1,5 @@
 prompts/
+cli/skills/
+/node_modules/
+/cli/node_modules/
+*.tgz
