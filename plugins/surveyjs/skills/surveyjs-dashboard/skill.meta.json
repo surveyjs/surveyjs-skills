@@ -1,0 +1,4 @@
+{
+  "packages": ["survey-analytics"],
+  "frameworks": ["*"]
+}

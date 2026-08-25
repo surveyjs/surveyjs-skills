@@ -1,0 +1,45 @@
+{
+  "name": "survey-cli",
+  "version": "0.1.0",
+  "description": "Install the SurveyJS agent skills into the AI coding clients your project already uses.",
+  "keywords": [
+    "surveyjs",
+    "survey",
+    "form",
+    "agent-skills",
+    "skills",
+    "claude-code",
+    "cursor",
+    "copilot",
+    "agents-md"
+  ],
+  "homepage": "https://github.com/surveyjs/surveyjs-skills/tree/main/cli",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/surveyjs/surveyjs-skills.git",
+    "directory": "cli"
+  },
+  "bugs": "https://github.com/surveyjs/surveyjs-skills/issues",
+  "license": "MIT",
+  "author": {
+    "name": "Devsoft Baltic OÜ",
+    "url": "https://surveyjs.io"
+  },
+  "type": "module",
+  "bin": {
+    "survey-cli": "./bin/survey-cli.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "skills",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "prepack": "node scripts/prepack-skills.js",
+    "test": "node --test"
+  }
+}

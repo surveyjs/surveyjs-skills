@@ -1,0 +1,141 @@
+{
+  "detected": {
+    "packages": {
+      "survey-angular-ui": {
+        "version": "3.0.1",
+        "range": "^3.0.1",
+        "source": "lockfile"
+      },
+      "survey-core": {
+        "version": "3.0.1",
+        "range": "^3.0.1",
+        "source": "lockfile"
+      },
+      "survey-creator-angular": {
+        "version": "3.0.1",
+        "range": "^3.0.1",
+        "source": "lockfile"
+      },
+      "survey-creator-core": {
+        "version": "3.0.1",
+        "range": "^3.0.1",
+        "source": "lockfile"
+      }
+    },
+    "framework": "angular",
+    "lockfile": "pnpm-lock.yaml",
+    "clients": [
+      "copilot"
+    ]
+  },
+  "clients": [
+    "copilot"
+  ],
+  "skills": [
+    "surveyjs-brand-styling",
+    "surveyjs-creator-customization",
+    "surveyjs-form-json",
+    "surveyjs-integration"
+  ],
+  "written": [
+    ".github/copilot-instructions.md",
+    ".github/skills/surveyjs-brand-styling/SKILL.md",
+    ".github/skills/surveyjs-brand-styling/references/brandbook-intake.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/_shared.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/boolean.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/buttongroup.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/checkbox.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/comment.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/display-content.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/dropdown.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/file.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/imagepicker.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/matrix.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/matrixdropdown.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/matrixdynamic.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/multipletext.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/paneldynamic.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/radiogroup.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/ranking.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/rating.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/signaturepad.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/slider.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/tagbox.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/text.md",
+    ".github/skills/surveyjs-brand-styling/references/custom-css.md",
+    ".github/skills/surveyjs-brand-styling/references/design-tokens.md",
+    ".github/skills/surveyjs-brand-styling/references/predefined-themes.md",
+    ".github/skills/surveyjs-brand-styling/references/question-controls-map.md",
+    ".github/skills/surveyjs-brand-styling/references/theme-adapters.md",
+    ".github/skills/surveyjs-brand-styling/references/theming.md",
+    ".github/skills/surveyjs-creator-customization/SKILL.md",
+    ".github/skills/surveyjs-creator-customization/references/customization.md",
+    ".github/skills/surveyjs-creator-customization/references/renamed-api.md",
+    ".github/skills/surveyjs-creator-customization/references/setup.md",
+    ".github/skills/surveyjs-creator-customization/references/theming.md",
+    ".github/skills/surveyjs-creator-customization/references/ui-presets.md",
+    ".github/skills/surveyjs-form-json/SKILL.md",
+    ".github/skills/surveyjs-integration/SKILL.md",
+    ".github/skills/surveyjs-integration/references/angular.md",
+    ".github/skills/surveyjs-integration/references/data-and-events.md",
+    ".github/skills/surveyjs-integration/references/react.md",
+    ".github/skills/surveyjs-integration/references/theming.md",
+    ".github/skills/surveyjs-integration/references/troubleshooting.md",
+    ".github/skills/surveyjs-integration/references/vanilla-js.md",
+    ".github/skills/surveyjs-integration/references/vue.md",
+    ".surveyjs-skills.json"
+  ],
+  "tree": [
+    ".github/copilot-instructions.md",
+    ".github/skills/surveyjs-brand-styling/SKILL.md",
+    ".github/skills/surveyjs-brand-styling/references/brandbook-intake.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/_shared.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/boolean.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/buttongroup.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/checkbox.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/comment.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/display-content.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/dropdown.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/file.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/imagepicker.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/matrix.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/matrixdropdown.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/matrixdynamic.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/multipletext.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/paneldynamic.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/radiogroup.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/ranking.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/rating.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/signaturepad.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/slider.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/tagbox.md",
+    ".github/skills/surveyjs-brand-styling/references/controls/text.md",
+    ".github/skills/surveyjs-brand-styling/references/custom-css.md",
+    ".github/skills/surveyjs-brand-styling/references/design-tokens.md",
+    ".github/skills/surveyjs-brand-styling/references/predefined-themes.md",
+    ".github/skills/surveyjs-brand-styling/references/question-controls-map.md",
+    ".github/skills/surveyjs-brand-styling/references/theme-adapters.md",
+    ".github/skills/surveyjs-brand-styling/references/theming.md",
+    ".github/skills/surveyjs-creator-customization/SKILL.md",
+    ".github/skills/surveyjs-creator-customization/references/customization.md",
+    ".github/skills/surveyjs-creator-customization/references/renamed-api.md",
+    ".github/skills/surveyjs-creator-customization/references/setup.md",
+    ".github/skills/surveyjs-creator-customization/references/theming.md",
+    ".github/skills/surveyjs-creator-customization/references/ui-presets.md",
+    ".github/skills/surveyjs-form-json/SKILL.md",
+    ".github/skills/surveyjs-integration/SKILL.md",
+    ".github/skills/surveyjs-integration/references/angular.md",
+    ".github/skills/surveyjs-integration/references/data-and-events.md",
+    ".github/skills/surveyjs-integration/references/react.md",
+    ".github/skills/surveyjs-integration/references/theming.md",
+    ".github/skills/surveyjs-integration/references/troubleshooting.md",
+    ".github/skills/surveyjs-integration/references/vanilla-js.md",
+    ".github/skills/surveyjs-integration/references/vue.md",
+    ".surveyjs-skills.json",
+    "package.json",
+    "pnpm-lock.yaml"
+  ],
+  "blocks": {
+    ".github/copilot-instructions.md": "# Repository instructions\n\nThis project is an Angular workspace. Use standalone components and signals.\nRun `pnpm test` before proposing a change.\n\n<!-- surveyjs:start -->\n## SurveyJS\n\nInstalled in this project: `survey-angular-ui@3.0.1`, `survey-core@3.0.1`, `survey-creator-angular@3.0.1`, `survey-creator-core@3.0.1`. UI framework: **angular**.\n\nThe SurveyJS agent skills are installed in `.github/skills`. Read the skill that matches the task before writing or changing SurveyJS code — they carry the current v3 API and the mistakes to check generated code against:\n\n- [`surveyjs-brand-styling`](skills/surveyjs-brand-styling/SKILL.md) — Style a SurveyJS application so it matches a custom app design, design system, or brandbook\n- [`surveyjs-creator-customization`](skills/surveyjs-creator-customization/SKILL.md) — Embed and customize SurveyJS Survey Creator (the drag-and-drop form builder) in React, Angular, Vue, or vanilla JS\n- [`surveyjs-form-json`](skills/surveyjs-form-json/SKILL.md) — Author, edit, or debug SurveyJS survey/form JSON\n- [`surveyjs-integration`](skills/surveyjs-integration/SKILL.md) — Integrate the SurveyJS Form Library into React, Next.js, Angular, Vue, vanilla JS, or jQuery apps\n\nEverything between the `surveyjs:start` and `surveyjs:end` markers is regenerated by `survey-cli 0.1.0` (`npx survey-cli@latest init-agents`). Put your own notes outside the markers.\n<!-- surveyjs:end -->\n"
+  }
+}

@@ -1,0 +1,4 @@
+{
+  "packages": ["ai-form-response-extractor"],
+  "frameworks": ["*"]
+}

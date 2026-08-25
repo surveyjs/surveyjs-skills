@@ -1,0 +1,10 @@
+{
+  "name": "fixture-ranges-no-lockfile",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {
+    "survey-core": "^3.0.1",
+    "survey-pdf": "3.0.1",
+    "survey-vue3-ui": "^3.0.1"
+  }
+}

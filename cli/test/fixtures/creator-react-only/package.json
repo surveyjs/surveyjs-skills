@@ -1,0 +1,10 @@
+{
+  "name": "fixture-creator-react-only",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "survey-creator-react": "^3.0.1"
+  }
+}

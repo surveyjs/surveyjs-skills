@@ -21,3 +21,21 @@ jobs:
 
       - name: Validate manifests, skills, links, and snapshots
         run: node scripts/validate-repo.mjs
+
+  cli:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cli
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Test survey-cli
+        run: node --test
+
+      - name: Check the published tarball
+        run: npm pack --dry-run

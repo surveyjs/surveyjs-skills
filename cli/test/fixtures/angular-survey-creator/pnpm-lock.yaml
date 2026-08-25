@@ -1,0 +1,25 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      '@angular/core':
+        specifier: ^22.1.3
+        version: 22.1.3
+      survey-angular-ui:
+        specifier: ^3.0.1
+        version: 3.0.1
+      survey-core:
+        specifier: ^3.0.1
+        version: 3.0.1
+      survey-creator-angular:
+        specifier: ^3.0.1
+        version: 3.0.1
+      survey-creator-core:
+        specifier: ^3.0.1
+        version: 3.0.1

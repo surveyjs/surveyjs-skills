@@ -1,0 +1,10 @@
+{
+  "packages": [
+    "survey-creator-core",
+    "survey-creator-react",
+    "survey-creator-angular",
+    "survey-creator-vue",
+    "survey-creator-js"
+  ],
+  "frameworks": ["*"]
+}

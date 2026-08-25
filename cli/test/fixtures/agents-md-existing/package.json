@@ -1,0 +1,10 @@
+{
+  "name": "fixture-agents-md-existing",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {
+    "survey-analytics": "^3.0.1",
+    "survey-core": "^3.0.1",
+    "survey-js-ui": "^3.0.1"
+  }
+}
