@@ -86,7 +86,7 @@ describe("installed from the tarball", { timeout: 180_000 }, () => {
     const packedSkills = join(root, "node_modules", "survey-cli", "skills");
     assert.ok(existsSync(join(packedSkills, "surveyjs-form-json", "SKILL.md")), "prepack did not ship the skills");
     assert.ok(existsSync(join(packedSkills, "surveyjs-form-json", "skill.meta.json")), "skill.meta.json was not packed");
-    assert.equal(readdirSync(packedSkills).length, 7);
+    assert.equal(readdirSync(packedSkills).length, 8);
 
     const result = run(root, ["init-agents", "--yes", "--client=claude"]);
     assert.equal(result.code, 0, result.stderr);
@@ -117,7 +117,7 @@ describe("installed from the tarball", { timeout: 180_000 }, () => {
     assert.equal(result.code, 0, `a first run before installing SurveyJS failed: ${result.stderr}`);
     assert.match(result.stdout, /none detected — writing the full skill set/);
     const manifest = JSON.parse(readFileSync(join(root, ".surveyjs-skills.json"), "utf8"));
-    assert.equal(manifest.skills.length, 7);
+    assert.equal(manifest.skills.length, 8);
     assert.deepEqual(manifest.packages, {});
   });
 

@@ -17,6 +17,8 @@ from it.
 Not this skill:
 
 - Installing and rendering the library → `surveyjs-integration`
+- Statically checking finished JSON for broken references, dead conditions, and cycles →
+  `surveyjs-linter` (`survey-core/linter`)
 - Embedding the drag-and-drop builder → `surveyjs-creator-customization`
 - Themes, colors, fonts, spacing → theming. A **theme JSON is not survey JSON**: it is a
   separate object of `cssVariables` passed to `survey.applyTheme()`, and it never belongs
