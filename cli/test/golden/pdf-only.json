@@ -22,6 +22,7 @@
   ],
   "written": [
     ".agents/skills/surveyjs-form-json/SKILL.md",
+    ".agents/skills/surveyjs-form-json/references/built-in-other-choice.md",
     ".agents/skills/surveyjs-pdf-generator/SKILL.md",
     ".agents/skills/surveyjs-pdf-generator/references/appearance.md",
     ".agents/skills/surveyjs-pdf-generator/references/existing-pdf-forms.md",
@@ -32,6 +33,7 @@
   ],
   "tree": [
     ".agents/skills/surveyjs-form-json/SKILL.md",
+    ".agents/skills/surveyjs-form-json/references/built-in-other-choice.md",
     ".agents/skills/surveyjs-pdf-generator/SKILL.md",
     ".agents/skills/surveyjs-pdf-generator/references/appearance.md",
     ".agents/skills/surveyjs-pdf-generator/references/existing-pdf-forms.md",
