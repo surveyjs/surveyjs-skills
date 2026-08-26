@@ -163,6 +163,9 @@ Take the shape of the solution from there, then still check every property name 
 installed guide and validate as in Step 4: the articles are community-maintained and not
 pinned to this project's version.
 
+For the built-in **Other** choice, read [references/built-in-other-choice.md](references/built-in-other-choice.md). It covers
+the correct JSON, result shape, and when to use `storeOthersAsComment`.
+
 ## Before you finish
 
 - [ ] The guide and schema you used came from the installed version, stamp checked
