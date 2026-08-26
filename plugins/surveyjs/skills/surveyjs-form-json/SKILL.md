@@ -62,13 +62,30 @@ The package declares an `exports` map that does not list these files, so
 both fail. That blocks the module resolver only — reading the paths off disk works normally,
 which is what you want here anyway.
 
-If the package is not installed, or the guide is missing from it, fetch the same files pinned
-to the version in `package.json`:
+If the package is not installed, or the guide is missing from it, fetch the same files from the
+CDN — **always pinned to an exact version**, never to a floating tag:
 
 ```
-https://unpkg.com/survey-core@<version>/llms/survey-json-authoring.md
-https://unpkg.com/survey-core@<version>/surveyjs_definition.json
+https://cdn.jsdelivr.net/npm/survey-core@<version>/llms/survey-json-authoring.md
+https://cdn.jsdelivr.net/npm/survey-core@<version>/surveyjs_definition.json
 ```
+
+Take the version from `package.json`. When there is no `survey-core` to pin to, resolve the
+latest version first and substitute it — do not fetch `survey-core@latest`:
+
+```bash
+curl -s https://registry.npmjs.org/survey-core/latest    # -> {"version":"X.Y.Z", ...}
+```
+
+A floating tag is cached by the CDN as an alias (`s-maxage=43200`), so for up to half a day after
+a release it still serves the **previous** version. The guide would at least admit it, on its
+line-3 stamp; `surveyjs_definition.json` carries no version anywhere, so a stale schema is
+indistinguishable from a current one. Resolving first also gives you the version number this
+skill requires you to report.
+
+`unpkg.com/survey-core@<version>/...` serves byte-identical files if jsDelivr is unreachable.
+`app.unpkg.com` does **not**: it is the file-browser UI, and returns an HTML page with the
+content escaped inside it rather than the raw file.
 
 ## Step 2 — check the version stamp before trusting the guide
 
@@ -81,7 +98,7 @@ mismatched copy sends you to validate against a different release.
 | Both files present, stamp matches | Use both. Normal case. |
 | Stamp disagrees with the installed version | Distrust the local guide — it is stale build output. Fetch the pinned URL instead. |
 | Guide missing (predates its release) | Fetch the pinned URL. On 404, use the latest guide for shape and idiom, but validate against the **local** `surveyjs_definition.json`, which is version-exact. |
-| No `survey-core` in the project | Use the unpinned latest, and tell the user which version you assumed. |
+| No `survey-core` in the project | Resolve the latest version, fetch it pinned, and tell the user which version you assumed. |
 
 The schema is the authority on *what exists*; the guide is the teaching text explaining *how
 to use it*. When they disagree, the local schema wins.
