@@ -21,6 +21,10 @@ literal value and does not display the accompanying input.
 - Use `otherPlaceholder` to label the input. Omit either text property when its default is
   acceptable.
 
+The Other input is required automatically: selecting Other and leaving the input empty raises
+a built-in validation error. Use `otherErrorText` on the question only to replace the default
+error message — no validator is needed to make the typed answer required.
+
 ## Result data
 
 By default, SurveyJS records the special value and typed answer separately. With the example
@@ -33,11 +37,29 @@ above, entering `Rust` produces:
 }
 ```
 
-The suffix is configured by the survey's `commentSuffix` setting. Keep this default result
-shape when the application needs to distinguish a listed choice from a custom answer.
+The `-Comment` suffix is fixed from the JSON's point of view: it comes from the code-level
+`settings.commentSuffix` and cannot be changed in survey JSON, so never emit a `commentSuffix`
+property. Keep this default result shape when the application needs to distinguish a listed
+choice from a custom answer.
 
-Set the survey-level `storeOthersAsComment` property to `false` only when the application needs
-the typed answer at the question's key instead:
+In multi-select questions (`checkbox`, `tagbox`) the question value is an array that contains
+the special value:
+
+```json
+{
+  "language": ["JavaScript", "other"],
+  "language-Comment": "Rust"
+}
+```
+
+The typed answer is available to expressions as `{language-Comment}` — use that key in
+`visibleIf`, `enableIf`, `setValueExpression`, and similar properties when logic depends on
+the custom answer.
+
+Set the `storeOthersAsComment` property to `false` only when the application needs
+the typed answer at the question's key instead. It exists at two levels: on the survey (applies
+to every question) and on an individual question (`true`, `false`, or `"default"`, which
+inherits the survey setting):
 
 ```json
 {
@@ -54,7 +76,16 @@ the typed answer at the question's key instead:
 ```
 
 That configuration produces `{ "language": "Rust" }` for an Other response. It no longer
-preserves whether the value came from the built-in list or a respondent-entered answer.
+preserves whether the value came from the built-in list or a respondent-entered answer. Note
+also that if the typed text equals an existing choice's value, SurveyJS converts the answer
+into that regular choice and clears the Other state.
+
+Two more caveats:
+
+- A question with `showCommentArea: true` always behaves as if `storeOthersAsComment` were
+  `false`, regardless of the setting: the `-Comment` key is occupied by the comment, so the
+  typed Other answer goes to the question's key.
+- To limit the length of the typed answer, use the survey-level `maxCommentLength` property.
 
 `showOtherItem` is a special-choice property on choice-based questions. Confirm that the target
 question type supports it in the version-matched authoring guide and schema before emitting it.
