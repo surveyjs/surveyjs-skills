@@ -145,6 +145,19 @@ Guard the template so it does not render before the model exists:
 <survey *ngIf="surveyModel" [model]="surveyModel"></survey>
 ```
 
+## SSR (Angular Universal / `@angular/ssr`)
+
+Form Library v3 renders on the server, so no `isPlatformBrowser` guard is needed around
+`<survey>`. Two rules keep hydration stable:
+
+- Build the model from a schema that is identical on the server and the client. With
+  `HttpClient` that means `TransferState` (`provideClientHydration(withHttpTransferCacheOptions(...))`),
+  so the client reuses the server's response instead of refetching a different one.
+- Do not read `window`, `document`, or `localStorage` in the constructor or `ngOnInit`; move
+  that into `ngAfterViewInit` or an event handler.
+
+**On v2 and earlier** the library is browser-only: keep the render behind `isPlatformBrowser`.
+
 ## More
 
 Framework-specific source for any demo:

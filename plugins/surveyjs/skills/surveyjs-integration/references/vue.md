@@ -103,17 +103,29 @@ onMounted(async () => {
 
 ## Nuxt
 
-The library is browser-only. Render it client-side:
+Form Library v3 supports server-side rendering, so render `SurveyComponent` normally — no
+`<ClientOnly>` wrapper needed:
 
 ```vue
 <template>
-  <ClientOnly>
-    <SurveyComponent :model="survey" />
-  </ClientOnly>
+  <SurveyComponent :model="survey" />
 </template>
 ```
 
-Or name the component file `Survey.client.vue`.
+Build the model synchronously from a schema that is identical on the server and the client, or
+the hydration will mismatch. If the schema is fetched, use `useAsyncData` (which transfers the
+payload to the client) rather than `onMounted` + `fetch`:
+
+```ts
+const { data: json } = await useAsyncData("survey", () => $fetch(`/api/forms/${formId}`));
+const survey = new Model(json.value);
+```
+
+Do not touch `window`, `document`, or `localStorage` while constructing the model; move that
+into `onMounted` or an event handler.
+
+**On v2 and earlier** the library is browser-only: keep the `<ClientOnly>` wrapper, or name the
+component file `Survey.client.vue`.
 
 ## More
 

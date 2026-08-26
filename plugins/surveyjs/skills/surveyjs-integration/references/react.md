@@ -104,23 +104,54 @@ Mark the component that imports and renders `<Survey>` as client code. This is s
 for interactivity; it does not prevent Next.js from pre-rendering the component on the server.
 
 ```tsx
+// components/Survey.tsx
 "use client";
+
+import { useMemo } from "react";
+import { Model } from "survey-core";
+import { Survey } from "survey-react-ui";
+
+export default function SurveyComponent({ schema }: { schema: object }) {
+  const survey = useMemo(() => new Model(schema), [schema]);
+  return <Survey model={survey} />;
+}
 ```
 
-Keep the page itself as a Server Component when it only loads the schema and passes it to the
+Keep the page itself a Server Component when it only loads the schema and passes it to the
 client component:
 
 ```tsx
 // app/survey/page.tsx
 import SurveyComponent from "@/components/Survey";
+import surveyJson from "@/surveys/feedback.json";
 
 export default function SurveyPage() {
   return <SurveyComponent schema={surveyJson} />;
 }
 ```
 
-Import `survey-core/survey-core.css` exactly once, preferably in `app/layout.tsx`. The schema
-and initial model state must be deterministic so the server render and client hydration match.
+Props crossing the server/client boundary must be JSON-serializable. Pass the **schema**, not
+a `Model` instance — constructing the model on the server and handing it to a client component
+throws a serialization error.
+
+Import `survey-core/survey-core.css` exactly once. In the App Router put it in
+`app/layout.tsx` rather than in the component, so several survey routes share one import. The
+schema and initial model state must be deterministic so the server render and client hydration
+match.
+
+Rendering two surveys on one page? Set a distinct `elementIdPrefix` on each model. Element ids
+are deterministic per survey, so two models produce the same ids and collide in the SSR HTML:
+
+```tsx
+const survey = useMemo(() => {
+  const model = new Model(schema);
+  model.elementIdPrefix = instanceId;   // e.g. "left_" / "right_"
+  return model;
+}, [schema, instanceId]);
+```
+
+**On v2 and earlier** the Form Library is browser-only. Keep the old workaround there:
+`dynamic(() => import("@/components/Survey"), { ssr: false })`.
 
 ## TypeScript
 
