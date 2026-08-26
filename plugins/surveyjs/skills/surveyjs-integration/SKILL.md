@@ -82,7 +82,7 @@ This is the single most common integration bug; each framework file shows the co
 
 | Task | Read |
 | :-- | :-- |
-| React or Next.js setup, SSR/hydration | `references/react.md` |
+| React or Next.js setup, SSR/hydration | `references/react.md` (Form Library v3 supports SSR) |
 | Angular setup, modules vs standalone | `references/angular.md` |
 | Vue 3 setup, plugin vs direct import | `references/vue.md` |
 | Plain HTML page, CDN, or jQuery | `references/vanilla-js.md` |

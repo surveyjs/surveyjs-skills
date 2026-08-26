@@ -49,12 +49,17 @@ An inline arrow function is a new reference each render and will always duplicat
 
 ## `document is not defined` at build time, or a hydration mismatch
 
-The Form Library is browser-only.
+Form Library v3 supports SSR. This error usually comes from application code or another
+browser-only dependency, rather than from rendering a standard SurveyJS form.
 
-- **Next.js:** mark the component `"use client"` *and* import it with
-  `dynamic(() => import("..."), { ssr: false })`. The directive alone is not enough.
-- **Nuxt:** wrap in `<ClientOnly>` or name the file `*.client.vue`.
-- **Angular Universal:** guard the render behind `isPlatformBrowser`.
+- **Next.js:** mark the component that renders `<Survey>` with `"use client"`. Do not read
+  `window`, `document`, `localStorage`, or other browser APIs while constructing the model;
+  perform that work in an effect or event handler. Ensure the schema and initial data are the
+  same on the server and client.
+- **Custom questions or third-party widgets:** make their server rendering safe, or defer only
+  that browser-dependent code until after mount.
+- **Hydration mismatch:** avoid non-deterministic initial values such as `Date.now()`, random
+  IDs, locale-dependent formatting, or data that differs between the server and client.
 
 ## Two surveys appear
 

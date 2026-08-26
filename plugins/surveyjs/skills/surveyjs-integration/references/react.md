@@ -97,27 +97,30 @@ stable id: `useMemo(() => new Model(schema), [schemaId])`.
 
 ## Next.js
 
-The Form Library is browser-only — it touches `document` during render. Two steps:
+SurveyJS Form Library v3 supports server-side rendering. In the App Router, render the form
+normally so it is included in the initial HTML and hydrated for interaction.
 
-**1. Mark the component as client-side.**
+Mark the component that imports and renders `<Survey>` as client code. This is still required
+for interactivity; it does not prevent Next.js from pre-rendering the component on the server.
 
 ```tsx
 "use client";
 ```
 
-**2. Disable SSR at the import site** so the server never tries to render it. Without this you
-get a hydration mismatch or a `document is not defined` build error.
+Keep the page itself as a Server Component when it only loads the schema and passes it to the
+client component:
 
 ```tsx
-import dynamic from "next/dynamic";
+// app/survey/page.tsx
+import SurveyComponent from "@/components/Survey";
 
-const SurveyComponent = dynamic(() => import("@/components/Survey"), {
-  ssr: false
-});
+export default function SurveyPage() {
+  return <SurveyComponent schema={surveyJson} />;
+}
 ```
 
-The CSS import can stay in the component, or move to `app/layout.tsx` if several routes render
-surveys.
+Import `survey-core/survey-core.css` exactly once, preferably in `app/layout.tsx`. The schema
+and initial model state must be deterministic so the server render and client hydration match.
 
 ## TypeScript
 
