@@ -59,6 +59,7 @@ const brandTheme = {
   themeName: "acme",
   colorPalette: "light",
   isPanelless: false,
+  headerView: "advanced",
   cssVariables: {
     "--sjs2-color-project-brand-600": "#085DE5",       // hover/tints/fg derive
     "--sjs2-color-utility-body": "#FAFAFA",
@@ -70,7 +71,7 @@ const brandTheme = {
   }
 };
 
-const survey = new Model(surveyJson);
+const survey = new Model(surveyJson);           // survey JSON omits headerView
 survey.applyTheme(brandTheme, DefaultLight);   // layer brand over the base theme
 ```
 

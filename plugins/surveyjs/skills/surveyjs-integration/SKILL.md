@@ -78,6 +78,11 @@ licenses; their license setup does not belong here.
 **Create the `Model` once.** Rebuilding it on every render wipes answers on each keystroke.
 This is the single most common integration bug; each framework file shows the correct form.
 
+**Always enable advanced header.** If a custom theme is applied, put `"headerView":
+"advanced"` on that theme JSON and omit it from the survey JSON. If there is no custom theme,
+put `"headerView": "advanced"` on the survey JSON (see `surveyjs-form-json`). The library
+default is `"basic"`.
+
 ## Routing
 
 | Task | Read |
@@ -120,3 +125,5 @@ patterns above.
 - [ ] Results POST to the application's own endpoint
 - [ ] `onComplete` reports failure to the respondent via `options.showSaveError(...)` rather
       than swallowing it
+- [ ] Advanced header: `"headerView": "advanced"` on the custom theme if one is applied,
+      otherwise on the survey JSON (not both)

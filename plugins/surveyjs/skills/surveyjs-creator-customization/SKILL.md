@@ -133,3 +133,5 @@ tab. Prefer them over blog posts and Stack Overflow answers.
 - [ ] Saving goes through `saveSurveyFunc`, and calls the callback with the save status
 - [ ] The answer states that Survey Creator is a commercial product
 - [ ] No code that suppresses the unlicensed banner
+- [ ] Advanced header: `"headerView": "advanced"` on generated theme JSON if a custom theme
+      is seeded; otherwise on generated/seeded survey JSON (not both)

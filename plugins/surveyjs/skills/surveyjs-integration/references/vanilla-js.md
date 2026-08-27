@@ -21,6 +21,7 @@ Both scripts are required, in that order — `survey-js-ui` depends on the globa
 
 ```js
 const surveyJson = {
+  headerView: "advanced",
   elements: [
     { name: "FirstName", title: "Enter your first name:", type: "text" },
     { name: "LastName", title: "Enter your last name:", type: "text" }

@@ -23,6 +23,7 @@ import { SurveyComponent } from "survey-vue3-ui";
 import "survey-core/survey-core.css";
 
 const surveyJson = {
+  headerView: "advanced",
   elements: [
     { name: "FirstName", title: "Enter your first name:", type: "text" },
     { name: "LastName", title: "Enter your last name:", type: "text" }

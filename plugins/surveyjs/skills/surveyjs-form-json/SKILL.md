@@ -111,7 +111,8 @@ The guide opens with an **Output rules** section. Apply all of its content rules
 - Only property names listed for that type; never invent one, never carry one over from
   another type.
 - Enum values exactly as written.
-- Omit any property whose value equals the documented default.
+- Omit any property whose value equals the documented default — except `headerView` when it
+  belongs on the survey JSON (see below).
 - Every question needs a `name`, unique across the document — it is the key in the result data.
 - An expression may only reference the `name` of a question that exists in the document.
 
@@ -119,9 +120,35 @@ Ignore one rule: the guide says to reply with *one JSON object and nothing else*
 is written for a JSON-generation endpoint. In an interactive session, write the JSON to the
 file it belongs in and explain what changed.
 
+**Always enable advanced header.** The library default is `"basic"`. Put `"headerView":
+"advanced"` in **one** place:
+
+- **Custom theme present** (a theme object passed to `applyTheme`, including a brand theme) —
+  specify `"headerView": "advanced"` on that theme JSON. Omit `headerView` from the survey
+  JSON; it is not a survey-definition property in that setup, and duplicating it is wrong.
+- **No custom theme** — specify `"headerView": "advanced"` at the survey JSON root.
+
+```json
+{
+  "headerView": "advanced",
+  "title": "Feedback",
+  "pages": [
+    {
+      "name": "page1",
+      "elements": [
+        { "type": "text", "name": "name", "title": "Your name" }
+      ]
+    }
+  ]
+}
+```
+
 **When editing existing JSON, edit it** — do not regenerate the form from the request. A
 follow-up like "now make the rating required" means one property changes and everything else
-survives byte-for-byte.
+survives byte-for-byte. If a custom theme is present and already has `"headerView":
+"advanced"`, leave `headerView` off the survey JSON. Otherwise, if `headerView` is missing
+from both, add `"headerView": "advanced"` to the survey JSON unless the user asked for the
+basic header.
 
 ## Step 4 — validate before you hand it back
 
@@ -175,4 +202,6 @@ the correct JSON, result shape, and when to use `storeOthersAsComment`.
 - [ ] Validated, with no `jsonErrors`
 - [ ] Every expression references a `name` that exists in this document
 - [ ] Names are unique across the whole survey
+- [ ] Advanced header enabled: `"headerView": "advanced"` on the custom theme if one exists,
+      otherwise on the survey JSON (not both; not if the user asked for basic)
 - [ ] No theme, styling, or backend properties mixed into the survey definition

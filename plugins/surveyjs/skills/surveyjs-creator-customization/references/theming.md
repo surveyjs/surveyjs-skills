@@ -76,7 +76,8 @@ The theme applied to the form itself is `creator.theme`, and it is the same kind
 When `autoSaveEnabled` is on, theme changes are persisted through `saveThemeFunc`, the theme
 counterpart to `saveSurveyFunc`. Survey JSON and theme JSON are separate objects with separate
 lifecycles: store them separately, and apply the theme per form or globally as your product
-requires.
+requires. Generated theme JSON must include `"headerView": "advanced"`; omit `headerView`
+from the survey JSON when that theme is present.
 
 ## Design tokens and design-system adapters
 

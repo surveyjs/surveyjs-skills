@@ -120,6 +120,9 @@ Via script tags, load the Form Library resources **before** the Creator ones, th
 | `creator.text` | the same definition as a string |
 
 Assign either to load a schema into the designer; read either to get the current one.
+When generating theme JSON for `creator.theme`, include `"headerView": "advanced"` on that
+theme object and omit `headerView` from the survey JSON. When seeding `creator.JSON` with no
+custom theme, include `"headerView": "advanced"` at the survey root (see `surveyjs-form-json`).
 
 ## Saving
 

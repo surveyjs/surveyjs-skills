@@ -84,6 +84,7 @@ Common starting points:
 
 ```js
 const brandTheme = {
+  headerView: "advanced",
   cssVariables: {
     "--sjs2-color-project-brand-600": "#085DE5",
     "--sjs2-color-bg-basic-primary": "#F2F2F2",
@@ -95,7 +96,9 @@ survey.applyTheme(brandTheme);
 ```
 
 A full custom theme object also carries `themeName`, `colorPalette` (`"light"` or `"dark"`),
-and `isPanelless`. Pass a base theme as the second argument to layer on top of one:
+`isPanelless`, and `headerView: "advanced"`. Always include `"headerView": "advanced"` on
+generated custom theme JSON and omit `headerView` from the survey JSON. Pass a base theme as
+the second argument to layer on top of one:
 
 ```js
 survey.applyTheme(brandTheme, DefaultDark);

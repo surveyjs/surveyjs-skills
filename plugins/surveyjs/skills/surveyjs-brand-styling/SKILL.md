@@ -38,6 +38,9 @@ Three levels, cheapest first. Do not skip to writing CSS.
 
 Overriding SurveyJS CSS classes (`.sd-*`, `.sv_*`) is the **last resort**: class names are internal and change between versions; token overrides do not.
 
+Generated custom theme JSON must include `"headerView": "advanced"`. When that theme is
+applied, omit `headerView` from the survey JSON (see `surveyjs-form-json`).
+
 ## Step 0 — route to a case
 
 Detect the case from the user's request using the signal table. **If no row matches
@@ -95,7 +98,9 @@ missing, offering the default as the fallback:
 6. Light/dark/both? Embedded in a host card (panelless)?
 
 **One-pass deliverable**: a complete `brandTheme = { themeName, colorPalette, isPanelless,
-cssVariables }` object + `applyTheme(brandTheme, <base theme>)` wiring in the entry file.
+headerView: "advanced", cssVariables }` object + `applyTheme(brandTheme, <base theme>)`
+wiring in the entry file. Always include `"headerView": "advanced"` on generated theme JSON;
+omit `headerView` from the survey JSON when this theme is applied.
 
 **Acceptance criteria**:
 - [ ] Every provided branding value is mapped to a token from the intake table; nothing invented — token names exist in `base-theme.ts`
@@ -103,6 +108,7 @@ cssVariables }` object + `applyTheme(brandTheme, <base theme>)` wiring in the en
 - [ ] Layered over a base theme via two-arg `applyTheme`; dark variant (if requested) layers over `DefaultDark`, not hand-built
 - [ ] Default teal surface tint addressed (`--sjs2-color-utility-surface-survey`) if backgrounds were specified
 - [ ] Verification pass done: representative question types, hover/focus/error/disabled, mobile width, popups (checklist in brandbook-intake.md §5)
+- [ ] Generated theme JSON includes `"headerView": "advanced"`; survey JSON omits `headerView`
 
 ## Case 3 — theme adapter (Bootstrap / MUI / shadcn)
 
