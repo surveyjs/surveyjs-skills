@@ -102,6 +102,7 @@ describe("skill content", () => {
         "surveyjs-dashboard",
         "surveyjs-form-json",
         "surveyjs-integration",
+        "surveyjs-linter",
         "surveyjs-pdf-generator",
         "surveyjs-response-extractor"
       ]

@@ -9,6 +9,7 @@ xAI Grok Build.
 | Skill | Use it for |
 | :---- | :---- |
 | `surveyjs-form-json` | Writing and debugging the survey JSON itself — question types, validators, `visibleIf` and expressions, triggers, matrices, localization, quiz scoring |
+| `surveyjs-linter` | Statically checking survey JSON with `survey-core/linter` — broken `{question}` references in conditions, name typos and duplicates, calculated-value and trigger cycles, dead choice sources, conditions that can never fire, plus rule severities, suppressions, and CI wiring |
 | `surveyjs-integration` | Getting the Form Library into a React, Next.js, Angular, Vue, vanilla JS, or jQuery app — install, render, theme, handle events, save results |
 | `surveyjs-brand-styling` | Matching a survey to your app design or brandbook — picking a predefined theme, building a custom theme from brand colors and fonts, Bootstrap/MUI/shadcn theme adapters, and custom CSS with per-question-type styling references |
 | `surveyjs-creator-customization` | Embedding the drag-and-drop builder — toolbox and property grid, creator events, UI presets, builder theming |
@@ -21,6 +22,7 @@ xAI Grok Build.
 | Product or area | Status | Skill |
 | :---- | :---- | :---- |
 | SurveyJS JSON schemas | Supported | `surveyjs-form-json` |
+| Survey JSON linting | Supported | `surveyjs-linter` |
 | Form Library | Supported | `surveyjs-integration` |
 | Theming and brand styling | Supported | `surveyjs-brand-styling` |
 | Survey Creator | Supported | `surveyjs-creator-customization` |
@@ -45,7 +47,8 @@ pages and source files they depend on. A weekly Action runs
 `scripts/check-upstream-docs.mjs` and opens an issue when one of those pages changes, so the
 reference files get reviewed rather than silently drifting. `surveyjs-form-json` reads the
 version-exact authoring guide and JSON Schema shipped inside the installed `survey-core` package
-instead.
+instead, and `surveyjs-linter` is written against that package's `survey-core/linter` entry
+point.
 
 ```
 node scripts/check-upstream-docs.mjs            # report drift
@@ -85,7 +88,7 @@ gemini extensions install ./plugins/surveyjs
 gemini extensions link ./plugins/surveyjs
 ```
 
-Gemini discovers all six skills automatically from `skills/`.
+Gemini discovers every skill automatically from `skills/`.
 
 ## GitHub Copilot CLI
 
@@ -95,7 +98,7 @@ Install this plugin directly from its repository subdirectory:
 copilot plugin install surveyjs/surveyjs-skills:plugins/surveyjs
 ```
 
-The shared `plugin.json` manifest registers all six skills. Copilot can also consume the
+The shared `plugin.json` manifest registers every skill in `skills/`. Copilot can also consume the
 repository's `.claude-plugin/marketplace.json` marketplace.
 
 ## xAI Grok Build

@@ -35,7 +35,8 @@
     "surveyjs-brand-styling",
     "surveyjs-creator-customization",
     "surveyjs-form-json",
-    "surveyjs-integration"
+    "surveyjs-integration",
+    "surveyjs-linter"
   ],
   "written": [
     ".claude/skills/surveyjs-brand-styling/SKILL.md",
@@ -83,6 +84,10 @@
     ".claude/skills/surveyjs-integration/references/troubleshooting.md",
     ".claude/skills/surveyjs-integration/references/vanilla-js.md",
     ".claude/skills/surveyjs-integration/references/vue.md",
+    ".claude/skills/surveyjs-linter/SKILL.md",
+    ".claude/skills/surveyjs-linter/references/api.md",
+    ".claude/skills/surveyjs-linter/references/rules.md",
+    ".claude/skills/surveyjs-linter/references/workflows.md",
     ".surveyjs-skills.json"
   ],
   "tree": [
@@ -132,6 +137,10 @@
     ".claude/skills/surveyjs-integration/references/troubleshooting.md",
     ".claude/skills/surveyjs-integration/references/vanilla-js.md",
     ".claude/skills/surveyjs-integration/references/vue.md",
+    ".claude/skills/surveyjs-linter/SKILL.md",
+    ".claude/skills/surveyjs-linter/references/api.md",
+    ".claude/skills/surveyjs-linter/references/rules.md",
+    ".claude/skills/surveyjs-linter/references/workflows.md",
     ".surveyjs-skills.json",
     "node_modules/survey-core/package.json",
     "node_modules/survey-creator-core/package.json",

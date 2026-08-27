@@ -26,7 +26,8 @@
   "skills": [
     "surveyjs-brand-styling",
     "surveyjs-form-json",
-    "surveyjs-integration"
+    "surveyjs-integration",
+    "surveyjs-linter"
   ],
   "written": [
     ".claude/skills/surveyjs-brand-styling/SKILL.md",
@@ -68,6 +69,10 @@
     ".claude/skills/surveyjs-integration/references/troubleshooting.md",
     ".claude/skills/surveyjs-integration/references/vanilla-js.md",
     ".claude/skills/surveyjs-integration/references/vue.md",
+    ".claude/skills/surveyjs-linter/SKILL.md",
+    ".claude/skills/surveyjs-linter/references/api.md",
+    ".claude/skills/surveyjs-linter/references/rules.md",
+    ".claude/skills/surveyjs-linter/references/workflows.md",
     ".cursor/skills/surveyjs-brand-styling/SKILL.md",
     ".cursor/skills/surveyjs-brand-styling/references/brandbook-intake.md",
     ".cursor/skills/surveyjs-brand-styling/references/controls/_shared.md",
@@ -107,6 +112,10 @@
     ".cursor/skills/surveyjs-integration/references/troubleshooting.md",
     ".cursor/skills/surveyjs-integration/references/vanilla-js.md",
     ".cursor/skills/surveyjs-integration/references/vue.md",
+    ".cursor/skills/surveyjs-linter/SKILL.md",
+    ".cursor/skills/surveyjs-linter/references/api.md",
+    ".cursor/skills/surveyjs-linter/references/rules.md",
+    ".cursor/skills/surveyjs-linter/references/workflows.md",
     ".surveyjs-skills.json"
   ],
   "tree": [
@@ -150,6 +159,10 @@
     ".claude/skills/surveyjs-integration/references/troubleshooting.md",
     ".claude/skills/surveyjs-integration/references/vanilla-js.md",
     ".claude/skills/surveyjs-integration/references/vue.md",
+    ".claude/skills/surveyjs-linter/SKILL.md",
+    ".claude/skills/surveyjs-linter/references/api.md",
+    ".claude/skills/surveyjs-linter/references/rules.md",
+    ".claude/skills/surveyjs-linter/references/workflows.md",
     ".cursor/.gitkeep",
     ".cursor/skills/surveyjs-brand-styling/SKILL.md",
     ".cursor/skills/surveyjs-brand-styling/references/brandbook-intake.md",
@@ -190,6 +203,10 @@
     ".cursor/skills/surveyjs-integration/references/troubleshooting.md",
     ".cursor/skills/surveyjs-integration/references/vanilla-js.md",
     ".cursor/skills/surveyjs-integration/references/vue.md",
+    ".cursor/skills/surveyjs-linter/SKILL.md",
+    ".cursor/skills/surveyjs-linter/references/api.md",
+    ".cursor/skills/surveyjs-linter/references/rules.md",
+    ".cursor/skills/surveyjs-linter/references/workflows.md",
     ".surveyjs-skills.json",
     "package-lock.json",
     "package.json"
