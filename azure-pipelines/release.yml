@@ -1,0 +1,117 @@
+# survey-cli release pipeline
+# Publishes cli/ as the survey-cli npm package: https://github.com/surveyjs/surveyjs-skills/tree/main/cli
+
+# Need to be configured in UI:
+# npmPublishArgs - arguments for the npm publish command (leave empty for a normal release)
+
+# The pipeline bumps the version in cli/package.json itself (releaseType parameter),
+# publishes, then commits and tags the bump back to the branch the run started from.
+
+parameters:
+  - name: releaseType
+    displayName: Version bump
+    type: string
+    default: patch
+    values:
+      - patch
+      - minor
+      - major
+  - name: dryRun
+    displayName: Dry run (npm publish --dry-run, nothing is released or pushed)
+    type: boolean
+    default: false
+
+#trigger only "by hand"
+trigger: none
+pr: none
+
+jobs:
+- job: Release
+  timeoutInMinutes: 15
+  steps:
+
+  - checkout: self
+    clean: true
+    persistCredentials: true
+
+  # No npm install: survey-cli has zero dependencies
+  - script: node --test
+    workingDirectory: $(Build.SourcesDirectory)/cli
+    displayName: 'Test survey-cli'
+
+  - script: npm version ${{ parameters.releaseType }} --no-git-tag-version
+    workingDirectory: $(Build.SourcesDirectory)/cli
+    displayName: 'Bump ${{ parameters.releaseType }} version'
+
+  - script: |
+      set -e
+      VERSION=$(node -p "require('./package.json').version")
+      STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/survey-cli/$VERSION")
+      if [ "$STATUS" = "200" ]; then
+        echo "##vso[task.logissue type=error]survey-cli@$VERSION is already on npm - cli/package.json is out of sync with the registry. Align it with the published version by hand."
+        exit 1
+      fi
+      echo "Releasing survey-cli@$VERSION"
+    workingDirectory: $(Build.SourcesDirectory)/cli
+    displayName: 'Check the version is not already published'
+
+  # prepack copies plugins/surveyjs/skills into cli/skills before packing
+  - script: npm pack --dry-run
+    workingDirectory: $(Build.SourcesDirectory)/cli
+    displayName: 'Inspect the tarball'
+
+  - task: Npm@1
+    inputs:
+      command: 'custom'
+      workingDir: '$(Build.SourcesDirectory)/cli'
+      ${{ if parameters.dryRun }}:
+        customCommand: 'publish --dry-run $(npmPublishArgs)'
+      ${{ else }}:
+        customCommand: 'publish $(npmPublishArgs)'
+      customEndpoint: 'NPM Registry V2'
+      verbose: true
+    displayName: 'npm publish survey-cli'
+
+  # Push the version bump only after a real publish succeeded
+  - ${{ if not(parameters.dryRun) }}:
+    - script: |
+        set -e
+
+        git config --global user.email "surveyjs.org@gmail.com"
+        git config --global user.name "surveyjsdeveloper"
+
+        BRANCH="${BUILD_SOURCEBRANCH#refs/heads/}"
+        VERSION=$(node -p "require('./cli/package.json').version")
+
+        git checkout -B "$BRANCH"
+        git add cli/package.json
+        git commit -m "Release: survey-cli@$VERSION [azurepipelines skip]"
+        git tag -a "cli-v$VERSION" -m "Release: survey-cli@$VERSION"
+
+        PUSHED=0
+        for ATTEMPT in 1 2 3; do
+          git fetch origin "$BRANCH"
+
+          # Bring in whatever landed on the branch while the release was running
+          if ! git merge -m "Merge origin/$BRANCH into release [azurepipelines skip]" FETCH_HEAD; then
+            git merge --abort || true
+            echo "##vso[task.logissue type=error]merge conflict with origin/$BRANCH - survey-cli@$VERSION is published but the version bump is not pushed"
+            exit 1
+          fi
+
+          # --atomic: the tag must never land without the branch
+          if git push origin "$BRANCH" --follow-tags --atomic --no-verify; then
+            PUSHED=1
+            break
+          fi
+
+          echo "push rejected (attempt $ATTEMPT of 3), retrying"
+          sleep 5
+        done
+
+        if [ "$PUSHED" -ne 1 ]; then
+          echo "##vso[task.logissue type=error]failed to push $BRANCH after 3 attempts - survey-cli@$VERSION is published but the version bump is not pushed"
+          exit 1
+        fi
+      workingDirectory: $(Build.SourcesDirectory)
+      displayName: 'Commit, tag, and push the version bump'

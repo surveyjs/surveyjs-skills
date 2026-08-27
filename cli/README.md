@@ -145,4 +145,4 @@ repository that silently never load.
 
 ## License
 
-MIT — see [LICENSE](../LICENSE).
+MIT — see [LICENSE](LICENSE).
