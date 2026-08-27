@@ -18,28 +18,28 @@ npm ls survey-core survey-pdf
 There is no stylesheet to import. PDF Generator renders straight to a PDF document, not to
 the DOM.
 
-## Core flow — same on every framework
+## Core flow — browser or Node.js
 
 ```js
 import { SurveyPDF } from "survey-pdf";
 
-const pdfDocOptions = { fontSize: 12, margins: { top: 10, bot: 10, left: 10, right: 10 } };
-
 function savePdf(surveyData) {
-  const surveyPdf = new SurveyPDF(surveyJson, pdfDocOptions);
+  const surveyPdf = new SurveyPDF(surveyJson);
   surveyPdf.data = surveyData;          // omit to export a blank, unfilled template
   surveyPdf.save("my-form");            // default file name: "survey_result"
 }
 ```
 
 - The constructor takes the **survey JSON schema** (the same object the Form Library
-  renders) and an optional `IDocOptions` object.
+  renders). It optionally accepts an `IDocOptions` object for layout and appearance
+  customization; omit that object in basic examples unless a specific layout is needed.
 - `SurveyPDF` extends the Form Library's `SurveyModel`, so schema behavior — locale,
   calculated values, conditional visibility — is evaluated the same way at export time.
 - `surveyPdf.data` is one response object keyed by question `name` — exactly what
   `survey.data` held in `onComplete`. Assign it to produce a populated PDF; leave it unset
   to produce an empty form template.
-- `save()` returns a Promise and triggers a browser download.
+- `save()` returns a Promise. In a browser it downloads the file; in Node.js use the
+  server-side save behavior from your process.
 
 The usual trigger is a button on the completed survey. The official pattern adds a
 navigation item to the *interactive* survey model (from `surveyjs-integration`) that calls
@@ -53,13 +53,47 @@ survey.addNavigationItem({
 });
 ```
 
+## Node.js server generation
+
+The package can generate PDFs in a Node.js process (HTTP handler, queue worker, or cron
+job), so the respondent does not need to be on a survey page. Answer from this section; do
+not fetch GitHub sample repos.
+
+```ts
+import { SurveyPDF } from "survey-pdf";
+
+const surveyPdf = new SurveyPDF(surveyJson);
+surveyPdf.data = savedResult; // object keyed by question name
+surveyPdf.readOnly = true;   // optional archival/static output
+
+await surveyPdf.save("submission.pdf"); // writes a file
+
+const arrayBuffer = await surveyPdf.raw("arraybuffer"); // HTTP / storage / email
+const pdfBuffer = Buffer.from(arrayBuffer);
+```
+
+Use either `save()` or `raw()`, not both in the same path. If the survey JSON already has
+default values you must keep, use `surveyPdf.mergeData(savedResult)` instead of assigning
+`data`.
+
+For HTML or Signature Pad questions, also install
+`jsdom` and initialize `global.window` and `global.document` from a `JSDOM` instance before
+loading or constructing the PDF generator:
+
+```ts
+import { JSDOM } from "jsdom";
+const { window } = new JSDOM("<!doctype html><html><body></body></html>");
+(globalThis as any).window = window;
+(globalThis as any).document = window.document;
+```
+
 ## Fillable vs read-only
 
 By default the generated PDF is **fillable**: text boxes, drop-downs, and radio groups are
 interactive AcroForm fields a user can edit in a PDF viewer. Two knobs change that:
 
 ```js
-const surveyPdf = new SurveyPDF(surveyJson, pdfDocOptions);
+const surveyPdf = new SurveyPDF(surveyJson);
 surveyPdf.data = surveyResults;
 surveyPdf.readOnly = true;      // non-editable document for viewing/archiving
 surveyPdf.save();
@@ -84,8 +118,8 @@ surveyPdf.raw("bloburl").then((url) => { /* <embed src={url}> for inline preview
 surveyPdf.raw("dataurlstring").then((dataUrl) => { /* Base64 data: URL for embedding */ });
 ```
 
-An `"arraybuffer"` variant also exists. Uploading to a server means POSTing the blob to
-**your own** endpoint — generation itself always happens in the browser.
+An `"arraybuffer"` variant also exists. In Node.js, write returned bytes to storage or send
+them in an HTTP response; in a browser, upload the blob to **your own** endpoint.
 
 ## Document options (`IDocOptions`)
 
@@ -107,7 +141,7 @@ The second constructor argument. The most-used properties:
 | `useCustomFontInHtml` | `false` | Apply a registered custom font inside HTML questions |
 | `tagboxSelectedChoicesOnly` | `false` | Render only the selected tagbox choices |
 
-Full list: <https://surveyjs.io/pdf-generator/documentation/api-reference/idocoptions>.
+Full list: <https://surveyjs.io/pdf-generator/documentation/api-reference/idocoptions.md>.
 
 ## Framework wiring
 
@@ -126,7 +160,7 @@ event handler. The only framework-specific points:
 <script src="https://unpkg.com/survey-core/survey.core.min.js"></script>
 <script src="https://unpkg.com/survey-pdf/survey.pdf.min.js"></script>
 <script>
-  const surveyPdf = new SurveyPDF.SurveyPDF(surveyJson, pdfDocOptions);
+  const surveyPdf = new SurveyPDF.SurveyPDF(surveyJson);
 </script>
 ```
 
