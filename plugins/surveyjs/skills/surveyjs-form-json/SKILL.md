@@ -166,6 +166,8 @@ pinned to this project's version.
 For the built-in **Other** choice, read [references/built-in-other-choice.md](references/built-in-other-choice.md). It covers
 the correct JSON, result shape, and when to use `storeOthersAsComment`.
 
+For built-in input masks, read [references/input-masking.md](references/input-masking.md). It covers numeric, currency, pattern, and datetime masks, where they apply (`text`, `multipletext` items, text matrix columns), `inputType` constraints, and what gets stored versus displayed.
+
 ## Before you finish
 
 - [ ] The guide and schema you used came from the installed version, stamp checked
