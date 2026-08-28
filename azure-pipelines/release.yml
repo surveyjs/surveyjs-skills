@@ -1,8 +1,5 @@
-# survey-cli release pipeline
-# Publishes cli/ as the survey-cli npm package: https://github.com/surveyjs/surveyjs-skills/tree/main/cli
-
-# Need to be configured in UI:
-# npmPublishArgs - arguments for the npm publish command (leave empty for a normal release)
+# CLI release pipeline
+# Publishes the npm package defined by cli/package.json: https://github.com/surveyjs/surveyjs-skills/tree/main/cli
 
 # The pipeline bumps the version in cli/package.json itself (releaseType parameter),
 # publishes, then commits and tags the bump back to the branch the run started from.
@@ -34,10 +31,10 @@ jobs:
     clean: true
     persistCredentials: true
 
-  # No npm install: survey-cli has zero dependencies
+  # No npm install: the CLI has zero dependencies
   - script: node --test
     workingDirectory: $(Build.SourcesDirectory)/cli
-    displayName: 'Test survey-cli'
+    displayName: 'Test the CLI package'
 
   - script: npm version ${{ parameters.releaseType }} --no-git-tag-version
     workingDirectory: $(Build.SourcesDirectory)/cli
@@ -45,13 +42,14 @@ jobs:
 
   - script: |
       set -e
-      VERSION=$(node -p "require('./package.json').version")
-      STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/survey-cli/$VERSION")
-      if [ "$STATUS" = "200" ]; then
-        echo "##vso[task.logissue type=error]survey-cli@$VERSION is already on npm - cli/package.json is out of sync with the registry. Align it with the published version by hand."
+      NAME=$(npm pkg get name | tr -d '"')
+      VERSION=$(npm pkg get version | tr -d '"')
+      # npm view exits non-zero when that version is not on the registry
+      if npm view "$NAME@$VERSION" version > /dev/null 2>&1; then
+        echo "##vso[task.logissue type=error]$NAME@$VERSION is already on npm - cli/package.json is out of sync with the registry. Align it with the published version by hand."
         exit 1
       fi
-      echo "Releasing survey-cli@$VERSION"
+      echo "Releasing $NAME@$VERSION"
     workingDirectory: $(Build.SourcesDirectory)/cli
     displayName: 'Check the version is not already published'
 
@@ -65,12 +63,12 @@ jobs:
       command: 'custom'
       workingDir: '$(Build.SourcesDirectory)/cli'
       ${{ if parameters.dryRun }}:
-        customCommand: 'publish --dry-run $(npmPublishArgs)'
+        customCommand: 'publish --dry-run'
       ${{ else }}:
-        customCommand: 'publish $(npmPublishArgs)'
+        customCommand: 'publish'
       customEndpoint: 'NPM Registry V2'
       verbose: true
-    displayName: 'npm publish survey-cli'
+    displayName: 'npm publish'
 
   # Push the version bump only after a real publish succeeded
   - ${{ if not(parameters.dryRun) }}:
@@ -81,12 +79,13 @@ jobs:
         git config --global user.name "surveyjsdeveloper"
 
         BRANCH="${BUILD_SOURCEBRANCH#refs/heads/}"
-        VERSION=$(node -p "require('./cli/package.json').version")
+        NAME=$(npm pkg get name --prefix cli | tr -d '"')
+        VERSION=$(npm pkg get version --prefix cli | tr -d '"')
 
         git checkout -B "$BRANCH"
         git add cli/package.json
-        git commit -m "Release: survey-cli@$VERSION [azurepipelines skip]"
-        git tag -a "cli-v$VERSION" -m "Release: survey-cli@$VERSION"
+        git commit -m "Release: $NAME@$VERSION [azurepipelines skip]"
+        git tag -a "cli-v$VERSION" -m "Release: $NAME@$VERSION"
 
         PUSHED=0
         for ATTEMPT in 1 2 3; do
@@ -95,7 +94,7 @@ jobs:
           # Bring in whatever landed on the branch while the release was running
           if ! git merge -m "Merge origin/$BRANCH into release [azurepipelines skip]" FETCH_HEAD; then
             git merge --abort || true
-            echo "##vso[task.logissue type=error]merge conflict with origin/$BRANCH - survey-cli@$VERSION is published but the version bump is not pushed"
+            echo "##vso[task.logissue type=error]merge conflict with origin/$BRANCH - $NAME@$VERSION is published but the version bump is not pushed"
             exit 1
           fi
 
@@ -110,7 +109,7 @@ jobs:
         done
 
         if [ "$PUSHED" -ne 1 ]; then
-          echo "##vso[task.logissue type=error]failed to push $BRANCH after 3 attempts - survey-cli@$VERSION is published but the version bump is not pushed"
+          echo "##vso[task.logissue type=error]failed to push $BRANCH after 3 attempts - $NAME@$VERSION is published but the version bump is not pushed"
           exit 1
         fi
       workingDirectory: $(Build.SourcesDirectory)
