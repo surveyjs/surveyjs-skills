@@ -8,8 +8,9 @@ npm install survey-analytics
 
 Chart.js (charts), Tabulator (table view), and the layout engine arrive as dependencies —
 do not add them by hand in a bundled app. `survey-core` is a **peer dependency pinned to
-the matching version**; npm ≥ 7 installs it automatically, but if the project already has a
-different `survey-core` version the install fails or misbehaves. Check alignment first:
+the matching version**; npm ≥ 7 installs it automatically. Do not add `survey-core` to the
+install command solely to satisfy that peer. If the project already declares a different
+`survey-core` version, the install fails or misbehaves. Check alignment first:
 
 ```bash
 npm ls survey-core survey-analytics
