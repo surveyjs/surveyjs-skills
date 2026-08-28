@@ -33,12 +33,12 @@ export const KNOWN_PACKAGES = [
 ];
 
 /**
- * Never a SurveyJS product, whatever it is called. `survey-cli` is this package: a project
+ * Never a SurveyJS product, whatever it is called. `surveyjs-cli` is this package: a project
  * that installs it as a devDependency must not be told it has a SurveyJS product called
- * survey-cli, and — before KNOWN_PACKAGES became the only rule — a project whose sole
+ * surveyjs-cli, and — before KNOWN_PACKAGES became the only rule — a project whose sole
  * `survey-` dependency was the CLI matched no skill at all and got nothing written.
  */
-const EXCLUDED_PACKAGES = new Set(["survey-cli"]);
+const EXCLUDED_PACKAGES = new Set(["surveyjs-cli"]);
 
 const LOCKFILES = ["package-lock.json", "npm-shrinkwrap.json", "pnpm-lock.yaml", "yarn.lock", "bun.lock", "bun.lockb"];
 

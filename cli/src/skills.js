@@ -20,7 +20,7 @@ export function resolveSkillsRoot() {
     if (existsSync(candidate) && readSkillNames(candidate).length > 0) return candidate;
   }
   throw new Error(
-    "survey-cli could not find its skill content. Reinstall the package, or run " +
+    "surveyjs-cli could not find its skill content. Reinstall the package, or run " +
       "`node scripts/prepack-skills.js` from the cli/ directory of a repository checkout."
   );
 }

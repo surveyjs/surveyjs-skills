@@ -56,8 +56,9 @@ npm install survey-analytics
 
 - Chart.js, Tabulator, and the other chart dependencies install automatically.
 - `survey-core` is a **peer dependency pinned to the matching version** (v3.0.0 ↔ 3.0.0).
-  Keep `survey-core` and `survey-analytics` in lockstep; a major-version mismatch fails to
-  install or renders nothing.
+  npm 7+ installs it when you install `survey-analytics`; do **not** recommend adding it to
+  the install command solely for this peer dependency. Keep versions in lockstep when the
+  app already declares `survey-core`, because a mismatch fails to install or renders nothing.
 - Stylesheet: import `survey-analytics/survey.analytics.css` in bundled apps, or reference
   `survey-analytics/survey.analytics.min.css` from `angular.json` / a `<link>` tag.
 - The class is `Dashboard` from `survey-analytics` (`SurveyAnalytics.Dashboard` as a script
@@ -109,7 +110,7 @@ reference over blog posts and summaries — both skew toward the pre-v3 Plotly-e
 
 ## Before you finish
 
-- [ ] `survey-analytics` installed; `survey-core` present at the **same** version
+- [ ] `survey-analytics` installed; its `survey-core` peer is present at the **same** version
 - [ ] Dashboard stylesheet imported or linked exactly once
 - [ ] `new Dashboard({ ... })` with an options object — no `VisualizationPanel`, no Plotly setup
 - [ ] Instance constructed once per container; `clear()` called on unmount

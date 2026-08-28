@@ -23,7 +23,7 @@ jobs:
         run: node scripts/validate-repo.mjs
 
   cli:
-    # Both platforms, because survey-cli is mostly path handling and the two disagree:
+    # Both platforms, because surveyjs-cli is mostly path handling and the two disagree:
     # a backslash separates directories on Windows and is a legal filename character on Linux.
     runs-on: ${{ matrix.os }}
     strategy:
@@ -40,7 +40,7 @@ jobs:
         with:
           node-version: 22
 
-      - name: Test survey-cli
+      - name: Test surveyjs-cli
         run: node --test
 
       - name: Check the published tarball

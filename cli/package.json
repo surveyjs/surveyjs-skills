@@ -1,5 +1,5 @@
 {
-  "name": "survey-cli",
+  "name": "surveyjs-cli",
   "version": "0.1.0",
   "description": "Install the SurveyJS agent skills into the AI coding clients your project already uses.",
   "keywords": [
@@ -29,7 +29,7 @@
   },
   "type": "module",
   "bin": {
-    "survey-cli": "./bin/survey-cli.js"
+    "surveyjs-cli": "./bin/surveyjs-cli.js"
   },
   "files": [
     "bin",

@@ -21,7 +21,7 @@ recommended default:
 ```js
 import { MonochromeLight } from "survey-core/themes";
 
-const surveyPdf = new SurveyPDF(surveyJson, pdfDocOptions);
+const surveyPdf = new SurveyPDF(surveyJson);
 surveyPdf.applyTheme(MonochromeLight);
 ```
 

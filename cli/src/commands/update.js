@@ -1,4 +1,4 @@
-// `survey-cli update` — re-run placement for the clients already recorded, nothing else.
+// `surveyjs-cli update` — re-run placement for the clients already recorded, nothing else.
 
 import process from "node:process";
 
@@ -14,13 +14,13 @@ export async function runUpdate({
 } = {}) {
   const manifest = readManifest(root);
   if (!manifest) {
-    err.write(`No ${MANIFEST_FILE} in ${root}. Run \`npx survey-cli@latest init-agents\` first.\n`);
+    err.write(`No ${MANIFEST_FILE} in ${root}. Run \`npx surveyjs-cli@latest init-agents\` first.\n`);
     return { code: 1, written: [], removed: [] };
   }
 
   const clients = Array.isArray(manifest.clients) ? manifest.clients : [];
   if (clients.length === 0) {
-    err.write(`${MANIFEST_FILE} records no clients. Run \`npx survey-cli@latest init-agents\` instead.\n`);
+    err.write(`${MANIFEST_FILE} records no clients. Run \`npx surveyjs-cli@latest init-agents\` instead.\n`);
     return { code: 1, written: [], removed: [] };
   }
 

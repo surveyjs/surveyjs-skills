@@ -141,7 +141,7 @@ export function analyzePlan({ root, plan, previousFiles = [], previousBlocks = [
 
 function requireInside(root, rel) {
   const absolute = resolveInside(root, rel);
-  if (absolute === null) throw new Error(`survey-cli built a path outside the project root: ${rel}`);
+  if (absolute === null) throw new Error(`surveyjs-cli built a path outside the project root: ${rel}`);
   return absolute;
 }
 

@@ -2,7 +2,7 @@
 //
 // This is the only test that exercises what a published install actually does: `npm pack`
 // runs the prepack script, so the skills come from cli/skills/ rather than the repository
-// fallback, and survey-cli sits in the consumer's node_modules where detection can see it.
+// fallback, and surveyjs-cli sits in the consumer's node_modules where detection can see it.
 // Both of those went wrong in ways no source-tree test could have caught.
 
 import assert from "node:assert/strict";
@@ -35,16 +35,16 @@ after(() => {
 });
 
 /**
- * A scratch project with survey-cli installed from the tarball, as a consumer would.
+ * A scratch project with surveyjs-cli installed from the tarball, as a consumer would.
  *
- * survey-cli is installed first, into a project with no other dependencies, so npm never has
+ * surveyjs-cli is installed first, into a project with no other dependencies, so npm never has
  * to reach the registry — the tarball is local and has none. The SurveyJS dependencies are
  * added afterwards and their node_modules entries written by hand, which keeps the test
  * offline and fast while still reproducing what matters: a real install layout with
- * survey-cli sitting in both package.json and node_modules alongside them.
+ * surveyjs-cli sitting in both package.json and node_modules alongside them.
  */
 function install(dependencies, extraFiles = {}) {
-  const root = mkdtempSync(join(tmpdir(), "survey-cli-packed-"));
+  const root = mkdtempSync(join(tmpdir(), "surveyjs-cli-packed-"));
   workspaces.push(root);
   const manifestPath = join(root, "package.json");
   writeFileSync(manifestPath, `${JSON.stringify({ name: "consumer", private: true, version: "1.0.0" }, null, 2)}\n`);
@@ -72,7 +72,7 @@ function install(dependencies, extraFiles = {}) {
 }
 
 function run(root, args) {
-  const bin = join(root, "node_modules", "survey-cli", "bin", "survey-cli.js");
+  const bin = join(root, "node_modules", "surveyjs-cli", "bin", "surveyjs-cli.js");
   try {
     return { code: 0, stdout: execFileSync(process.execPath, [bin, ...args], { cwd: root, encoding: "utf8" }) };
   } catch (error) {
@@ -83,7 +83,7 @@ function run(root, args) {
 describe("installed from the tarball", { timeout: 180_000 }, () => {
   it("serves skills out of the packed skills/ directory, not the repository", () => {
     const root = install({ "survey-core": "^3.0.1", "survey-react-ui": "^3.0.1" }, { ".claude/settings.json": "{}" });
-    const packedSkills = join(root, "node_modules", "survey-cli", "skills");
+    const packedSkills = join(root, "node_modules", "surveyjs-cli", "skills");
     assert.ok(existsSync(join(packedSkills, "surveyjs-form-json", "SKILL.md")), "prepack did not ship the skills");
     assert.ok(existsSync(join(packedSkills, "surveyjs-form-json", "skill.meta.json")), "skill.meta.json was not packed");
     assert.equal(readdirSync(packedSkills).length, 7);
@@ -98,10 +98,10 @@ describe("installed from the tarball", { timeout: 180_000 }, () => {
     const result = run(root, ["init-agents", "--yes", "--client=claude"]);
 
     assert.equal(result.code, 0, result.stderr);
-    assert.doesNotMatch(result.stdout, /survey-cli@/, "survey-cli was listed as a SurveyJS package");
+    assert.doesNotMatch(result.stdout, /surveyjs-cli@/, "surveyjs-cli was listed as a SurveyJS package");
 
     // Only the version line matters here: the skill body legitimately says
-    // `npx survey-cli@latest init-agents` as the instruction for re-running after an upgrade.
+    // `npx surveyjs-cli@latest init-agents` as the instruction for re-running after an upgrade.
     const skill = readFileSync(join(root, ".claude", "skills", "surveyjs-form-json", "SKILL.md"), "utf8");
     const versionLine = skill.match(/^> Installed in this project:.*$/m)?.[0];
     assert.equal(versionLine, "> Installed in this project: `survey-core@3.0.1`, `survey-react-ui@3.0.1`. UI framework: **react**.");
@@ -110,7 +110,7 @@ describe("installed from the tarball", { timeout: 180_000 }, () => {
     assert.deepEqual(Object.keys(manifest.packages), ["survey-core", "survey-react-ui"]);
   });
 
-  it("writes the full skill set for a project that has survey-cli and no SurveyJS yet", () => {
+  it("writes the full skill set for a project that has surveyjs-cli and no SurveyJS yet", () => {
     const root = install({}, { ".claude/settings.json": "{}" });
     const result = run(root, ["init-agents", "--yes", "--client=claude"]);
 

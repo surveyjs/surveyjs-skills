@@ -18,7 +18,7 @@ after(() => {
 
 /** A project directory with a sibling file that must never be touched. */
 function sandbox(manifest) {
-  const box = mkdtempSync(join(tmpdir(), "survey-cli-safety-"));
+  const box = mkdtempSync(join(tmpdir(), "surveyjs-cli-safety-"));
   sandboxes.push(box);
   const root = join(box, "project");
   mkdirSync(root, { recursive: true });
