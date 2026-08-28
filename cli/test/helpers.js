@@ -23,14 +23,14 @@ const created = [];
 
 /** Copy a fixture project into a throwaway directory and return its path. */
 export function useFixture(name) {
-  const root = mkdtempSync(join(tmpdir(), `survey-cli-${name}-`));
+  const root = mkdtempSync(join(tmpdir(), `surveyjs-cli-${name}-`));
   cpSync(join(FIXTURES, name), root, { recursive: true });
   created.push(root);
   return root;
 }
 
 export function makeTempProject(files = {}) {
-  const root = mkdtempSync(join(tmpdir(), "survey-cli-tmp-"));
+  const root = mkdtempSync(join(tmpdir(), "surveyjs-cli-tmp-"));
   created.push(root);
   for (const [rel, content] of Object.entries(files)) {
     const absolute = join(root, ...rel.split("/"));

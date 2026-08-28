@@ -1,11 +1,11 @@
-# survey-cli
+# surveyjs-cli
 
 Puts the [SurveyJS agent skills](../plugins/surveyjs/skills/) into whichever AI coding clients
 your project already uses, filtered to the SurveyJS products you actually have installed and
 pinned to the versions you actually have installed.
 
 ```
-npx survey-cli@latest init-agents
+npx surveyjs-cli@latest init-agents
 ```
 
 No runtime dependencies, no install scripts, no network calls, no telemetry. Node 22+.
@@ -51,13 +51,13 @@ as-is.
 ## Commands
 
 ```
-survey-cli init-agents [options]   detect, filter, write, record
-survey-cli doctor                  compare .surveyjs-skills.json against what is installed now
-survey-cli update                  re-run placement for the clients already recorded
+surveyjs-cli init-agents [options]   detect, filter, write, record
+surveyjs-cli doctor                  compare .surveyjs-skills.json against what is installed now
+surveyjs-cli update                  re-run placement for the clients already recorded
 ```
 
 `doctor` exits non-zero when the recorded state is stale — a SurveyJS upgrade, an added or
-removed package, a different survey-cli, a recorded file missing from disk — so it works as a CI
+removed package, a different surveyjs-cli, a recorded file missing from disk — so it works as a CI
 check. A version it simply could not verify is reported as a warning and does **not** fail the
 exit code: a project with no committed lockfile and no `node_modules` in CI cannot fix that, and
 failing the build over it would be noise.
@@ -99,7 +99,7 @@ rather than guessed at; `bun.lock` (Bun 1.2+) is parsed.
 ```json
 {
   "cliVersion": "0.1.0",
-  "generator": "survey-cli",
+  "generator": "surveyjs-cli",
   "source": "https://github.com/surveyjs/surveyjs-skills",
   "framework": "react",
   "lockfile": "package-lock.json",

@@ -1,4 +1,4 @@
-// `survey-cli doctor` — is what was written still true?
+// `surveyjs-cli doctor` — is what was written still true?
 //
 // Two distinct outcomes, deliberately separated. An *issue* means the recorded state is wrong
 // and a re-run would change something: it fails the exit code so `doctor` can gate CI. A
@@ -16,7 +16,7 @@ import { cliVersion, MANIFEST_FILE, normalizePackages, readManifest } from "../m
 export function runDoctor({ root = process.cwd(), out = process.stdout, err = process.stderr } = {}) {
   const manifest = readManifest(root);
   if (!manifest) {
-    err.write(`No ${MANIFEST_FILE} in ${root}. Run \`npx survey-cli@latest init-agents\` first.\n`);
+    err.write(`No ${MANIFEST_FILE} in ${root}. Run \`npx surveyjs-cli@latest init-agents\` first.\n`);
     return { code: 1, issues: ["missing-manifest"], warnings: [] };
   }
 
@@ -25,10 +25,10 @@ export function runDoctor({ root = process.cwd(), out = process.stdout, err = pr
   const issues = [];
   const warnings = [];
 
-  out.write(`Recorded by survey-cli ${manifest.cliVersion}; running survey-cli ${version}.\n`);
+  out.write(`Recorded by surveyjs-cli ${manifest.cliVersion}; running surveyjs-cli ${version}.\n`);
   if (manifest.cliVersion !== version) {
     issues.push("cli-version");
-    out.write("  stale: written by a different survey-cli. Re-run `survey-cli update`.\n");
+    out.write("  stale: written by a different surveyjs-cli. Re-run `surveyjs-cli update`.\n");
   }
 
   const recorded = normalizePackages(manifest.packages);
@@ -62,7 +62,7 @@ export function runDoctor({ root = process.cwd(), out = process.stdout, err = pr
   if (unresolved.length > 0) {
     out.write(
       `\nCould not verify the installed version of: ${unresolved.join(", ")}.\n` +
-        `  Lockfile: ${describeLockfile(project)}. Install dependencies or commit a lockfile survey-cli\n` +
+        `  Lockfile: ${describeLockfile(project)}. Install dependencies or commit a lockfile surveyjs-cli\n` +
         "  can read (package-lock.json, pnpm-lock.yaml, yarn.lock, bun.lock) for exact pinning.\n"
     );
   }
@@ -94,7 +94,7 @@ export function runDoctor({ root = process.cwd(), out = process.stdout, err = pr
     out.write(`Up to date, with ${warnings.length} unverifiable package version(s).\n`);
     return { code: 0, issues, warnings };
   }
-  out.write(`${issues.length} issue(s). Run \`npx survey-cli@latest update\` to refresh what is recorded.\n`);
+  out.write(`${issues.length} issue(s). Run \`npx surveyjs-cli@latest update\` to refresh what is recorded.\n`);
   return { code: 1, issues, warnings };
 }
 

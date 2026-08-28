@@ -16,13 +16,13 @@ names, APIs that were renamed in v3, styling hooks that are now internal. These 
 current facts and list the specific mistakes to check generated code against, so answers stop
 drifting toward whatever was true a few major versions ago.
 
-## Install into a project with `survey-cli`
+## Install into a project with `surveyjs-cli`
 
-The plugin installs the skills for one agent, for you. `survey-cli` installs them into a
+The plugin installs the skills for one agent, for you. `surveyjs-cli` installs them into a
 **project**, for whichever agents your team already uses:
 
 ```
-npx survey-cli@latest init-agents
+npx surveyjs-cli@latest init-agents
 ```
 
 It reads the project's `package.json` and lockfile, writes only the skills for the SurveyJS
@@ -171,7 +171,7 @@ plugins/surveyjs/                   the plugin
   skills/<skill>/SKILL.md           what the agent loads first
   skills/<skill>/references/        deeper material, read on demand
 scripts/check-upstream-docs.mjs     upstream doc drift checker
-cli/                                the survey-cli npm package (see cli/README.md)
+cli/                                the surveyjs-cli npm package (see cli/README.md)
 ```
 
 ## Related repositories
