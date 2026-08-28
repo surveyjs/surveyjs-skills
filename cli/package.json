@@ -1,6 +1,6 @@
 {
   "name": "surveyjs-cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Install the SurveyJS agent skills into the AI coding clients your project already uses.",
   "keywords": [
     "surveyjs",
