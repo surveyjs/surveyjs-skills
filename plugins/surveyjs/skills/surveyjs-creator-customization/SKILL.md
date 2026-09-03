@@ -4,9 +4,9 @@ description: >
   Embed and customize SurveyJS Survey Creator (the drag-and-drop form builder) in React,
   Angular, Vue, or vanilla JS — installing survey-creator-core and the renderer, rendering the
   designer, saving the survey JSON back to your API, configuring the toolbox and property grid,
-  handling creator events, applying UI presets per project, and theming the builder chrome.
-  Use when adding a form builder to an admin app, when the builder needs to look or behave
-  differently per customer, or when creator code stops working after an upgrade.
+  handling creator events, and theming the builder chrome. Use when adding a form builder to
+  an admin app or when creator code stops working after an upgrade. Authoring UI preset JSON
+  and the UI Preset Editor belong to surveyjs-creator-presets.
 ---
 
 # SurveyJS Survey Creator
@@ -19,6 +19,8 @@ Not this skill:
 - Rendering a finished form for respondents → `surveyjs-integration`
 - The survey JSON itself — question types, validators, expressions → `surveyjs-form-json`
 - Styling the *form* → theming. Styling the *builder* is here, and they are different systems.
+- Writing or managing UI presets — a stored JSON that configures tabs, toolbox, property grid,
+  and options per project or tenant — → `surveyjs-creator-presets`
 
 ## Survey Creator is commercial
 
@@ -101,7 +103,7 @@ They take different objects. Passing one to the other does nothing useful. See
 | Install, render, save JSON back to an API | `references/setup.md` |
 | An API name that may have moved | `references/renamed-api.md` |
 | Toolbox contents, property grid, custom properties | `references/customization.md` |
-| Different toolbox/tabs/properties per customer | `references/ui-presets.md` |
+| Different toolbox/tabs/properties per customer | `references/ui-presets.md`, then `surveyjs-creator-presets` |
 | Styling the builder, or the design surface | `references/theming.md` |
 
 ## Fetching current docs
