@@ -11,7 +11,8 @@ xAI Grok Build.
 | `surveyjs-form-json` | Writing and debugging the survey JSON itself — question types, validators, `visibleIf` and expressions, triggers, matrices, localization, quiz scoring |
 | `surveyjs-integration` | Getting the Form Library into a React, Next.js, Angular, Vue, vanilla JS, or jQuery app — install, render, theme, handle events, save results |
 | `surveyjs-brand-styling` | Matching a survey to your app design or brandbook — picking a predefined theme, building a custom theme from brand colors and fonts, Bootstrap/MUI/shadcn theme adapters, and custom CSS with per-question-type styling references |
-| `surveyjs-creator-customization` | Embedding the drag-and-drop builder — toolbox and property grid, creator events, UI presets, builder theming |
+| `surveyjs-creator-customization` | Embedding the drag-and-drop builder — toolbox and property grid, creator events, builder theming |
+| `surveyjs-creator-presets` | Configuring the builder per project or tenant with UI presets — authoring the preset JSON (tabs, toolbox, property grid, languages, options, localization), the predefined Basic/Advanced/Expert presets, `UIPreset.applyTo`, `registerUIPreset`, and the no-code UI Preset Editor with preset saving and loading |
 | `surveyjs-dashboard` | Visualizing collected responses with Dashboard — install `survey-analytics`, configure charts and tables, filtering, theming, localization, custom visualizers, table view export |
 | `surveyjs-pdf-generator` | Exporting forms and responses to PDF with `survey-pdf` — fillable or read-only PDFs, page options, fonts, headers/footers, themes and layout presets, and filling existing PDF form fields with PDFFormFiller |
 | `surveyjs-response-extractor` | Extracting structured responses from scanned or photographed paper forms and PDFs with `ai-form-response-extractor` — server-side schema-guided extraction via OpenAI, Anthropic, or local Ollama, confidence review, QR/unique-ID detection, merging paper and online submissions |
@@ -23,7 +24,7 @@ xAI Grok Build.
 | SurveyJS JSON schemas | Supported | `surveyjs-form-json` |
 | Form Library | Supported | `surveyjs-integration` |
 | Theming and brand styling | Supported | `surveyjs-brand-styling` |
-| Survey Creator | Supported | `surveyjs-creator-customization` |
+| Survey Creator | Supported | `surveyjs-creator-customization`, `surveyjs-creator-presets` |
 | Dashboard | Supported | `surveyjs-dashboard` |
 | PDF Generator | Supported | `surveyjs-pdf-generator` |
 | AI Form Response Extractor | Supported | `surveyjs-response-extractor` |
@@ -39,7 +40,7 @@ See [SurveyJS licensing](https://surveyjs.io/licensing).
 ## Staying current
 
 `surveyjs-integration`, `surveyjs-brand-styling`, `surveyjs-creator-customization`,
-`surveyjs-dashboard`, and `surveyjs-pdf-generator` target SurveyJS v3. `surveyjs-response-extractor` follows the current,
+`surveyjs-creator-presets`, `surveyjs-dashboard`, and `surveyjs-pdf-generator` target SurveyJS v3. `surveyjs-response-extractor` follows the current,
 independently versioned `ai-form-response-extractor` package. These skills hash the upstream doc
 pages and source files they depend on. A weekly Action runs
 `scripts/check-upstream-docs.mjs` and opens an issue when one of those pages changes, so the
@@ -85,7 +86,7 @@ gemini extensions install ./plugins/surveyjs
 gemini extensions link ./plugins/surveyjs
 ```
 
-Gemini discovers all six skills automatically from `skills/`.
+Gemini discovers all eight skills automatically from `skills/`.
 
 ## GitHub Copilot CLI
 
@@ -95,7 +96,7 @@ Install this plugin directly from its repository subdirectory:
 copilot plugin install surveyjs/surveyjs-skills:plugins/surveyjs
 ```
 
-The shared `plugin.json` manifest registers all six skills. Copilot can also consume the
+The shared `plugin.json` manifest registers all eight skills. Copilot can also consume the
 repository's `.claude-plugin/marketplace.json` marketplace.
 
 ## xAI Grok Build

@@ -5,6 +5,10 @@ behave: which tabs exist, what the toolbox offers, which properties the grid sho
 languages are available, and general options. One Creator instance, many presets, no fork per
 customer.
 
+Authoring that JSON, the predefined Basic/Advanced/Expert presets, `registerUIPreset`, the
+no-code UI Preset Editor, and saving and loading presets are covered by the dedicated
+**`surveyjs-creator-presets`** skill. This page holds only what an embedding answer needs.
+
 ## Version gate — check this first
 
 UI presets live in `survey-creator-core` **from v3.0.0**. They are **not present in v2.5.x** —
@@ -18,81 +22,20 @@ pre-preset approach, and on v2 it is the correct answer rather than a dated one.
 
 Confirm the installed major before recommending either.
 
-## Shape
-
-A preset JSON has one key per section:
-
-| Key | Configures |
-| :-- | :-- |
-| `toolbox` | Toolbox contents, under a `definition` array |
-| `tabs` | Which tabs exist and their order |
-| `propertyGrid` | Property grid layout, under a `definition` array |
-| `languages` | Available locales |
-| `options` | Creator options |
-| `localization` | Preset-specific UI strings |
-
-```js
-const clientPreset = {
-  name: "acme",
-  json: {
-    toolbox: {
-      definition: [
-        { name: "radiogroup" },
-        { name: "checkbox" },
-        { name: "text", subitems: [] },
-        { name: "email", title: "Email", json: { type: "text", inputType: "email" } }
-      ]
-    },
-    tabs: { /* ... */ },
-    propertyGrid: { /* ... */ }
-  }
-};
-```
-
-A toolbox entry can name an existing type, or define a variation by supplying `title`,
-`iconName` and a `json` block — the same idea as `toolbox.addItem`, expressed declaratively.
-
 ## Applying one
 
 ```js
-import { UIPreset } from "survey-creator-core";
+import { SurveyCreatorModel, UIPreset } from "survey-creator-core";
+import { Basic } from "survey-creator-core/ui-presets";   // or your own { name, json }
 
 const creator = new SurveyCreatorModel(creatorOptions);
-new UIPreset(clientPreset).applyTo(creator);
-```
-
-`applyTo(creator)` is the public entry point. The constructor accepts either the `{ name, json }`
-wrapper above or a bare configuration object. When the preset carries a `name`, it is recorded
-on `creator.activePresetName`.
-
-Pick the preset per request — by tenant, by user role, by whatever your app already knows — and
-apply it to a freshly constructed Creator. Nothing here requires a second Creator build.
-
-## Predefined presets
-
-Three ship in the box, useful as starting points or as ready-made complexity tiers:
-
-```js
-import { Basic, Advanced, Expert } from "survey-creator-core/ui-presets";
-
 new UIPreset(Basic).applyTo(creator);
 ```
 
-`Basic` trims the toolbox to common question types and simplifies the tabs and property grid;
-`Advanced` and `Expert` progressively expose more.
-
-## The no-code preset editor
-
-Presets are JSON, so they can be produced by hand — but `survey-creator-core/ui-preset-editor`
-provides an editor for building and managing them without code, which is what makes
-per-customer configuration something a non-developer can own.
-
-## Current documentation
-
-Presets are newer than most of the Creator documentation, and the package ships no generated
-reference. When a detail matters, fetch:
-
-`https://surveyjs.io/survey-creator/documentation/ui-preset-editor.md`
+Apply right after construction and before rendering. `applyTo()` describes the **whole** UI: a
+section missing from the preset resets that part of the Creator to its defaults, and any
+imperative toolbox or tab changes made earlier are undone. Do not combine the two approaches
+on one instance — pick a preset, or pick code.
 
 ## What presets replace
 
@@ -100,4 +43,10 @@ An answer that reconfigures a single Creator imperatively at runtime — togglin
 and `showTranslationTab`, looping over `creator.toolbox` to remove items, hiding properties
 through `onPropertyShowing` — still works on v3, and every method in it still exists. It is
 simply the v2 shape of the answer. On v3 with several client configurations to serve, a preset
-is the intended structure.
+is the intended structure; hand the authoring to `surveyjs-creator-presets`.
+
+## Current documentation
+
+[UI Preset Editor](https://surveyjs.io/survey-creator/documentation/ui-preset-editor) (append
+`.md` for the Markdown version) and the
+[UI Preset Editor demo](https://surveyjs.io/survey-creator/examples/ui-preset-editor/).

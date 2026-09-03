@@ -66,6 +66,7 @@ describe("init-agents golden fixtures", () => {
     assert.deepEqual(run.one.skills, [
       "surveyjs-brand-styling",
       "surveyjs-creator-customization",
+      "surveyjs-creator-presets",
       "surveyjs-form-json",
       "surveyjs-integration"
     ]);
@@ -106,6 +107,7 @@ describe("init-agents golden fixtures", () => {
     assert.deepEqual(run.one.skills, [
       "surveyjs-brand-styling",
       "surveyjs-creator-customization",
+      "surveyjs-creator-presets",
       "surveyjs-dashboard",
       "surveyjs-form-json",
       "surveyjs-integration",
@@ -131,6 +133,7 @@ describe("init-agents golden fixtures", () => {
     assert.deepEqual(run.one.skills, [
       "surveyjs-brand-styling",
       "surveyjs-creator-customization",
+      "surveyjs-creator-presets",
       "surveyjs-form-json",
       "surveyjs-integration"
     ]);

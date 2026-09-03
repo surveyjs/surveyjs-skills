@@ -99,6 +99,7 @@ describe("skill content", () => {
       [
         "surveyjs-brand-styling",
         "surveyjs-creator-customization",
+        "surveyjs-creator-presets",
         "surveyjs-dashboard",
         "surveyjs-form-json",
         "surveyjs-integration",

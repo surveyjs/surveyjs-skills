@@ -80,13 +80,45 @@ const WATCHED = {
     "surveyjs-creator-customization/references/renamed-api.md"
   ],
   "https://surveyjs.io/survey-creator/documentation/toolbox-customization.md": [
-    "surveyjs-creator-customization/references/customization.md"
+    "surveyjs-creator-customization/references/customization.md",
+    "surveyjs-creator-presets/references/preset-json.md"
   ],
   "https://surveyjs.io/survey-creator/documentation/property-grid-customization.md": [
     "surveyjs-creator-customization/references/customization.md"
   ],
   "https://surveyjs.io/survey-creator/documentation/ui-preset-editor.md": [
-    "surveyjs-creator-customization/references/ui-presets.md"
+    "surveyjs-creator-customization/references/ui-presets.md",
+    "surveyjs-creator-presets/SKILL.md",
+    "surveyjs-creator-presets/references/preset-editor.md",
+    "surveyjs-creator-presets/references/predefined-presets.md"
+  ],
+  "https://surveyjs.io/survey-creator/documentation/api-reference/uipreset.md": [
+    "surveyjs-creator-presets/SKILL.md"
+  ],
+  "https://surveyjs.io/survey-creator/documentation/api-reference/ipreset.md": [
+    "surveyjs-creator-presets/references/preset-json.md"
+  ],
+  "https://surveyjs.io/survey-creator/examples/ui-preset-editor/documentation.md": [
+    "surveyjs-creator-presets/references/preset-editor.md"
+  ],
+  "https://surveyjs.io/survey-creator/examples/basic-ui-preset/documentation.md": [
+    "surveyjs-creator-presets/references/predefined-presets.md"
+  ],
+  "https://raw.githubusercontent.com/surveyjs/survey-creator/master/packages/survey-creator-core/src/ui-presets-creator/presets.ts": [
+    "surveyjs-creator-presets/SKILL.md",
+    "surveyjs-creator-presets/references/preset-json.md"
+  ],
+  "https://raw.githubusercontent.com/surveyjs/survey-creator/master/packages/survey-creator-core/src/ui-presets-creator/presets-toolbox.ts": [
+    "surveyjs-creator-presets/references/preset-json.md"
+  ],
+  "https://raw.githubusercontent.com/surveyjs/survey-creator/master/packages/survey-creator-core/src/ui-presets/basic.ts": [
+    "surveyjs-creator-presets/references/predefined-presets.md"
+  ],
+  "https://raw.githubusercontent.com/surveyjs/survey-creator/master/packages/survey-creator-core/src/ui-presets/advanced.ts": [
+    "surveyjs-creator-presets/references/predefined-presets.md"
+  ],
+  "https://raw.githubusercontent.com/surveyjs/survey-creator/master/packages/survey-creator-core/src/ui-presets/expert.ts": [
+    "surveyjs-creator-presets/references/predefined-presets.md"
   ],
   "https://surveyjs.io/survey-creator/documentation/theme-editor.md": [
     "surveyjs-creator-customization/references/theming.md"
