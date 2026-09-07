@@ -1,7 +1,15 @@
 # API reference
 
-Everything below is exported from `survey-core/linter`. The TypeScript interfaces ship with the
-package; the shapes here are the declared ones.
+Public function signatures, result and finding fields, rule severity, suppressions, and the
+`knownVariables` / `knownFunctions` / `components` options are documented at
+<https://surveyjs.io/form-library/documentation/survey-json-validation#use-the-surveyjs-linter>
+(Markdown: `https://surveyjs.io/form-library/documentation/survey-json-validation.md`).
+Fetch that page rather than restating those tables.
+
+Everything below is **not** on that page: TypeScript shapes as shipped, `messageData`, how
+`path` / `reproduction` work, and the live `survey-core` registries the analysis reads.
+
+The TypeScript interfaces ship with `survey-core`. The shapes here are the declared ones.
 
 ## Functions
 
@@ -13,18 +21,15 @@ function getRules(): Array<ILintRuleInfo>;
 
 ### `lintSurvey(json, options?)`
 
-- `json` must be a **parsed, non-array object** — the survey JSON as written. A string, `null`,
-  or an array throws `TypeError`; parse text with `JSON.parse` first.
-- Accepts both the `pages` form and the legacy top-level `elements` form (which is treated as one
+- `json` must be a **parsed, non-array object**. A string, `null`, or an array throws
+  `TypeError`; parse text with `JSON.parse` first.
+- Accepts both the `pages` form and the legacy top-level `elements` form (treated as one
   implicit page).
 - **Does not mutate the input.** Nothing is normalized, defaulted, or written back.
-- Runs every rule that is not `"off"`, then sorts findings by `path`, then by `ruleId`. The order
-  is stable across runs, which makes the output diffable in CI.
+- Runs every rule that is not `"off"`, then sorts findings by `path`, then by `ruleId`.
 
 ### `renderFindings(input, options?)`
 
-Formats findings as plain text: one block per finding, then a summary line
-(`2 errors, 1 warning, 0 info`, plus `(N suppressed)` when a result carries suppressions).
 Accepts either the whole result or a plain array of findings — filter first to render a subset.
 
 ```ts
@@ -40,11 +45,11 @@ reproduction steps as JSON or the finding's note.
 
 ### `getRules()`
 
-The rule registry as `{ id, defaultSeverity }` pairs, in execution order. Use it to build a
+The rule registry as `{ id, defaultSeverity }` pairs, in **execution order**. Use it to build a
 severity config or to check a rule id before referencing it — do not hardcode a list that can
 drift from the installed version.
 
-## Options
+## Options the docs omit
 
 ```ts
 interface ISurveyLintOptions {
@@ -55,99 +60,36 @@ interface ISurveyLintOptions {
   components?: { [typeName: string]: IComponentDef };
   reportSuppressed?: boolean;
 }
-```
 
-### `rules`
-
-Overrides a rule's default severity. An unrecognized value is ignored and the default applies; an
-unrecognized rule id is simply never matched. `"off"` skips the rule entirely — it produces no
-findings and no suppressed entries.
-
-```js
-lintSurvey(json, { rules: { "page/empty": "off", "expression/type-mismatch": "error" } });
-```
-
-### `suppress`
-
-```ts
 interface ISuppression {
   ruleId?: string;
   elementName?: string;
   path?: string;      // exact path, or a prefix ending in ".*"
 }
-```
 
-A suppression matches when **every** field it sets matches the finding — the fields are ANDed. An
-entry with no fields at all matches nothing (a guard against `{}` silencing the run).
-
-- `ruleId` — exact match.
-- `elementName` — case-insensitive; never matches a finding that has no `elementName`.
-- `path` — exact, or a prefix form: `"pages[0].*"` matches `pages[0]` itself and everything
-  beneath it.
-
-Suppressed findings leave `findings` and are counted in `suppressedCount`; with
-`reportSuppressed: true` they are also returned in `result.suppressed`. Prefer a narrow
-suppression (rule + element) over turning a rule off.
-
-### `knownVariables`
-
-Names the host application supplies at runtime — `survey.setVariable("userRole", …)`, a value
-injected into `survey.data`, a trigger target that is a variable rather than a question. They
-resolve as references and as trigger targets, and they feed typo suggestions. Dotted names work:
-`"user.role"` resolves `{user.role}`.
-
-### `knownFunctions`
-
-Custom functions that are not registered in the process doing the linting. When the linter runs
-inside the application, registering with `FunctionFactory.Instance` is better: registered
-functions are known automatically **and** contribute to "Did you mean …?" suggestions.
-
-### `components`
-
-Definitions for custom question types, in the shape `ComponentCollection.add` takes:
-
-```ts
 interface IComponentDef {
   questionJSON?: any;              // single-question component
   elementsJSON?: Array<any>;       // composite component
 }
 ```
 
-```js
-lintSurvey(json, {
-  components: {
-    fullname: { elementsJSON: [
-      { type: "text", name: "firstName" },
-      { type: "text", name: "lastName" }
-    ]}
-  }
-});
-```
+- An unrecognized `rules` value is ignored and the default applies; an unrecognized rule id is
+  simply never matched. `"off"` skips the rule entirely — no findings and no suppressed entries.
+- A suppression matches when **every** field it sets matches the finding (AND). An entry with no
+  fields matches nothing — a guard against `{}` silencing the run. `elementName` never matches a
+  finding that has none.
+- `knownVariables` also feed typo suggestions. Dotted names work: `"user.role"` resolves
+  `{user.role}`.
+- Registering with `FunctionFactory.Instance` is better than `knownFunctions` when linting
+  inside the app: registered functions are known automatically **and** contribute to
+  "Did you mean …?" suggestions.
+- Expressions **inside** an `options.components` definition are linted too, with
+  `components.<name>.elementsJSON[i].<prop>` paths and a scope where `{composite.x}` resolves
+  against the sibling fields. A component registered only through `ComponentCollection.add`
+  silences `element/unknown-type` but does **not** expose inner field names — pass
+  `options.components` as well when you want that coverage.
 
-Two effects: the type stops being "unknown", and paths into it (`{fn.firstName}`) are resolved
-against the declared fields instead of being skipped. Expressions **inside** the definition are
-linted too, with `components.<name>.elementsJSON[i].<prop>` paths and a scope where
-`{composite.x}` resolves against the sibling fields.
-
-A component registered through `ComponentCollection.add` is visible to the linter as a known type
-— it lands in the `Serializer` — but its **inner field names are not validated**, because the
-definition is not exposed as JSON. Pass `options.components` as well when you want that coverage.
-
-## Results
-
-```ts
-interface ISurveyLintResult {
-  findings: Array<ILintFinding>;
-  errorCount: number;
-  warningCount: number;
-  infoCount: number;
-  suppressedCount: number;
-  suppressed?: Array<ILintFinding>;   // only with reportSuppressed: true
-}
-```
-
-The three counts partition `findings`; `suppressedCount` counts what was filtered out and is
-**not** included in them.
+## Finding fields the docs omit
 
 ```ts
 interface ILintFinding {
@@ -204,9 +146,8 @@ A JSON path into the linted object, using dots for properties and `[i]` for arra
 `calculatedValues[1].expression`, `elements[1].choicesByUrl.url`, `elements[1].bindings.rowCount`,
 `components.fullname.elementsJSON[1].visibleIf`.
 
-There are **no line or column numbers** — the input is an object, not text. To point at a source
-location, resolve the path against the file yourself (a JSON source-map parser, or a search for
-the element name).
+There are **no line or column numbers**. To point at a source location, resolve the path against
+the file yourself (a JSON source-map parser, or a search for the element name).
 
 ### `reproduction`
 

@@ -60,6 +60,12 @@ const WATCHED = {
   "https://surveyjs.io/documentation/backend-integration.md": [
     "surveyjs-integration/references/data-and-events.md"
   ],
+  "https://surveyjs.io/form-library/documentation/survey-json-validation.md": [
+    "surveyjs-linter/SKILL.md",
+    "surveyjs-linter/references/api.md",
+    "surveyjs-linter/references/workflows.md",
+    "surveyjs-linter/references/rules.md"
+  ],
   "https://surveyjs.io/survey-creator/documentation/get-started-react.md": [
     "surveyjs-creator-customization/references/setup.md"
   ],

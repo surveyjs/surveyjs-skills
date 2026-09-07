@@ -1,47 +1,12 @@
 # Workflows
 
-No CLI ships with the linter — it is a function. Everything below is a small amount of glue
-around `lintSurvey`.
+The Node file-linting script, `package.json` npm script, and CI step are in the official
+documentation — copy them from there, do not invent a CLI:
 
-## Lint files from Node
+<https://surveyjs.io/form-library/documentation/survey-json-validation#use-the-surveyjs-linter>
 
-```js
-// scripts/lint-surveys.mjs
-import { readdir, readFile } from "node:fs/promises";
-import { join } from "node:path";
-import { lintSurvey, renderFindings } from "survey-core/linter";
-
-const DIR = "surveys";
-const entries = await readdir(DIR, { recursive: true });
-let failed = 0;
-
-for (const entry of entries.filter((name) => name.endsWith(".json"))) {
-  const file = join(DIR, entry);
-  const json = JSON.parse(await readFile(file, "utf8"));
-  const result = lintSurvey(json);
-  if (result.findings.length === 0) continue;
-
-  console.log(`\n${file}`);
-  console.log(renderFindings(result));
-  if (result.errorCount > 0) failed++;
-}
-
-process.exit(failed > 0 ? 1 : 0);
-```
-
-```json
-{ "scripts": { "lint:surveys": "node scripts/lint-surveys.mjs" } }
-```
-
-Choices worth making explicitly rather than by accident:
-
-- **What fails the build.** Failing on `errorCount` and printing warnings is the usual split.
-  Promote a rule instead of tightening the whole gate: `rules: { "expression/type-mismatch":
-  "error" }`.
-- **Where the config lives.** One shared options object imported by the script, the app, and any
-  editor integration — so a name in `knownVariables` does not have to be repeated.
-- **Guard the parse.** `JSON.parse` throws before the linter sees the file; report that as its own
-  failure, not as a lint finding.
+This file covers glue the docs do not: running inside the application's setup, gating a Survey
+Creator save, checking untrusted JSON from an API, and linting JSON you just generated.
 
 ## Run it inside the application's setup
 
@@ -70,15 +35,17 @@ const LINT_OPTIONS = {
 };
 ```
 
-## CI
+Choices worth making explicitly rather than by accident:
 
-```yaml
-- run: npm ci
-- run: npm run lint:surveys
-```
+- **What fails the build.** Failing on `errorCount` and printing warnings is the usual split.
+  Promote a rule instead of tightening the whole gate: `rules: { "expression/type-mismatch":
+  "error" }`.
+- **Where the config lives.** One shared options object imported by the script, the app, and any
+  editor integration — so a name in `knownVariables` does not have to be repeated.
+- **Guard the parse.** `JSON.parse` throws before the linter sees the file; report that as its own
+  failure, not as a lint finding.
 
-Findings are sorted by `path`, then `ruleId`, so the output is stable between runs and diffs
-cleanly. For a machine-readable artifact, write `result.findings` as JSON instead of rendering it —
+For a machine-readable CI artifact, write `result.findings` as JSON instead of rendering it —
 `messageData` carries the message in parts.
 
 ## Validate on save in Survey Creator

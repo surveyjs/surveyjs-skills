@@ -1,7 +1,12 @@
 # Rule catalog
 
-Fourteen rules, all enabled by default. Every rendered block below is real `renderFindings`
-output for the JSON above it.
+The rule list and default severities are in the official documentation — fetch them from there
+rather than hardcoding a list that can drift:
+
+<https://surveyjs.io/form-library/documentation/survey-json-validation#use-the-surveyjs-linter>
+
+This file is the example JSON, real `renderFindings` output, and the fix for each rule. Read it
+before explaining or suppressing a finding.
 
 Severity means: **error** — the construct cannot evaluate at all; **warning** — it evaluates but
 cannot produce the intended outcome; **info** — the linter lacks the information to be sure.
