@@ -125,6 +125,25 @@ file it belongs in and explain what changed.
 follow-up like "now make the rating required" means one property changes and everything else
 survives byte-for-byte.
 
+## Return a complete survey, not a question fragment
+
+"JSON schema", "the schema", and "survey JSON" in a user request mean a **complete SurveyJS
+survey definition** — the object `new Model(json)` loads. They do not mean a JSON Schema
+(draft-07) document, and they do not mean a standalone question.
+
+The guide's **The shape of a survey** section is the default output: one object with `pages`,
+each page with `elements`, each element a question or a panel. Root-level `elements` is valid
+(the library wraps them in a page); prefer `pages` unless you are editing a file that already
+uses the root-`elements` form.
+
+- A `{ "type": "slider", ... }` (or any other question or panel object) is a **fragment**.
+  Hand a fragment back only when the user asked for one — "just the question", "the element
+  JSON", "a snippet to paste into `elements`".
+- Keep the requested scope. Wrap only the questions they asked for; do not invent extra
+  pages, questions, or branding to make the document look larger.
+- When editing an existing survey file, this still means edit that file. Do not wrap a
+  follow-up change in a new survey envelope.
+
 ## Step 4 — validate before you hand it back
 
 Either route is fine; the second catches more.
@@ -180,6 +199,7 @@ constraints, stored vs displayed values, and mistakes to avoid.
 - [ ] Every `type` appears in the guide's Question types section
 - [ ] No property invented, and none borrowed from a different question type
 - [ ] No legacy alias — the guide lists them explicitly as "never emit"
+- [ ] Complete survey (`pages` / `elements`), not a standalone question, unless a fragment was requested
 - [ ] Validated, with no `jsonErrors`
 - [ ] Every expression references a `name` that exists in this document
 - [ ] Names are unique across the whole survey
