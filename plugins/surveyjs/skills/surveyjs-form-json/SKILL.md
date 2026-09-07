@@ -193,6 +193,13 @@ for types, `maskSettings`, and examples, then read
 [references/input-masking.md](references/input-masking.md) for where they apply, `inputType`
 constraints, stored vs displayed values, and mistakes to avoid.
 
+To bind a slider to a text input, fetch
+<https://surveyjs.io/form-library/examples/sync-slider-with-input-fields/documentation.md>
+then read [references/slider-input-binding.md](references/slider-input-binding.md) for the
+mistakes models invent: `setvalue` triggers, `columnCount`, titles (hidden on a single
+companion field; `"Min:"` / `"Max:"` on the left for a range), a 50%-wide single text
+field, and a text input with no `defaultValue`.
+
 ## Before you finish
 
 - [ ] The guide and schema you used came from the installed version, stamp checked

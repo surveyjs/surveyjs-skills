@@ -70,6 +70,10 @@ const WATCHED = {
     "surveyjs-form-json/SKILL.md",
     "surveyjs-form-json/references/input-masking.md"
   ],
+  "https://surveyjs.io/form-library/examples/sync-slider-with-input-fields/documentation.md": [
+    "surveyjs-form-json/SKILL.md",
+    "surveyjs-form-json/references/slider-input-binding.md"
+  ],
   "https://surveyjs.io/survey-creator/documentation/get-started-react.md": [
     "surveyjs-creator-customization/references/setup.md"
   ],

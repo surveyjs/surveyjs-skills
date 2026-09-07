@@ -150,7 +150,7 @@ repository's README and core source files. A weekly GitHub Action runs the check
 issue when one of those pages changes, so the references get reviewed by hand rather than
 silently going stale. `surveyjs-form-json` reads the authoring guide and JSON Schema shipped
 inside the installed `survey-core` package, which are version-exact by construction, and hashes
-the masked-input demo page used by `references/input-masking.md`.
+the masked-input and slider-with-input demo pages used by its references.
 
 ```
 node scripts/check-upstream-docs.mjs            # report drift, exit 1 if any
