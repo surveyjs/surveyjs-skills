@@ -148,9 +148,9 @@ upstream pages their
 reference files are based on — surveyjs.io doc pages plus, for the extractor, the package
 repository's README and core source files. A weekly GitHub Action runs the checker and opens an
 issue when one of those pages changes, so the references get reviewed by hand rather than
-silently going stale. `surveyjs-form-json` needs no watched pages: it reads the authoring guide
-and JSON Schema shipped inside the installed `survey-core` package, which are version-exact by
-construction.
+silently going stale. `surveyjs-form-json` reads the authoring guide and JSON Schema shipped
+inside the installed `survey-core` package, which are version-exact by construction, and hashes
+the masked-input demo page used by `references/input-masking.md`.
 
 ```
 node scripts/check-upstream-docs.mjs            # report drift, exit 1 if any

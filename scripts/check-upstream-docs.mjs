@@ -66,6 +66,10 @@ const WATCHED = {
     "surveyjs-linter/references/workflows.md",
     "surveyjs-linter/references/rules.md"
   ],
+  "https://surveyjs.io/form-library/examples/masked-input-fields/documentation.md": [
+    "surveyjs-form-json/SKILL.md",
+    "surveyjs-form-json/references/input-masking.md"
+  ],
   "https://surveyjs.io/survey-creator/documentation/get-started-react.md": [
     "surveyjs-creator-customization/references/setup.md"
   ],
