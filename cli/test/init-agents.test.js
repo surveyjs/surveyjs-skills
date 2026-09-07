@@ -47,7 +47,12 @@ describe("init-agents golden fixtures", () => {
 
     assert.equal(run.one.code, 0);
     assert.deepEqual(run.one.clients, ["claude", "cursor"]);
-    assert.deepEqual(run.one.skills, ["surveyjs-brand-styling", "surveyjs-form-json", "surveyjs-integration"]);
+    assert.deepEqual(run.one.skills, [
+      "surveyjs-brand-styling",
+      "surveyjs-form-json",
+      "surveyjs-integration",
+      "surveyjs-linter"
+    ]);
 
     matchGolden("react-survey-core", snapshot(root, run), assert);
 
@@ -67,7 +72,8 @@ describe("init-agents golden fixtures", () => {
       "surveyjs-brand-styling",
       "surveyjs-creator-customization",
       "surveyjs-form-json",
-      "surveyjs-integration"
+      "surveyjs-integration",
+      "surveyjs-linter"
     ]);
 
     matchGolden("angular-survey-creator", snapshot(root, run, [".github/copilot-instructions.md"]), assert);
@@ -109,6 +115,7 @@ describe("init-agents golden fixtures", () => {
       "surveyjs-dashboard",
       "surveyjs-form-json",
       "surveyjs-integration",
+      "surveyjs-linter",
       "surveyjs-pdf-generator",
       "surveyjs-response-extractor"
     ]);
@@ -132,7 +139,8 @@ describe("init-agents golden fixtures", () => {
       "surveyjs-brand-styling",
       "surveyjs-creator-customization",
       "surveyjs-form-json",
-      "surveyjs-integration"
+      "surveyjs-integration",
+      "surveyjs-linter"
     ]);
 
     const pinned = run.contentsAfterFirst[".claude/skills/surveyjs-form-json/SKILL.md"];
@@ -201,7 +209,8 @@ describe("init-agents golden fixtures", () => {
       "surveyjs-brand-styling",
       "surveyjs-dashboard",
       "surveyjs-form-json",
-      "surveyjs-integration"
+      "surveyjs-integration",
+      "surveyjs-linter"
     ]);
 
     const after = run.contentsAfterFirst["AGENTS.md"];

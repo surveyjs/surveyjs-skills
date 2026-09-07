@@ -79,7 +79,7 @@ Install the plugin directly from its repository subdirectory:
 copilot plugin install surveyjs/surveyjs-skills:plugins/surveyjs
 ```
 
-The shared `plugin.json` manifest registers all six skills. The existing Claude-compatible
+The shared `plugin.json` manifest registers every skill in `skills/`. The existing Claude-compatible
 marketplace can also be added with `copilot plugin marketplace add surveyjs/surveyjs-skills`.
 
 ## Install with xAI Grok Build
@@ -107,6 +107,7 @@ link the same skill directories into its native location, such as `.cursor/skill
 | Skill | Use it for |
 | :---- | :---- |
 | `surveyjs-form-json` | Writing and debugging the survey JSON itself — question types, validators, `visibleIf` and expressions, triggers, matrices, localization, quiz scoring |
+| `surveyjs-linter` | Statically checking survey JSON with `survey-core/linter` — broken `{question}` references in conditions, name typos and duplicates, calculated-value and trigger cycles, dead choice sources, conditions that can never fire, plus rule severities, suppressions, and CI wiring |
 | `surveyjs-integration` | Getting the Form Library into a React, Next.js, Angular, Vue, vanilla JS, or jQuery app — install, render, theme, handle events, save results |
 | `surveyjs-brand-styling` | Matching a survey to your app design or brandbook — picking a predefined theme, building a custom theme from brand colors and fonts, Bootstrap/MUI/shadcn theme adapters, and custom CSS with per-question-type styling references |
 | `surveyjs-creator-customization` | Embedding the drag-and-drop builder — toolbox and property grid, creator events, UI presets, builder theming |
@@ -122,6 +123,7 @@ independently versioned `ai-form-response-extractor` package.
 | Product or area | Status | Skill |
 | :---- | :---- | :---- |
 | SurveyJS JSON schemas | Supported | `surveyjs-form-json` |
+| Survey JSON linting | Supported | `surveyjs-linter` |
 | Form Library | Supported | `surveyjs-integration` |
 | Theming and brand styling | Supported | `surveyjs-brand-styling` |
 | Survey Creator | Supported | `surveyjs-creator-customization` |
@@ -140,7 +142,8 @@ commercial application. The relevant skills state licensing requirements where t
 ## Staying current
 
 `surveyjs-integration`, `surveyjs-brand-styling`, `surveyjs-creator-customization`,
-`surveyjs-dashboard`, `surveyjs-pdf-generator`, and `surveyjs-response-extractor` hash the
+`surveyjs-dashboard`, `surveyjs-pdf-generator`, `surveyjs-linter`, and
+`surveyjs-response-extractor` hash the
 upstream pages their
 reference files are based on — surveyjs.io doc pages plus, for the extractor, the package
 repository's README and core source files. A weekly GitHub Action runs the checker and opens an
