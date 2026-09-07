@@ -121,10 +121,10 @@ describe("detect/project", () => {
     assert.deepEqual(Object.keys(detectProject(root).packages), ["survey-core"]);
   });
 
-  it("does not treat survey-cli itself as a SurveyJS product", () => {
+  it("does not treat surveyjs-cli itself as a SurveyJS product", () => {
     const root = makeTempProject({
-      "package.json": JSON.stringify({ name: "p", devDependencies: { "survey-cli": "^0.1.0" } }),
-      "node_modules/survey-cli/package.json": JSON.stringify({ version: "0.1.0" })
+      "package.json": JSON.stringify({ name: "p", devDependencies: { "surveyjs-cli": "^0.1.0" } }),
+      "node_modules/surveyjs-cli/package.json": JSON.stringify({ version: "0.1.0" })
     });
     assert.deepEqual(detectProject(root).packages, {});
   });
@@ -174,7 +174,7 @@ describe("detect/project", () => {
   it("admits that bun.lockb cannot be read instead of guessing from the range", () => {
     const root = makeTempProject({
       "package.json": pkg({ "survey-core": "^3.0.1" }),
-      "bun.lockb": "binary; survey-cli never parses it"
+      "bun.lockb": "binary; surveyjs-cli never parses it"
     });
     const project = detectProject(root);
     assert.equal(project.lockfile, "bun.lockb");

@@ -13,8 +13,9 @@ description: >
 
 # SurveyJS PDF Generator
 
-Generates PDF documents in the browser from the same survey JSON the Form Library renders,
-optionally populated with collected response data. There are **two distinct workflows** —
+Generates PDF documents from the same survey JSON the Form Library renders, optionally
+populated with collected response data. Browser and Node.js server environments are
+supported. There are **two distinct workflows** —
 pick the right one first:
 
 1. **Generate a PDF from a survey schema** — `SurveyPDF` lays out the survey itself as a
@@ -67,10 +68,10 @@ npm install survey-pdf
 
 ## Guardrails
 
-**Everything runs client-side in the browser.** The schema and response data come from the
-host application — there is no SurveyJS backend to fetch from or post to. Generation, saving,
-and `raw()` conversion all happen in the user's browser; upload the blob to your own API if
-the server needs the file.
+**Browser and Node.js are both supported.** In Node.js, generate from an HTTP handler,
+queue worker, or cron job; no user needs to open the survey. If the survey contains HTML or
+Signature Pad questions, install `jsdom` and expose its `window` and `document` globals
+before creating `SurveyPDF` (see `references/setup.md`).
 
 **A PDF is a static document.** Conditional visibility, validation, and navigation run
 *before* export (SurveyPDF extends the Form Library's `SurveyModel`), not inside the PDF.
@@ -84,6 +85,10 @@ license an alert banner appears at the top of each exported page. Activation ins
 and the key live behind <https://surveyjs.io/remove-alert-banner> after logging in — point
 the user there rather than guessing, never invent a key, and never add code that hides or
 crops the banner.
+
+**Keep basic examples minimal.** For ordinary exports, use `new SurveyPDF(surveyJson)` with
+no document-options object. Include optional customizations only when the user asks for a specific page size, direction, or
+margin, or when the task otherwise requires them. Do not add them merely as boilerplate.
 
 ## Routing
 
@@ -103,19 +108,24 @@ Every page on surveyjs.io is available as raw Markdown by appending `.md` to its
 - Demo, framework-neutral — `https://surveyjs.io/pdf-generator/examples/<name>/documentation.md`
 - Demo, framework source — `https://surveyjs.io/pdf-generator/examples/<name>/<framework>.md`
   where `<framework>` is `reactjs`, `angular`, `vue3js`, or `vanillajs`
-- API reference — `https://surveyjs.io/pdf-generator/documentation/api-reference/surveypdf`,
-  `.../idocoptions`, `.../drawcanvas`
+- API reference — `https://surveyjs.io/pdf-generator/documentation/api-reference/surveypdf.md`,
+  `.../idocoptions.md`, `.../drawcanvas.md`
+- Node.js guide — `https://surveyjs.io/pdf-generator/documentation/get-started-nodejs.md`
 
-Escalation order when stuck: reference file → official `.md` doc → matching demo source →
-[howtos-and-troubleshooting](https://github.com/surveyjs/surveyjs-howtos-and-troubleshooting)
-→ [llms.txt](https://surveyjs.io/llms.txt) for orientation. Prefer these over blog posts and
-Stack Overflow answers, which predate the v3 appearance API.
+**Do not fetch GitHub.** Skip `surveyjs/code-examples` (including `surveyjs-pdf-nodejs`),
+raw.githubusercontent.com sample trees, and other GitHub repos. Node.js server generation is
+fully covered in `references/setup.md`; if that is not enough, fetch only the surveyjs.io
+`.md` URLs above.
+
+Escalation order when stuck: reference file → official surveyjs.io `.md` doc → matching
+surveyjs.io demo `.md` → [llms.txt](https://surveyjs.io/llms.txt) for orientation. Prefer
+these over blog posts and Stack Overflow answers, which predate the v3 appearance API.
 
 ## Before you finish
 
 - [ ] `survey-pdf` installed; `survey-core` present at the **same** version; jsPDF not added by hand
 - [ ] The right workflow chosen: `SurveyPDF` to generate, `PDFFormFiller` to fill an existing PDF
-- [ ] `new SurveyPDF(json, docOptions)`; response data assigned via `surveyPdf.data`
+- [ ] `new SurveyPDF(json)` for the basic case, or `new SurveyPDF(json, docOptions)` only when document layout options are relevant; response data assigned via `surveyPdf.data`
 - [ ] Read-only output uses `readOnly = true`; fillable is the default, not an option to invent
 - [ ] `save()` / `raw()` treated as async (they return Promises)
 - [ ] Margins use `bot`, not `bottom`; no browser CSS anywhere near PDF styling

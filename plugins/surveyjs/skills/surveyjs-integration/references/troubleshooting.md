@@ -49,12 +49,25 @@ An inline arrow function is a new reference each render and will always duplicat
 
 ## `document is not defined` at build time, or a hydration mismatch
 
-The Form Library is browser-only.
+Form Library v3 supports SSR. On v3 this error usually comes from application code or another
+browser-only dependency, rather than from rendering a standard SurveyJS form.
 
-- **Next.js:** mark the component `"use client"` *and* import it with
-  `dynamic(() => import("..."), { ssr: false })`. The directive alone is not enough.
-- **Nuxt:** wrap in `<ClientOnly>` or name the file `*.client.vue`.
-- **Angular Universal:** guard the render behind `isPlatformBrowser`.
+- **Anywhere:** do not read `window`, `document`, `localStorage`, or other browser APIs while
+  constructing the model — do that work in an effect, `onMounted`, `ngAfterViewInit`, or an
+  event handler. Ensure the schema and initial data are the same on the server and the client.
+- **Next.js:** mark the component that renders `<Survey>` with `"use client"`, and pass the
+  schema (JSON) rather than a `Model` instance across the server/client boundary.
+- **Custom questions or third-party widgets:** make their server rendering safe, or defer only
+  that browser-dependent code until after mount.
+- **Hydration mismatch:** avoid non-deterministic initial values such as `Date.now()`, random
+  IDs, locale-dependent formatting, or data that differs between the server and client. Two
+  surveys on one page need distinct `elementIdPrefix` values — element ids are deterministic
+  per survey, so otherwise both render the same ids.
+
+**On v2 and earlier** the Form Library is browser-only and the old workarounds still apply:
+Next.js needs `"use client"` *and* `dynamic(() => import("..."), { ssr: false })`; Nuxt needs
+`<ClientOnly>` or a `*.client.vue` filename; Angular Universal needs an `isPlatformBrowser`
+guard.
 
 ## Two surveys appear
 

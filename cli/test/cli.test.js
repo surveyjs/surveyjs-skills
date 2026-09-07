@@ -9,7 +9,7 @@ import { CLI_ROOT, cleanup, listFiles, useFixture } from "./helpers.js";
 
 after(cleanup);
 
-const BIN = join(CLI_ROOT, "bin", "survey-cli.js");
+const BIN = join(CLI_ROOT, "bin", "surveyjs-cli.js");
 
 function run(args, { cwd = CLI_ROOT } = {}) {
   try {
@@ -20,7 +20,7 @@ function run(args, { cwd = CLI_ROOT } = {}) {
   }
 }
 
-describe("bin/survey-cli.js", () => {
+describe("bin/surveyjs-cli.js", () => {
   it("prints the package version", () => {
     const expected = JSON.parse(readFileSync(join(CLI_ROOT, "package.json"), "utf8")).version;
     assert.deepEqual(run(["--version"]), { code: 0, stdout: `${expected}\n`, stderr: "" });
@@ -29,7 +29,7 @@ describe("bin/survey-cli.js", () => {
   it("prints usage with --help and exits 0", () => {
     const result = run(["--help"]);
     assert.equal(result.code, 0);
-    assert.match(result.stdout, /survey-cli <command> \[options\]/);
+    assert.match(result.stdout, /surveyjs-cli <command> \[options\]/);
     assert.match(result.stdout, /no telemetry/);
   });
 

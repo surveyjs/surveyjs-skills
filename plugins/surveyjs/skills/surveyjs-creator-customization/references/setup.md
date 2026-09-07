@@ -39,9 +39,12 @@ const creatorOptions: ICreatorOptions = {
 };
 ```
 
-`autoSaveEnabled` replaced `isAutoSave`. `questionTypes` restricts which question types the
-toolbox offers at all — for finer control over toolbox contents see `customization.md`, and for
-per-customer configuration see `ui-presets.md`.
+`autoSaveEnabled` defaults to `false`, so omit it unless you are implementing automatic
+persistence. Set `autoSaveEnabled: true` only with a `saveSurveyFunc`; it saves after every
+change instead of waiting for a button. The property replaced `isAutoSave`.
+`questionTypes` restricts which question types the toolbox offers at all — for finer control
+over toolbox contents see `customization.md`, and for per-customer configuration see
+`ui-presets.md`.
 
 ## Create and render
 

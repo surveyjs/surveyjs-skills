@@ -15,7 +15,7 @@ in `references/` and link it from the skill's `SKILL.md`.
   output that has not been reviewed.
 - Link every Markdown file under a skill's `references/` directory from `SKILL.md`.
 - Add a `skill.meta.json` beside `SKILL.md` declaring the npm `packages` and UI `frameworks`
-  the skill applies to. `survey-cli` uses it to decide which skills a project needs; `["*"]`
+  the skill applies to. `surveyjs-cli` uses it to decide which skills a project needs; `["*"]`
   means "applies to all".
 
 ## Validation

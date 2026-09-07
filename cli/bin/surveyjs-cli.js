@@ -7,7 +7,7 @@ import { runUpdate } from "../src/commands/update.js";
 import { cliVersion } from "../src/manifest.js";
 import { CLIENT_DEFINITIONS } from "../src/detect/clients.js";
 
-const USAGE = `survey-cli <command> [options]
+const USAGE = `surveyjs-cli <command> [options]
 
 Commands
   init-agents   Detect this project's SurveyJS packages and AI clients, then write the
@@ -23,9 +23,9 @@ ${CLIENT_DEFINITIONS.map((client) => `                     ${client.id.padEnd(10
   --dry-run        Print what would change without touching disk.
   --force          Overwrite files at owned paths that a previous run did not write.
   --help, -h       Show this help.
-  --version, -v    Print the survey-cli version.
+  --version, -v    Print the surveyjs-cli version.
 
-survey-cli makes no network calls and collects no telemetry.
+surveyjs-cli makes no network calls and collects no telemetry.
 `;
 
 function parseArgv(argv) {
@@ -90,6 +90,6 @@ try {
   const result = await command();
   process.exit(result?.code ?? 0);
 } catch (error) {
-  process.stderr.write(`survey-cli: ${error?.message ?? error}\n`);
+  process.stderr.write(`surveyjs-cli: ${error?.message ?? error}\n`);
   process.exit(1);
 }

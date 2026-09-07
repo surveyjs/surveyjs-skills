@@ -32,7 +32,7 @@ export function readManifest(root) {
 export function buildManifest({ cliVersion: version, project, clients, skills, files, blocks }) {
   return {
     cliVersion: version,
-    generator: "survey-cli",
+    generator: "surveyjs-cli",
     source: "https://github.com/surveyjs/surveyjs-skills",
     framework: project.framework,
     lockfile: project.lockfile,

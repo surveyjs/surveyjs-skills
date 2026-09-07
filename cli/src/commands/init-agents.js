@@ -1,4 +1,4 @@
-// `survey-cli init-agents` — detect, filter, place, record.
+// `surveyjs-cli init-agents` — detect, filter, place, record.
 
 import process from "node:process";
 
@@ -23,7 +23,7 @@ const SOURCE_LABELS = {
 
 function lockfileLabel(project) {
   if (!project.lockfile) return "none";
-  return project.lockfileParsed ? project.lockfile : `${project.lockfile} (present, but survey-cli cannot read it)`;
+  return project.lockfileParsed ? project.lockfile : `${project.lockfile} (present, but surveyjs-cli cannot read it)`;
 }
 
 export async function runInitAgents({
@@ -116,7 +116,7 @@ function warnAboutRejectedPaths({ err, rejected }) {
     `\nIgnored ${rejected.length} path(s) in ${MANIFEST_FILE} that point outside this project:\n` +
       rejected.map((rel) => `  ${rel}\n`).join("") +
       "Nothing outside the project root is ever written or deleted. Check that file into version " +
-      "control only as survey-cli wrote it.\n"
+      "control only as surveyjs-cli wrote it.\n"
   );
 }
 

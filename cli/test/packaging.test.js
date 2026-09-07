@@ -30,16 +30,16 @@ describe("package.json", () => {
     assert.ok(existsSync(join(CLI_ROOT, "scripts", "prepack-skills.js")));
   });
 
-  it("is named survey-cli, exposes the survey-cli bin, and floors Node at an LTS release", () => {
-    assert.equal(packageJson.name, "survey-cli");
-    assert.deepEqual(packageJson.bin, { "survey-cli": "./bin/survey-cli.js" });
+  it("is named surveyjs-cli, exposes the surveyjs-cli bin, and floors Node at an LTS release", () => {
+    assert.equal(packageJson.name, "surveyjs-cli");
+    assert.deepEqual(packageJson.bin, { "surveyjs-cli": "./bin/surveyjs-cli.js" });
     assert.match(packageJson.engines.node, /^>=(2[2-9]|[3-9]\d)\./);
   });
 });
 
 describe("source", () => {
   const files = [
-    "bin/survey-cli.js",
+    "bin/surveyjs-cli.js",
     "src/commands/init-agents.js",
     "src/commands/doctor.js",
     "src/commands/update.js",

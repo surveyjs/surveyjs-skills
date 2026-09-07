@@ -97,27 +97,61 @@ stable id: `useMemo(() => new Model(schema), [schemaId])`.
 
 ## Next.js
 
-The Form Library is browser-only — it touches `document` during render. Two steps:
+SurveyJS Form Library v3 supports server-side rendering. In the App Router, render the form
+normally so it is included in the initial HTML and hydrated for interaction.
 
-**1. Mark the component as client-side.**
+Mark the component that imports and renders `<Survey>` as client code. This is still required
+for interactivity; it does not prevent Next.js from pre-rendering the component on the server.
 
 ```tsx
+// components/Survey.tsx
 "use client";
+
+import { useMemo } from "react";
+import { Model } from "survey-core";
+import { Survey } from "survey-react-ui";
+
+export default function SurveyComponent({ schema }: { schema: object }) {
+  const survey = useMemo(() => new Model(schema), [schema]);
+  return <Survey model={survey} />;
+}
 ```
 
-**2. Disable SSR at the import site** so the server never tries to render it. Without this you
-get a hydration mismatch or a `document is not defined` build error.
+Keep the page itself a Server Component when it only loads the schema and passes it to the
+client component:
 
 ```tsx
-import dynamic from "next/dynamic";
+// app/survey/page.tsx
+import SurveyComponent from "@/components/Survey";
+import surveyJson from "@/surveys/feedback.json";
 
-const SurveyComponent = dynamic(() => import("@/components/Survey"), {
-  ssr: false
-});
+export default function SurveyPage() {
+  return <SurveyComponent schema={surveyJson} />;
+}
 ```
 
-The CSS import can stay in the component, or move to `app/layout.tsx` if several routes render
-surveys.
+Props crossing the server/client boundary must be JSON-serializable. Pass the **schema**, not
+a `Model` instance — constructing the model on the server and handing it to a client component
+throws a serialization error.
+
+Import `survey-core/survey-core.css` exactly once. In the App Router put it in
+`app/layout.tsx` rather than in the component, so several survey routes share one import. The
+schema and initial model state must be deterministic so the server render and client hydration
+match.
+
+Rendering two surveys on one page? Set a distinct `elementIdPrefix` on each model. Element ids
+are deterministic per survey, so two models produce the same ids and collide in the SSR HTML:
+
+```tsx
+const survey = useMemo(() => {
+  const model = new Model(schema);
+  model.elementIdPrefix = instanceId;   // e.g. "left_" / "right_"
+  return model;
+}, [schema, instanceId]);
+```
+
+**On v2 and earlier** the Form Library is browser-only. Keep the old workaround there:
+`dynamic(() => import("@/components/Survey"), { ssr: false })`.
 
 ## TypeScript
 
