@@ -42,6 +42,16 @@ describe("bin/surveyjs-cli.js", () => {
     assert.equal(run(["init-agents", "--nope"]).code, 2);
   });
 
+  it("runs install-mcp end to end at project scope", () => {
+    const root = useFixture("empty-project");
+    const result = run(["install-mcp", "--editor", "claude-code"], { cwd: root });
+
+    assert.equal(result.code, 0, result.stderr);
+    assert.match(result.stdout, /wrote {2}\.mcp\.json/);
+    assert.equal(JSON.parse(readFileSync(join(root, ".mcp.json"), "utf8")).mcpServers.surveyjs.type, "http");
+    assert.equal(run(["install-mcp", "--editor=windsurf"], { cwd: root }).code, 2);
+  });
+
   it("runs init-agents end to end in a non-TTY process without --yes", () => {
     const root = useFixture("react-survey-core");
     const result = run(["init-agents"], { cwd: root });

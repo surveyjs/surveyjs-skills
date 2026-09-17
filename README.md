@@ -31,6 +31,13 @@ products actually installed, pins their exact versions into the skill text, and 
 depending on which clients the project uses. Commit the result and every agent on the team gets
 the same guidance. See [cli/README.md](cli/README.md).
 
+The same CLI adds the SurveyJS MCP server (documentation search) to an editor's MCP config, in the
+project by default or in your home directory with `--user`:
+
+```
+npx surveyjs-cli@latest install-mcp --editor=vscode
+```
+
 ## Install with OpenAI Codex
 
 Add this repository as a Codex marketplace and install the plugin:

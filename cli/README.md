@@ -54,6 +54,7 @@ as-is.
 surveyjs-cli init-agents [options]   detect, filter, write, record
 surveyjs-cli doctor                  compare .surveyjs-skills.json against what is installed now
 surveyjs-cli update                  re-run placement for the clients already recorded
+surveyjs-cli install-mcp [options]   add the SurveyJS MCP server to an editor's MCP config
 ```
 
 `doctor` exits non-zero when the recorded state is stale — a SurveyJS upgrade, an added or
@@ -62,12 +63,56 @@ check. A version it simply could not verify is reported as a warning and does **
 exit code: a project with no committed lockfile and no `node_modules` in CI cannot fix that, and
 failing the build over it would be noise.
 
+## `install-mcp`
+
+Registers the SurveyJS MCP server, `https://mcp.surveyjs.io/mcp`, so the AI assistant in your
+editor can search the SurveyJS documentation.
+
+```
+npx surveyjs-cli@latest install-mcp --editor=vscode              # .vscode/mcp.json in this project
+npx surveyjs-cli@latest install-mcp --editor=claude-code,cursor  # .mcp.json and .cursor/mcp.json
+npx surveyjs-cli@latest install-mcp --editor=windsurf --user     # ~/.codeium/windsurf/mcp_config.json
+npx surveyjs-cli@latest install-mcp --editor=zed --dry-run       # print the entry, write nothing
+```
+
+By default the command writes the editor's **project-level** config, inside the project root like
+everything else this CLI writes, so you can commit it and share the server with the team. It writes
+the **user-level** config in your home directory only when you pass `--user`. Editors without a
+project-level config fail without `--user` and write nothing.
+
+| `--editor` | Project-level config | User-level config (`--user`) | Path source |
+| :--- | :--- | :--- | :--- |
+| `vscode` | `.vscode/mcp.json` | `mcp.json` in the VS Code user profile | [VS Code — MCP servers](https://code.visualstudio.com/docs/copilot/customization/mcp-servers) |
+| `vscode-insiders` | `.vscode/mcp.json` | `mcp.json` in the VS Code Insiders user profile | [VS Code — MCP servers](https://code.visualstudio.com/docs/copilot/customization/mcp-servers) |
+| `cursor` | `.cursor/mcp.json` | `~/.cursor/mcp.json` | [Cursor — MCP](https://cursor.com/docs/context/mcp) |
+| `windsurf` | — | `~/.codeium/windsurf/mcp_config.json` | [Windsurf — MCP](https://docs.windsurf.com/windsurf/cascade/mcp) |
+| `webstorm` | — | GitHub Copilot's `mcp.json` for JetBrains IDEs | [GitHub — extend Copilot Chat with MCP](https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp/extend-copilot-chat-with-mcp) |
+| `visual-studio` | `.mcp.json` | `~/.mcp.json` | [Visual Studio — MCP servers](https://learn.microsoft.com/en-us/visualstudio/ide/mcp-servers) |
+| `claude-code` | `.mcp.json` | `~/.claude.json` | [Claude Code — MCP](https://code.claude.com/docs/en/mcp) |
+| `claude-desktop` | — | `claude_desktop_config.json` in the OS config directory | [MCP — connect local servers](https://modelcontextprotocol.io/quickstart/user) |
+| `zed` | `.zed/settings.json` | Zed's `settings.json` | [Zed — MCP](https://zed.dev/docs/ai/mcp) |
+| `cline` | — | `cline_mcp_settings.json` in VS Code's `globalStorage` | [Cline — configuring MCP servers](https://docs.cline.bot/mcp/configuring-mcp-servers) |
+
+- Only the `surveyjs` entry is added or replaced; other servers and settings in the file are kept.
+  Re-runs are idempotent.
+- The file is written back as plain JSON. If it contains comments, the command refuses, prints the
+  entry to add by hand, and rewrites the file only with `--force`.
+- A file that is not valid JSON(C) stops the run before any file is written.
+- Claude Desktop and Zed get the server through `npx mcp-remote`, so Node.js has to be on `PATH`
+  when the editor starts it. The CLI itself still makes no network calls.
+- Without `--editor`, a TTY gets a prompt (default `vscode`); `--yes` or a non-TTY stdin fails with
+  exit code 2 instead of guessing.
+- `install-mcp` does not record anything in `.surveyjs-skills.json`: the MCP config is a shared
+  file, not one this CLI owns.
+
 ## Options
 
 | Option | Effect |
 | :--- | :--- |
 | `--client=<name>` | Write for this client. Repeatable, and comma-separated values work. |
 | `--all` | Write for every known client. |
+| `--editor=<name>` | `install-mcp`: add the server for this editor. Repeatable, and comma-separated values work. |
+| `--user` | `install-mcp`: write the editor's user-level config in your home directory instead of the project-level one. |
 | `--yes`, `-y` | Never prompt. Fully non-interactive, for CI. |
 | `--dry-run` | Print what would change; touch nothing. |
 | `--force` | Overwrite files at owned paths that a previous run did not write. |
