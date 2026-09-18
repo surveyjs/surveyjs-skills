@@ -1,148 +1,158 @@
-# surveyjs-cli
+# SurveyJS CLI
 
-Puts the [SurveyJS agent skills](../plugins/surveyjs/skills/) into whichever AI coding clients
-your project already uses, filtered to the SurveyJS products you actually have installed and
-pinned to the versions you actually have installed.
+Give your AI coding client guidance for working with SurveyJS. This CLI installs [SurveyJS agent skills](../plugins/surveyjs/skills/) that match the packages in your project. It can also connect your editor to the SurveyJS MCP server so your assistant can search the documentation.
 
-```
+Requires Node.js 22 or later.
+
+## Quick Start
+
+Open a terminal in your project root and run `init-agents`. It finds your SurveyJS packages, asks you to confirm which AI clients to use, and installs the matching skills.
+
+```sh
+# Detect clients and install matching SurveyJS skills
 npx surveyjs-cli@latest init-agents
 ```
 
-No runtime dependencies, no install scripts, no network calls, no telemetry. Node 22+.
+To choose clients yourself, pass `--client`. If you want to review the changes first, use `--dry-run`.
 
-## What `init-agents` does
+```sh
+# Install skills for specific clients (Claude Code and Cursor)
+npx surveyjs-cli@latest init-agents --client=claude,cursor
 
-1. **Reads your project.** `package.json` plus `package-lock.json`, `pnpm-lock.yaml`, `yarn.lock`,
-   `bun.lock`, or `node_modules/` gives the installed version of every SurveyJS package and the UI
-   framework you render with (react / angular / vue3 / jquery / vanilla). Transitive packages count:
-   `npm install survey-creator-react` on its own — what the Creator docs tell you to do — pulls
-   `survey-creator-core`, `survey-core`, and `survey-react-ui` without listing them in
-   `package.json`, and all four are detected.
-2. **Detects your AI clients** from the config locations each one documents (table below).
-3. **Filters the skills.** Each skill declares the packages it applies to in a `skill.meta.json`
-   beside its `SKILL.md`; only matching skills are written. A project with `survey-pdf` and
-   nothing else gets `surveyjs-form-json` and `surveyjs-pdf-generator`. A project with no
-   SurveyJS at all gets the full set, because there is nothing to narrow by.
-4. **Writes them.** Directories we own are written whole. Files we do not own — `AGENTS.md`,
-   `.github/copilot-instructions.md` — only get a block between `<!-- surveyjs:start -->` and
-   `<!-- surveyjs:end -->`; the rest of the file is never rewritten.
-5. **Pins the versions** into every written `SKILL.md`, so the skill text says which SurveyJS
-   version it describes — and only when the version was actually verified. See
-   [Versions it will and will not claim](#versions-it-will-and-will-not-claim).
-6. **Records what it wrote** in `.surveyjs-skills.json`. Re-runs are idempotent and clean up
-   anything recorded there that no longer applies.
+# Preview changes without writing files
+npx surveyjs-cli@latest init-agents --dry-run
+```
 
-## Client targets
-
-| `--client` | Skill directory | Managed block | Path source |
-| :--- | :--- | :--- | :--- |
-| `claude` | `.claude/skills/<name>/` | — | [Claude Code — skills](https://code.claude.com/docs/en/skills) |
-| `cursor` | `.cursor/skills/<name>/` | — | [Cursor — Agent Skills](https://cursor.com/docs/skills) |
-| `copilot` | `.github/skills/<name>/` | `.github/copilot-instructions.md` | [GitHub — add agent skills](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills), [VS Code — agent skills](https://code.visualstudio.com/docs/agent-customization/agent-skills), [GitHub — repository instructions](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions) |
-| `agents-md` | `.agents/skills/<name>/` | `AGENTS.md` | [agents.md](https://agents.md/), plus the Cursor and Copilot docs above for `.agents/skills/` |
-
-`agents-md` is the portable target: OpenAI Codex, Gemini CLI, Jules, and anything else that reads
-`AGENTS.md`. It is also what gets written when no client is detected and nobody can be asked.
-
-With no `--client` and no `--all`, the detected clients are used. In a TTY you get to confirm or
-change that selection; with `--yes`, or when stdin is not a TTY (CI), the detected set is used
-as-is.
+The skills are saved in each client's skill directory. The CLI also creates `.surveyjs-skills.json` to track what it installed. Commit these files so everyone working on the project uses the same guidance.
 
 ## Commands
 
-```
-surveyjs-cli init-agents [options]   detect, filter, write, record
-surveyjs-cli doctor                  compare .surveyjs-skills.json against what is installed now
-surveyjs-cli update                  re-run placement for the clients already recorded
-```
+Use `npx surveyjs-cli@latest <command>` to run any command.
 
-`doctor` exits non-zero when the recorded state is stale — a SurveyJS upgrade, an added or
-removed package, a different surveyjs-cli, a recorded file missing from disk — so it works as a CI
-check. A version it simply could not verify is reported as a warning and does **not** fail the
-exit code: a project with no committed lockfile and no `node_modules` in CI cannot fix that, and
-failing the build over it would be noise.
+| Command | Description |
+| :--- | :--- |
+| `init-agents` | [Install skills](#agent-skills) for your project's packages and AI clients. |
+| `update` | [Refresh the skills](#keeping-skills-updated) for your selected clients. |
+| `doctor` | [Check whether the installed skills need an update](#keeping-skills-updated). |
+| `install-mcp` | [Add the SurveyJS MCP server](#mcp-server-setup) to an editor's configuration. |
 
 ## Options
 
-| Option | Effect |
+| Option | Description |
 | :--- | :--- |
-| `--client=<name>` | Write for this client. Repeatable, and comma-separated values work. |
-| `--all` | Write for every known client. |
-| `--yes`, `-y` | Never prompt. Fully non-interactive, for CI. |
-| `--dry-run` | Print what would change; touch nothing. |
-| `--force` | Overwrite files at owned paths that a previous run did not write. |
-| `--help`, `-h` / `--version`, `-v` | Usage / version. |
+| `--client=<name>` | [Choose clients](#supported-clients) for `init-agents`. Repeat the option or separate names with commas. |
+| `--all` | Install skills for [all supported clients](#supported-clients). |
+| `--editor=<name>` | [Choose editors](#supported-editors) for `install-mcp`. Repeat the option or separate names with commas. |
+| `--user` | [Write user configuration](#mcp-server-setup) for `install-mcp`. |
+| `--yes`, `-y` | Skip prompts. |
+| `--dry-run` | Preview changes without writing files. |
+| `--force` | Replace conflicting skill files the CLI does not track, or rewrite MCP configuration without its comments. |
+| `--help`, `-h` | Show usage. |
+| `--version`, `-v` | Show the CLI version. |
 
-Without `--force`, a file at a path we own that exists, differs from what we would write, and is
-not listed in `.surveyjs-skills.json` aborts the whole run before anything is written. That is
-the case where someone hand-edited a skill, and silently replacing it would lose their work.
+## Agent Skills
 
-## Versions it will and will not claim
+### Supported Clients
 
-Every package carries where its version came from, and only a verified version is ever printed as
-one:
+Use the names below with `--client` to choose where to install skills. For clients that read `AGENTS.md`, including Codex, choose `agents-md`.
 
-| `source` | Means | Written as |
+| `--client` | Skill directory | Instructions file |
 | :--- | :--- | :--- |
-| `node_modules` | Read from the installed package | `survey-core@3.0.1` |
-| `lockfile` | Read from the lockfile | `survey-core@3.0.1` |
-| `package.json` | Pinned exactly, no range operator | `survey-core@3.0.1` |
-| `range` | Only a range is known — no readable lockfile, nothing installed | `survey-core@^3.0.1`, labelled as an unresolved range |
+| `claude` | `.claude/skills/<name>/` | None |
+| `cursor` | `.cursor/skills/<name>/` | None |
+| `copilot` | `.github/skills/<name>/` | `.github/copilot-instructions.md` |
+| `agents-md` | `.agents/skills/<name>/` | `AGENTS.md` |
 
-So a project with `"survey-core": "^3.0.1"`, no lockfile, and no `node_modules` gets skills that
-say "declared `survey-core@^3.0.1`, exact installed version could not be verified" rather than
-claiming 3.0.1, which may well be wrong. `bun.lockb` is binary and is reported as unreadable
-rather than guessed at; `bun.lock` (Bun 1.2+) is parsed.
+If you omit `--client`, the CLI suggests the clients it detects and lets you change the selection. With `--yes` or in a terminal that cannot accept input, it uses the detected clients automatically. If it finds none, it uses `agents-md`.
 
-## `.surveyjs-skills.json`
+### How Skills Are Selected
 
-```json
-{
-  "cliVersion": "0.1.0",
-  "generator": "surveyjs-cli",
-  "source": "https://github.com/surveyjs/surveyjs-skills",
-  "framework": "react",
-  "lockfile": "package-lock.json",
-  "lockfileParsed": true,
-  "packages": {
-    "survey-core": { "version": "3.0.1", "range": "^3.0.1", "source": "lockfile" },
-    "survey-react-ui": { "version": "3.0.1", "range": "^3.0.1", "source": "lockfile" }
-  },
-  "clients": ["claude", "cursor"],
-  "skills": ["surveyjs-brand-styling", "surveyjs-form-json", "surveyjs-integration"],
-  "files": ["..."],
-  "blocks": []
-}
+The CLI checks `package.json`, installed packages, and npm, pnpm, Yarn, or Bun text lockfiles to find the SurveyJS products you use. This includes SurveyJS packages installed as dependencies of other packages. It then installs skills for those products. If it finds no SurveyJS packages, it installs all skills.
+
+Each skill includes the package versions the CLI finds. When only a version range is available, the skill states that the exact version is unknown.
+
+### Keeping Skills Updated
+
+After changing your SurveyJS dependencies, run `update`. It uses `.surveyjs-skills.json` to refresh skills for the same clients and remove files that no longer apply.
+
+```sh
+# Refresh skills after changing SurveyJS dependencies
+npx surveyjs-cli@latest update
 ```
 
-Commit it along with the written skills. It carries no timestamps, so identical inputs produce an
-identical file and a re-run is a no-op in `git status`.
+Use `doctor` to check for changes to your packages or CLI version, or for missing skill files. It returns a nonzero exit code when it finds a problem, so you can use it in CI. If it cannot determine an exact package version, it reports a warning without failing the check.
 
-Paths inside it are treated as untrusted input. An entry that points outside the project root —
-`../something`, an absolute path — is refused and reported, never written to or deleted, so
-running `init-agents` inside a repository you just cloned cannot touch anything above it.
+```sh
+# Check whether an update is needed
+npx surveyjs-cli@latest doctor
+```
+
+When updating `AGENTS.md` or Copilot instructions, the CLI changes only the section between `<!-- surveyjs:start -->` and `<!-- surveyjs:end -->`. Your surrounding instructions stay intact.
+
+For skill files, the CLI uses `.surveyjs-skills.json` to check which files it manages. If a file it does not track conflicts with the new content, the command stops. Pass `--force` if you want to replace that file.
+
+## MCP Server Setup
+
+To let your assistant search SurveyJS documentation, use `install-mcp`. It adds the server at `https://mcp.surveyjs.io/mcp` to your editor's configuration.
+
+Choose an editor with `--editor`. By default, the command saves the configuration in your project, so you can commit it and share it with your team.
+
+```sh
+# Add the MCP server to VS Code's project configuration
+npx surveyjs-cli@latest install-mcp --editor=vscode
+
+# Add the MCP server to Claude Code and Cursor project configurations
+npx surveyjs-cli@latest install-mcp --editor=claude-code,cursor
+```
+
+To save the configuration for your user account, add `--user`. Editors such as Windsurf require this option because they do not support project configuration files.
+
+```sh
+# Add the MCP server to Windsurf's user configuration
+npx surveyjs-cli@latest install-mcp --editor=windsurf --user
+```
+
+If you omit `--editor`, the CLI asks you to choose one. In scripts or CI, always pass `--editor` so the command can run without a prompt.
+
+### Supported Editors
+
+The table below shows where the CLI saves the configuration for each editor.
+
+| `--editor` | Project configuration | User configuration (`--user`) |
+| :--- | :--- | :--- |
+| `vscode` | `.vscode/mcp.json` | `mcp.json` in the VS Code user profile |
+| `vscode-insiders` | `.vscode/mcp.json` | `mcp.json` in the VS Code Insiders user profile |
+| `cursor` | `.cursor/mcp.json` | `~/.cursor/mcp.json` |
+| `windsurf` | None | `~/.codeium/windsurf/mcp_config.json` |
+| `webstorm` | None | GitHub Copilot's `mcp.json` for JetBrains IDEs |
+| `visual-studio` | `.mcp.json` | `~/.mcp.json` |
+| `claude-code` | `.mcp.json` | `~/.claude.json` |
+| `claude-desktop` | None | `claude_desktop_config.json` in the OS configuration directory |
+| `zed` | `.zed/settings.json` | Zed's `settings.json` |
+| `cline` | None | `cline_mcp_settings.json` in VS Code's `globalStorage` |
+
+> Claude Desktop and Zed use `npx mcp-remote` to connect to the server. Make sure Node.js is on `PATH` when these apps start.
+
+### Updating Existing Configuration
+
+The `install-mcp` command adds or replaces the `surveyjs` server entry while keeping your other servers and settings. If a configuration file is invalid, the command stops before writing any files so you can fix it first.
+
+The CLI saves configuration as plain JSON, which does not support comments. If your file has comments, the CLI shows the server entry for you to add it manually. You can instead pass `--force` to rewrite the file and remove its comments.
 
 ## Development
 
-The skill content lives once in git, at [`plugins/surveyjs/skills/`](../plugins/surveyjs/skills/).
-`cli/skills/` is gitignored and produced by the `prepack` script when the package is packed or
-published:
+To change a skill, edit its source in [`plugins/surveyjs/skills/`](../plugins/surveyjs/skills/). During packaging, the `prepack` script copies these sources into `cli/skills/`, which is excluded from Git.
 
+Run the following commands from `cli/` to check your changes and preview the package:
+
+```sh
+# Run the CLI test suite
+npm test
+
+# Preview package contents without creating a tarball
+npm pack --dry-run
 ```
-node scripts/prepack-skills.js   # copy plugins/surveyjs/skills -> cli/skills
-node --test                      # golden-file tests over test/fixtures/
-UPDATE_GOLDEN=1 node --test      # accept new golden output in test/golden/
-npm pack --dry-run               # inspect the tarball
-```
-
-At runtime the CLI reads `cli/skills/` when it exists and falls back to
-`../plugins/surveyjs/skills/` when running from a checkout.
-
-Adding a client target means adding a module under `src/targets/`, registering it in
-`src/targets/index.js`, and adding its detection markers to `src/detect/clients.js`. Both need a
-link to the client's own documentation for the path — a wrong path writes files into someone's
-repository that silently never load.
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+[MIT](LICENSE).

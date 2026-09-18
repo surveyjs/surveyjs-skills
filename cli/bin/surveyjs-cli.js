@@ -3,9 +3,11 @@ import process from "node:process";
 
 import { runDoctor } from "../src/commands/doctor.js";
 import { runInitAgents } from "../src/commands/init-agents.js";
+import { runInstallMcp } from "../src/commands/install-mcp.js";
 import { runUpdate } from "../src/commands/update.js";
 import { cliVersion } from "../src/manifest.js";
 import { CLIENT_DEFINITIONS } from "../src/detect/clients.js";
+import { MCP_EDITORS } from "../src/mcp/editors.js";
 
 const USAGE = `surveyjs-cli <command> [options]
 
@@ -14,6 +16,8 @@ Commands
                 matching SurveyJS agent skills into each client's directory.
   doctor        Compare .surveyjs-skills.json against what is installed now.
   update        Re-run placement for the clients already recorded.
+  install-mcp   Add the SurveyJS MCP server to an editor's MCP config. Writes the
+                project-level config; the user-level one only with --user.
 
 Options
   --client=<name>  Write for this client. Repeatable. Known clients:
@@ -22,6 +26,12 @@ ${CLIENT_DEFINITIONS.map((client) => `                     ${client.id.padEnd(10
   --yes, -y        Never prompt. Use for CI.
   --dry-run        Print what would change without touching disk.
   --force          Overwrite files at owned paths that a previous run did not write.
+                   With install-mcp: rewrite an MCP config even though its comments are lost.
+  --editor=<name>  install-mcp: add the server for this editor. Repeatable. Known editors
+                   (* = no project-level config, needs --user):
+${MCP_EDITORS.map((editor) => `                     ${editor.id.padEnd(16)} ${editor.label}${editor.projectConfig ? "" : " *"}`).join("\n")}
+  --user           install-mcp: write the editor's user-level config in your home directory,
+                   outside the project, instead of the project-level one.
   --help, -h       Show this help.
   --version, -v    Print the surveyjs-cli version.
 
@@ -29,7 +39,7 @@ surveyjs-cli makes no network calls and collects no telemetry.
 `;
 
 function parseArgv(argv) {
-  const flags = { client: [], all: false, yes: false, dryRun: false, force: false, help: false, version: false };
+  const flags = { client: [], editor: [], user: false, all: false, yes: false, dryRun: false, force: false, help: false, version: false };
   const positional = [];
 
   for (let index = 0; index < argv.length; index += 1) {
@@ -42,6 +52,9 @@ function parseArgv(argv) {
     else if (arg === "--version" || arg === "-v") flags.version = true;
     else if (arg.startsWith("--client=")) flags.client.push(...splitList(arg.slice("--client=".length)));
     else if (arg === "--client") flags.client.push(...splitList(argv[++index] ?? ""));
+    else if (arg.startsWith("--editor=")) flags.editor.push(...splitList(arg.slice("--editor=".length)));
+    else if (arg === "--editor") flags.editor.push(...splitList(argv[++index] ?? ""));
+    else if (arg === "--user") flags.user = true;
     else if (arg.startsWith("-")) return { error: `Unknown option: ${arg}` };
     else positional.push(arg);
   }
@@ -77,7 +90,8 @@ if (parsed.extra.length > 0) {
 const commands = {
   "init-agents": () => runInitAgents({ root: process.cwd(), flags: parsed.flags }),
   doctor: () => runDoctor({ root: process.cwd() }),
-  update: () => runUpdate({ root: process.cwd(), flags: parsed.flags })
+  update: () => runUpdate({ root: process.cwd(), flags: parsed.flags }),
+  "install-mcp": () => runInstallMcp({ root: process.cwd(), flags: parsed.flags })
 };
 
 const command = commands[parsed.command];
