@@ -1,211 +1,111 @@
 # SurveyJS Agent Skills
 
-Agent skills that teach AI coding agents to build with [SurveyJS](https://surveyjs.io) — writing
-survey JSON, embedding the Form Library in a web app, customizing Survey Creator, visualizing
-collected responses with Dashboard, exporting forms and responses to PDF, and extracting
-responses from scanned paper forms with AI Form Response Extractor.
+Skills that give AI coding agents instructions for building forms with [SurveyJS](https://surveyjs.io). When you ask an agent to work on a form, it can use the relevant skill to choose the right APIs and avoid common mistakes.
 
-This repository packages one `surveyjs` plugin for OpenAI Codex, Claude Code, GitHub Copilot,
-Google Gemini CLI, and xAI Grok Build. The plugin contains six portable skills. Each skill loads
-only when the work calls for it and carries reference files the agent reads on demand.
+## Installation
 
-## Why
+To share the skills with your team, follow Project Setup. To install them for your own agent, follow the section for that agent below.
 
-Models have a lot of SurveyJS in their training data, and much of it is out of date — old package
-names, APIs that were renamed in v3, styling hooks that are now internal. These skills pin the
-current facts and list the specific mistakes to check generated code against, so answers stop
-drifting toward whatever was true a few major versions ago.
+### Project Setup
 
-## Install into a project with `surveyjs-cli`
+Open a terminal in your project root and run the command below. The CLI finds your SurveyJS packages and asks which AI clients you want to use, then installs the matching skills with package version information.
 
-The plugin installs the skills for one agent, for you. `surveyjs-cli` installs them into a
-**project**, for whichever agents your team already uses:
-
-```
+```sh
+# Install skills for your project's packages and AI clients
 npx surveyjs-cli@latest init-agents
 ```
 
-It reads the project's `package.json` and lockfile, writes only the skills for the SurveyJS
-products actually installed, pins their exact versions into the skill text, and places them in
-`.claude/skills/`, `.cursor/skills/`, `.github/skills/`, or `.agents/skills/` plus `AGENTS.md`,
-depending on which clients the project uses. Commit the result and every agent on the team gets
-the same guidance. See [cli/README.md](cli/README.md).
+Commit the generated files so that your team's agents can use the same instructions. When your packages change, follow the [CLI documentation](cli/README.md#updating-existing-configuration) to update the skills.
 
-The same CLI adds the SurveyJS MCP server (documentation search) to an editor's MCP config, in the
-project by default or in your home directory with `--user`:
+### OpenAI Codex
 
-```
-npx surveyjs-cli@latest install-mcp --editor=vscode
-```
-
-## Install with OpenAI Codex
-
-Add this repository as a Codex marketplace and install the plugin:
-
-```
+```sh
+# Add the marketplace that contains the SurveyJS plugin
 codex plugin marketplace add surveyjs/surveyjs-skills
+
+# Install the plugin from that marketplace
 codex plugin add surveyjs@surveyjs-skills
 ```
 
-For local development, replace the first command with `codex plugin marketplace add .`. The
-OpenAI plugin package is [`plugins/surveyjs`](plugins/surveyjs); its native
-`.codex-plugin/plugin.json` manifest can also be uploaded as a skills-only plugin through the
-OpenAI plugin submission flow.
+### Claude Code
 
-After installation, Codex selects a skill automatically when a request matches its description.
-You can also request one explicitly, for example: `Use $surveyjs-form-json to add a conditional
-page to this survey.`
+Run these commands in Claude Code, then restart it to load the skills:
 
-## Install with Claude Code
-
-```
+```sh
+# Add the marketplace that contains the SurveyJS plugin
 /plugin marketplace add surveyjs/surveyjs-skills
+
+# Install the plugin from that marketplace
 /plugin install surveyjs@surveyjs-skills
 ```
 
-Restart Claude Code, and the skills activate on their own when a task matches. You can also
-invoke one directly, for example: `Use surveyjs-form-json to add a conditional page to this
-survey.`
+### Google Gemini CLI
 
-## Install with Google Gemini CLI
+Clone this repository, then run from its root:
 
-Clone this repository, then install the plugin directory as a Gemini extension:
-
-```
+```sh
+# Install the SurveyJS plugin as a Gemini extension
 gemini extensions install ./plugins/surveyjs
 ```
 
-For local extension development, use `gemini extensions link ./plugins/surveyjs`. Gemini discovers
-the skills automatically from the extension's `skills/` directory.
+### GitHub Copilot CLI
 
-## Install with GitHub Copilot CLI
-
-Install the plugin directly from its repository subdirectory:
-
-```
+```sh
+# Install the SurveyJS plugin from its directory in this repository
 copilot plugin install surveyjs/surveyjs-skills:plugins/surveyjs
 ```
 
-The shared `plugin.json` manifest registers every skill in `skills/`. The existing Claude-compatible
-marketplace can also be added with `copilot plugin marketplace add surveyjs/surveyjs-skills`.
+### xAI Grok Build
 
-## Install with xAI Grok Build
-
-Add this repository as a Grok marketplace and install the plugin:
-
-```
+```sh
+# Add the marketplace that contains the SurveyJS plugin
 grok plugin marketplace add surveyjs/surveyjs-skills
+
+# Install the SurveyJS plugin
 grok plugin install surveyjs
 ```
 
-For local development, load the plugin directory directly with
-`grok --plugin-dir ./plugins/surveyjs`.
+### Other Agents
 
-## Other compatible agents
+If your agent supports `SKILL.md` files, copy or link the folders in [`plugins/surveyjs/skills/`](plugins/surveyjs/skills/) into the skills directory it reads. For example, use `.cursor/skills/` for Cursor or `.cline/skills/` for Cline.
 
-The skills follow the portable `SKILL.md` convention. Agents that support shared skill discovery,
-including Cursor, can load the six directories under `plugins/surveyjs/skills/` from a project or
-user-level `.agents/skills/` directory. If an agent does not read that shared location, copy or
-link the same skill directories into its native location, such as `.cursor/skills/` for Cursor or
-`.cline/skills/` for Cline. No changes to the skill files are required.
+## Using the Skills
 
-## Skills
+After installation, ask your agent to work on a SurveyJS task. It selects a skill based on your request. To choose one yourself, include its name, for example: `Use surveyjs-form-json to add a conditional page to this survey.`
 
-| Skill | Use it for |
+Use this table to find the skill for your task:
+
+| Skill | Purpose |
 | :---- | :---- |
-| `surveyjs-form-json` | Writing and debugging the survey JSON itself — question types, validators, `visibleIf` and expressions, triggers, matrices, localization, quiz scoring |
-| `surveyjs-linter` | Statically checking survey JSON with `survey-core/linter` — broken `{question}` references in conditions, name typos and duplicates, calculated-value and trigger cycles, dead choice sources, conditions that can never fire, plus rule severities, suppressions, and CI wiring |
-| `surveyjs-integration` | Getting the Form Library into a React, Next.js, Angular, Vue, vanilla JS, or jQuery app — install, render, theme, handle events, save results |
-| `surveyjs-brand-styling` | Matching a survey to your app design or brandbook — picking a predefined theme, building a custom theme from brand colors and fonts, Bootstrap/MUI/shadcn theme adapters, and custom CSS with per-question-type styling references |
-| `surveyjs-creator-customization` | Embedding the drag-and-drop builder — toolbox and property grid, creator events, UI presets, builder theming |
-| `surveyjs-dashboard` | Visualizing collected responses with Dashboard — install `survey-analytics`, configure charts and tables, filtering, theming, localization, custom visualizers, table view export |
-| `surveyjs-pdf-generator` | Exporting forms and responses to PDF with `survey-pdf` — fillable or read-only PDFs, page options, fonts, headers/footers, themes and layout presets, and filling existing PDF form fields with PDFFormFiller |
-| `surveyjs-response-extractor` | Extracting structured responses from scanned or photographed paper forms and PDFs with `ai-form-response-extractor` — server-side schema-guided extraction via OpenAI, Anthropic, or local Ollama, confidence review, QR/unique-ID detection, merging paper and online submissions |
-
-The browser-product skills target **SurveyJS v3**. AI Form Response Extractor follows the current,
-independently versioned `ai-form-response-extractor` package.
-
-## Product coverage
-
-| Product or area | Status | Skill |
-| :---- | :---- | :---- |
-| SurveyJS JSON schemas | Supported | `surveyjs-form-json` |
-| Survey JSON linting | Supported | `surveyjs-linter` |
-| Form Library | Supported | `surveyjs-integration` |
-| Theming and brand styling | Supported | `surveyjs-brand-styling` |
-| Survey Creator | Supported | `surveyjs-creator-customization` |
-| Dashboard | Supported | `surveyjs-dashboard` |
-| PDF Generator | Supported | `surveyjs-pdf-generator` |
-| AI Form Response Extractor | Supported | `surveyjs-response-extractor` |
-
-Every current SurveyJS product now has a dedicated skill; each skill routes requests outside its
-own product to the right neighbor instead of guessing.
-
-Note on licensing: Form Library and AI Form Response Extractor are MIT-licensed. **Survey Creator,
-Dashboard, and PDF Generator require commercial developer licenses** when integrated into a
-commercial application. The relevant skills state licensing requirements where they matter — see
-[surveyjs.io/licensing](https://surveyjs.io/licensing).
-
-## Staying current
-
-`surveyjs-integration`, `surveyjs-brand-styling`, `surveyjs-creator-customization`,
-`surveyjs-dashboard`, `surveyjs-pdf-generator`, `surveyjs-linter`, and
-`surveyjs-response-extractor` hash the
-upstream pages their
-reference files are based on — surveyjs.io doc pages plus, for the extractor, the package
-repository's README and core source files. A weekly GitHub Action runs the checker and opens an
-issue when one of those pages changes, so the references get reviewed by hand rather than
-silently going stale. `surveyjs-form-json` reads the authoring guide and JSON Schema shipped
-inside the installed `survey-core` package, which are version-exact by construction, and hashes
-the masked-input and slider-with-input demo pages used by its references.
-
-```
-node scripts/check-upstream-docs.mjs            # report drift, exit 1 if any
-node scripts/check-upstream-docs.mjs --update   # accept the new baseline
-```
-
-The checker never rewrites the reference files. They contain hand-written judgement — which
-mistakes to warn about, what to check first — that a scraper would destroy.
-
-## Layout
-
-```
-.claude-plugin/marketplace.json     marketplace manifest
-.grok-plugin/marketplace.json       xAI Grok marketplace manifest
-.agents/plugins/marketplace.json    OpenAI Codex marketplace manifest
-plugins/surveyjs/                   the plugin
-  .codex-plugin/plugin.json         OpenAI Codex plugin manifest
-  .claude-plugin/plugin.json        Claude Code plugin manifest
-  gemini-extension.json             Google Gemini CLI extension manifest
-  plugin.json                       GitHub Copilot and xAI Grok plugin manifest
-  skills/<skill>/SKILL.md           what the agent loads first
-  skills/<skill>/references/        deeper material, read on demand
-scripts/check-upstream-docs.mjs     upstream doc drift checker
-cli/                                the surveyjs-cli npm package (see cli/README.md)
-```
-
-## Related repositories
-
-[surveyjs/surveyjs-howtos-and-troubleshooting](https://github.com/surveyjs/surveyjs-howtos-and-troubleshooting)
-is a companion knowledge base of task-sized how-tos — problem, working code, explanation —
-organized by category: design-time Creator recipes, custom question types, expressions and
-triggers, matrices, quizzes, data visualization, PDF generation. It complements the skills
-rather than overlapping them: the skills pin the current API and the mistakes to avoid, the
-how-tos show a specific behaviour composed end to end.
-
-The skills point agents at it as a step in their escalation order, after the official docs and
-demos and before general web search. Read it directly when you want a worked example, and
-contribute an article there when a fix is a recipe rather than a correction to what a skill
-states.
+| [`surveyjs-form-json`](plugins/surveyjs/skills/surveyjs-form-json/) | Write survey JSON and fix validation, conditions, and expressions. |
+| [`surveyjs-linter`](plugins/surveyjs/skills/surveyjs-linter/) | Find logic errors in survey JSON and add automated checks. |
+| [`surveyjs-integration`](plugins/surveyjs/skills/surveyjs-integration/) | Add a form to your app, handle events, and save responses. |
+| [`surveyjs-brand-styling`](plugins/surveyjs/skills/surveyjs-brand-styling/) | Style a survey to match your app or brand. |
+| [`surveyjs-creator-customization`](plugins/surveyjs/skills/surveyjs-creator-customization/) | Add Survey Creator to your app and customize its interface. |
+| [`surveyjs-dashboard`](plugins/surveyjs/skills/surveyjs-dashboard/) | Visualize responses with charts, tables, filters, and exports. |
+| [`surveyjs-pdf-generator`](plugins/surveyjs/skills/surveyjs-pdf-generator/) | Export fillable or read-only PDFs and fill existing PDF forms. |
+| [`surveyjs-response-extractor`](plugins/surveyjs/skills/surveyjs-response-extractor/) | Read answers from scanned forms, photos, and PDFs. |
 
 ## Contributing
 
-Issues and pull requests are welcome — corrections to anything a skill states are especially
-useful. When changing a reference file, keep it about what an agent needs to get the code right,
-and re-run the drift checker if the change follows an upstream doc update. See
-[CONTRIBUTING.md](CONTRIBUTING.md) for validation and submission requirements. Report security
-issues according to [SECURITY.md](SECURITY.md).
+To fix or improve a skill, follow the steps in [CONTRIBUTING.md](CONTRIBUTING.md).
+
+We check the docs used by the skills each week and open an issue if they change. To check them yourself, run:
+
+```sh
+# Check for changes in the docs
+node scripts/check-upstream-docs.mjs
+```
+
+If the docs have changed, read the changes and fix any outdated skill instructions. Then run this command so that the next check reports only new changes:
+
+```sh
+# Mark the doc changes as reviewed
+node scripts/check-upstream-docs.mjs --update
+```
+
+To report a security issue, follow [SECURITY.md](SECURITY.md).
 
 ## License
 
-MIT — see [LICENSE](LICENSE). SurveyJS itself is licensed separately per product.
+The skills are available under the [MIT license](LICENSE). To use SurveyJS in your app, check the [license terms for your SurveyJS products](https://surveyjs.io/licensing).
