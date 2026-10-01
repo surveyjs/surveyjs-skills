@@ -96,10 +96,16 @@ const WATCHED = {
   "https://surveyjs.io/survey-creator/documentation/toolbox-customization.md": [
     "surveyjs-creator-customization/references/customization.md"
   ],
+  "https://surveyjs.io/survey-creator/documentation/api-reference/questiontoolbox.md": [
+    "surveyjs-creator-customization/references/customization.md"
+  ],
   "https://surveyjs.io/survey-creator/documentation/property-grid-customization.md": [
     "surveyjs-creator-customization/references/customization.md"
   ],
   "https://surveyjs.io/survey-creator/examples/remove-properties-from-property-grid/documentation.md": [
+    "surveyjs-creator-customization/references/customization.md"
+  ],
+  "https://surveyjs.io/survey-creator/examples/hide-category-from-property-grid/documentation.md": [
     "surveyjs-creator-customization/references/customization.md"
   ],
   "https://surveyjs.io/survey-creator/documentation/end-user-guide/user-interface.md": [

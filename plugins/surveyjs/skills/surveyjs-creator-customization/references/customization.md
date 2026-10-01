@@ -55,7 +55,22 @@ the new type automatically.
 | `toolbox.allowExpandMultipleCategories`, `toolbox.keepAllCategoriesExpanded` | Category expand behaviour |
 | `toolbox.showSubitems` | Show or hide subitems |
 
-## Property grid
+### Ordering
+
+Recommend only APIs in the [`QuestionToolbox`](https://surveyjs.io/survey-creator/documentation/api-reference/questiontoolbox.md)
+reference. `toolbox.orderedQuestions` exists in the source but is undocumented — do not use it.
+
+- **`questionTypes` filters, it does not order.** Listing types in a particular order changes
+  nothing. To control order, define categories with
+  [`defineCategories()`](https://surveyjs.io/survey-creator/documentation/api-reference/questiontoolbox.md#defineCategories),
+  listing items in the wanted order.
+- **Reordering whole groups:** [Reorder Categories](https://surveyjs.io/survey-creator/documentation/toolbox-customization.md#reorder-categories).
+  Match categories by `name` (`choice`, `text`, …), not by their localized captions.
+- **Reordering items inside one group:** no documented method. Either restate the layout with
+  `defineCategories()`, or reorder that category's `items` array the way Reorder Categories
+  reorders `categories` — undocumented, so say so and have the user verify it.
+- **Run reordering last.** The toolbox rebuilds `categories` from its items whenever the items
+  change (`addItem()`, `removeItem()`, `changeCategory()`, …), discarding a manual reorder.
 
 ### Hiding properties
 
@@ -140,9 +155,11 @@ function with that name, and the `survey-core` dictionary has no `pehelp` object
 
 ### The property grid is a survey
 
-It is a one-page survey in which every property is a question — which is why it can be
-customised with the same tools as any other survey. To reach that survey instance, handle
-`onSurveyInstanceCreated` and check for the `"property-grid"` area:
+It is a survey in which every property is a question and every category is a page — or a panel
+when [`propertyGridNavigationMode`](https://surveyjs.io/survey-creator/documentation/api-reference/survey-creator.md#propertyGridNavigationMode)
+is `"accordion"` — which is why it can be customised with the same tools as any other survey.
+To reach that survey instance, handle `onSurveyInstanceCreated` and check for the
+`"property-grid"` area:
 
 ```js
 creator.onSurveyInstanceCreated.add((sender, options) => {
@@ -154,6 +171,28 @@ creator.onSurveyInstanceCreated.add((sender, options) => {
 
 That is also the hook for behaviour the property grid inherits from survey-core — validation
 among it, since the grid's own questions raise the same events any survey does.
+
+### Hiding a whole category
+
+To hide a category (Conditions, Validation, …) instead of its properties one by one, delete its
+page or panel in that handler. Code:
+[Hide a Category from the Property Grid](https://surveyjs.io/survey-creator/examples/hide-category-from-property-grid/documentation.md).
+What the example leaves implicit:
+
+- **Look the category up as a page *and* as a panel.** `getPanelByName()` alone finds nothing in
+  the default navigation mode, where categories are pages.
+- **Use the category name, not its caption.** Conditions is `logic`; the caption is localized.
+  The same name is used for the survey, pages and panels (`panelbase`), questions, matrix
+  columns and multiple-textbox items, so one lookup covers every element. To hide it only for
+  some, filter on the event's `obj`, as the example does.
+- **It runs per selection.** The property grid survey is rebuilt each time a different element
+  is selected, so the handler fires for each one.
+- **It does not touch the Logic tab.** Conditions also stay editable there; set
+  [`showLogicTab`](https://surveyjs.io/survey-creator/documentation/api-reference/survey-creator.md#showLogicTab)
+  to `false` if logic should be off-limits entirely.
+- **It hides editors, not data.** Conditions already in the survey JSON stay, and the JSON
+  Editor tab still shows them. If another system must own the logic, strip or validate those
+  properties on save.
 
 Adding entirely new property editors means defining a custom question JSON configuration, the
 same way you would extend a survey. That is documented in the Form Library docs under
