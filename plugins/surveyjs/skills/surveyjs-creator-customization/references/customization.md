@@ -97,11 +97,10 @@ en.pageNextText = "Forward";
 
 ### Help texts
 
-Property editor hints live in the same locale strings, under `pehelp`:
-
-```js
-getLocaleStrings("en").pehelp.title = "Text displayed above the question";
-```
+Property editor hints live under `pehelp` in the **Creator** locale strings — `getLocaleStrings`
+from `survey-creator-core`, not the `survey-core` function used above. Both packages export a
+function with that name, and the `survey-core` dictionary has no `pehelp` object. Code:
+[Add Help Texts to Property Editors](https://surveyjs.io/survey-creator/documentation/property-grid-customization.md#add-help-texts-to-property-editors).
 
 ### The property grid is a survey
 
