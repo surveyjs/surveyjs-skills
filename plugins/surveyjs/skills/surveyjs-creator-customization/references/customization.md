@@ -59,12 +59,20 @@ the new type automatically.
 
 ### Hiding properties
 
-Two APIs, and the choice is about scope:
+Default to `creator.onPropertyShowing`. The property grid exists only in Creator, and the event
+is scoped to one Creator instance. Match the element type explicitly, and pick the check with
+the user:
 
-- `Serializer.getProperty(className, name).visible = false` — a Form Library API, so it hides
-  the property in every Creator instance in the app. Use it for one property hidden everywhere.
-- `creator.onPropertyShowing` — per Creator instance, decided per element. Use it for lists of
-  properties or conditional hiding.
+- `options.element.getType() === "boolean"` — exactly that type.
+- `options.element.isDescendantOf("boolean")` — that type and any custom type registered with it
+  as the parent. Identical to `getType()` for built-in types.
+
+Fall back to `Serializer.getProperty(className, name).visible = false` only when the property
+should be hidden in every Creator instance in the app. It mutates global `survey-core` metadata:
+`getProperty` adds a class-specific copy of an inherited property, which subclasses then
+inherit, so it behaves like `isDescendantOf`. Never use `Serializer.findProperty` for this — it
+returns the shared inherited property, so hiding `title` on `"boolean"` hides it for every
+question type.
 
 Code and option names: [Hide Properties from the Property Grid](https://surveyjs.io/survey-creator/documentation/property-grid-customization.md#hide-properties-from-the-property-grid),
 the [`onPropertyShowing`](https://surveyjs.io/survey-creator/documentation/api-reference/survey-creator.md#onPropertyShowing)
