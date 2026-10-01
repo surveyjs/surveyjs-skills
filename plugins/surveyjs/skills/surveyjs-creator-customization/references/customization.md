@@ -61,12 +61,36 @@ the new type automatically.
 
 Default to `creator.onPropertyShowing`. The property grid exists only in Creator, and the event
 is scoped to one Creator instance. It fires once per property of the selected element, so test
-both `options.property.name` and the element type. For the type, there are two checks, and which
-one fits is the user's call — ask when the request does not settle it:
+both `options.property.name` and the element type. For one specific type, there are two checks,
+and which one fits is the user's call — ask when the request does not settle it:
 
 - `options.element.getType() === "boolean"` — exactly that type.
 - `options.element.isDescendantOf("boolean")` — that type plus custom types registered with it as
   the parent. Same result as `getType()` for built-in types.
+
+For "every question", check `options.element.isQuestion`. It is defined on `Base`, so it is safe
+on every object the grid shows — the survey, pages, panels and matrix columns return `false`
+and keep their full grid.
+
+All three are documented in the [`Base`](https://surveyjs.io/form-library/documentation/api-reference/base.md)
+API reference: [`getType()`](https://surveyjs.io/form-library/documentation/api-reference/base.md#getType),
+[`isDescendantOf()`](https://surveyjs.io/form-library/documentation/api-reference/base.md#isDescendantOf),
+[`isQuestion`](https://surveyjs.io/form-library/documentation/api-reference/base.md#isQuestion).
+
+**Allowlists.** To show only a few properties, set `options.show` from a list — the
+[Hide Properties from the Property Grid](https://surveyjs.io/survey-creator/documentation/property-grid-customization.md#hide-properties-from-the-property-grid)
+doc has the white-list variant. One list can serve all question types: the event only fires for
+properties the element actually has, so listing `choices` shows it on choice-based types and
+nowhere else.
+
+**Hiding a property is not removing the feature.** Before warning users about what an allowlist
+takes away, check whether the feature has another entry point:
+
+- Conditions (`visibleIf`, `enableIf`, `requiredIf`, …) stay editable in the
+  [Logic tab](https://surveyjs.io/survey-creator/documentation/end-user-guide/user-interface.md#logic-tab),
+  as long as that tab is enabled.
+- Matrix rows and columns stay editable on the design surface. In a row or column title's
+  in-place editor, Enter adds a new one and Backspace removes the current one.
 
 Fall back to `Serializer.getProperty(className, name).visible = false` only when the property
 should be hidden in every Creator instance in the app. It mutates global `survey-core` metadata:
