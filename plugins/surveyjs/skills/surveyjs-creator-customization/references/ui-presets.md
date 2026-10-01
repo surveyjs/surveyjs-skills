@@ -52,6 +52,26 @@ const clientPreset = {
 A toolbox entry can name an existing type, or define a variation by supplying `title`,
 `iconName` and a `json` block — the same idea as `toolbox.addItem`, expressed declaratively.
 
+### `propertyGrid`
+
+`propertyGrid.definition` replaces Creator's default property grid definition (it is passed to
+`creator.setPropertyGridDefinition()`). Copy it from a shipped preset —
+`survey-creator-core/ui-presets/basic.js` or `advanced.js` — rather than writing it from
+scratch. The types are `IPropertyEditorInfo` and `IPropertyTabInfo` in
+`typings/question-editor/definition.d.ts`. Behaviour, as of v3.1.2 source:
+
+- **Keys of `classes` are `Serializer` class names, and lists accumulate down the hierarchy.**
+  A question gets the properties listed for its own class plus every ancestor (`checkbox` +
+  `selectbase` + `question`). A subtype entry can add properties but **cannot remove** one an
+  ancestor lists — to hide `title` for Boolean only, keep `title` off `question` and list it per
+  type, or use `onPropertyShowing` (see `customization.md`).
+- **The list is close to an allowlist, but the switch is `generateOtherTab`, not
+  `autoGenerateProperties`.** The shipped presets set `autoGenerateProperties: false`, but the
+  code never reads that key. What drops unlisted properties is `generateOtherTab` not being
+  `true`. An unlisted property whose `Serializer` definition has a `category` still appears, in
+  that category's tab — built-in properties have none, so this mainly affects custom properties
+  added with `Serializer.addProperty`.
+
 ## Applying one
 
 ```js

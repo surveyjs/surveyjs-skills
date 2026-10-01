@@ -60,19 +60,23 @@ the new type automatically.
 ### Hiding properties
 
 Default to `creator.onPropertyShowing`. The property grid exists only in Creator, and the event
-is scoped to one Creator instance. Match the element type explicitly, and pick the check with
-the user:
+is scoped to one Creator instance. It fires once per property of the selected element, so test
+both `options.property.name` and the element type. For the type, there are two checks, and which
+one fits is the user's call — ask when the request does not settle it:
 
 - `options.element.getType() === "boolean"` — exactly that type.
-- `options.element.isDescendantOf("boolean")` — that type and any custom type registered with it
-  as the parent. Identical to `getType()` for built-in types.
+- `options.element.isDescendantOf("boolean")` — that type plus custom types registered with it as
+  the parent. Same result as `getType()` for built-in types.
 
 Fall back to `Serializer.getProperty(className, name).visible = false` only when the property
 should be hidden in every Creator instance in the app. It mutates global `survey-core` metadata:
-`getProperty` adds a class-specific copy of an inherited property, which subclasses then
-inherit, so it behaves like `isDescendantOf`. Never use `Serializer.findProperty` for this — it
-returns the shared inherited property, so hiding `title` on `"boolean"` hides it for every
-question type.
+for an inherited property, `getProperty` adds a copy owned by `className`, and subclasses pick
+that copy up, so it behaves like `isDescendantOf`. Do not use `Serializer.findProperty` here — for
+an inherited property it returns the shared parent definition, so hiding `title` on `"boolean"`
+hides it for every question type.
+
+On v3, a per-project list of visible properties that should live in a reviewed file is a UI
+preset's `propertyGrid` section — see `ui-presets.md`.
 
 Code and option names: [Hide Properties from the Property Grid](https://surveyjs.io/survey-creator/documentation/property-grid-customization.md#hide-properties-from-the-property-grid),
 the [`onPropertyShowing`](https://surveyjs.io/survey-creator/documentation/api-reference/survey-creator.md#onPropertyShowing)
