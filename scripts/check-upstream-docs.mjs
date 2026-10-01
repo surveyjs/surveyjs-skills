@@ -99,6 +99,9 @@ const WATCHED = {
   "https://surveyjs.io/survey-creator/documentation/property-grid-customization.md": [
     "surveyjs-creator-customization/references/customization.md"
   ],
+  "https://surveyjs.io/survey-creator/examples/remove-properties-from-property-grid/documentation.md": [
+    "surveyjs-creator-customization/references/customization.md"
+  ],
   "https://surveyjs.io/survey-creator/documentation/ui-preset-editor.md": [
     "surveyjs-creator-customization/references/ui-presets.md"
   ],

@@ -59,26 +59,20 @@ the new type automatically.
 
 ### Hiding properties
 
-One property, globally — through the serializer, which is a Form Library API:
+Two APIs, and the choice is about scope:
 
-```js
-import { Serializer } from "survey-core";
-Serializer.getProperty("boolean", "title").visible = false;
-```
+- `Serializer.getProperty(className, name).visible = false` — a Form Library API, so it hides
+  the property in every Creator instance in the app. Use it for one property hidden everywhere.
+- `creator.onPropertyShowing` — per Creator instance, decided per element. Use it for lists of
+  properties or conditional hiding.
 
-Several, or conditionally — through the Creator event. The flag is `options.show`:
+Code and option names: [Hide Properties from the Property Grid](https://surveyjs.io/survey-creator/documentation/property-grid-customization.md#hide-properties-from-the-property-grid),
+the [`onPropertyShowing`](https://surveyjs.io/survey-creator/documentation/api-reference/survey-creator.md#onPropertyShowing)
+reference, and the runnable [Remove Properties from the Property Grid](https://surveyjs.io/survey-creator/examples/remove-properties-from-property-grid/documentation.md)
+example.
 
-```js
-const blackList = ["visible", "isRequired"];
-
-creator.onPropertyShowing.add((_, options) => {
-  if (options.element.getType() === "panel") {
-    options.show = blackList.indexOf(options.property.name) === -1;
-  }
-});
-```
-
-This event was called `onShowingProperty` before v2.
+The event was called `onShowingProperty` before v2, and snippets written for it set
+`options.canShow` and read `options.obj`. Write `options.show` and `options.element`.
 
 ### Overriding default values
 
