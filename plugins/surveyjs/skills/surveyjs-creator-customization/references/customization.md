@@ -198,6 +198,36 @@ Adding entirely new property editors means defining a custom question JSON confi
 same way you would extend a survey. That is documented in the Form Library docs under
 *Customize Question Types*.
 
+### Custom properties in their own tab
+
+Placement is documented: [`category`](https://surveyjs.io/form-library/documentation/customize-question-types/add-custom-properties-to-a-form.md#category)
+(with the built-in categories and their indexes) and
+[`categoryIndex`](https://surveyjs.io/form-library/documentation/customize-question-types/add-custom-properties-to-a-form.md#categoryindex).
+What the docs leave out:
+
+- **Captions come from the Creator locale.** The tab title is looked up as
+  `pe.tabs.<category>` in `getLocaleStrings` from `survey-creator-core` (not `survey-core`).
+  Use a stable identifier as `category` and set the caption there, rather than putting display
+  text into `category` itself.
+- **Register the property everywhere a schema is re-saved.** Any app that loads the survey JSON
+  with `survey-core` and saves it back must run the same `Serializer.addProperty` call, or the
+  value is dropped as unknown on save.
+
+### Dependent custom properties
+
+When one custom property's `choices` (or `visibleIf`) reads another property, the dependent
+property needs `dependsOn` — without it the function runs once, when the editor is built, and
+the list never follows the other property. Code:
+[`dependsOn`](https://surveyjs.io/form-library/documentation/customize-question-types/add-custom-properties-to-a-form.md#dependson)
+and the runnable [Configure Property Dependencies](https://surveyjs.io/survey-creator/examples/configure-property-dependencies/documentation.md)
+example.
+
+`dependsOn` is the whole fix. When the rebuilt list no longer contains the current value,
+Creator resets the property editor's value itself. Do not add an
+[`onSetValue`](https://surveyjs.io/form-library/documentation/customize-question-types/add-custom-properties-to-a-form.md#onsetvalue)
+on the source property to clear the dependent one — it works, but duplicates what Creator
+already does.
+
 ## Tracking edits
 
 `creator.onModified` fires whenever the survey JSON changes. One caveat worth knowing: edits
