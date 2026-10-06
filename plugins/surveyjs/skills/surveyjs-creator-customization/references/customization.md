@@ -72,6 +72,18 @@ reference. `toolbox.orderedQuestions` exists in the source but is undocumented â
 - **Run reordering last.** The toolbox rebuilds `categories` from its items whenever the items
   change (`addItem()`, `removeItem()`, `changeCategory()`, â€¦), discarding a manual reorder.
 
+### Subitems
+
+For presets that should appear in an item's hover menu rather than as top-level items, use
+subitems: [Manage Toolbox Subitems](https://surveyjs.io/survey-creator/documentation/toolbox-customization.md#manage-toolbox-subitems).
+
+The compact toolbox does not show subitems. Creator switches to compact mode on its own when
+space is narrow, so presets vanish from the toolbox on smaller screens. They stay available in
+the page's "Add Question" menu, which shows subitems in either mode. If authors should also
+find the presets in the toolbox while the Creator is narrow, keep the full toolbox with
+[`forceCompact`](https://surveyjs.io/survey-creator/documentation/api-reference/questiontoolbox.md#forceCompact)
+set to `false`.
+
 ### Hiding properties
 
 Default to `creator.onPropertyShowing`. The property grid exists only in Creator, and the event
