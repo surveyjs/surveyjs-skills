@@ -100,7 +100,7 @@ They take different objects. Passing one to the other does nothing useful. See
 | :-- | :-- |
 | Install, render, save JSON back to an API | `references/setup.md` |
 | An API name that may have moved | `references/renamed-api.md` |
-| Toolbox contents, property grid, custom properties | `references/customization.md` |
+| Toolbox contents and subitems, element limits and nesting rules, property grid, custom properties | `references/customization.md` |
 | Different toolbox/tabs/properties per customer | `references/ui-presets.md` |
 | Styling the builder, or the design surface | `references/theming.md` |
 

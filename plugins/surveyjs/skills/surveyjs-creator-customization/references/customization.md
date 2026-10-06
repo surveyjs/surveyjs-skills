@@ -14,6 +14,37 @@ const creatorOptions = {
 };
 ```
 
+### Instance limits and nesting rules
+
+Code: [Limit Question Instances and Panel Nesting](https://surveyjs.io/survey-creator/examples/limit-number-of-survey-elements/documentation.md).
+Pick the API by the shape of the rule:
+
+- **Per survey** ("at most one Signature", "at most 3 file uploads"):
+  [`onAllowAddElement`](https://surveyjs.io/survey-creator/documentation/api-reference/survey-creator.md#onAllowAddElement).
+  It is re-evaluated after every add, copy, convert and delete, and one `allow = false` covers
+  the toolbox, the "Add Question" menu, the convert menu and Duplicate — so do not add separate
+  checks for those paths.
+- **Per container** ("no matrices inside a Dynamic Panel"):
+  [`forbiddenNestedElements`](https://surveyjs.io/survey-creator/documentation/api-reference/icreatoroptions.md#forbiddenNestedElements),
+  a constructor option or a Creator property. `onAllowAddElement` cannot express this — it
+  enables or disables an item for the whole survey. Entries are matched with
+  `Serializer.isDescendantOf`, so custom types derived from a forbidden class are blocked too.
+  Depth limits: [`maxPanelNestingLevel`](https://surveyjs.io/survey-creator/documentation/api-reference/icreatoroptions.md#maxPanelNestingLevel).
+
+What the example leaves implicit about `onAllowAddElement`:
+
+- **It fires once per toolbox item, and `options.name` is the item name.** The example matches
+  `options.name === "signaturepad"`, which misses custom items that insert the same type under
+  another name (a `"photo"` item with `json: { type: "file" }`). To limit a question type,
+  match `options.json?.type`; count with `getType()` as the example does.
+- **Attach the handler before assigning `creator.JSON`.** Creator evaluates the restriction
+  once right after loading JSON and skips that pass when the event has no handlers. Attached
+  later, a loaded survey that is already at the limit stays unrestricted until the next add or
+  delete. The example has the right order; keep it when moving the code into a component.
+
+Both APIs guard designer actions only. JSON pasted into the JSON Editor tab, or loaded from
+storage, is not checked — if the limit protects something downstream, also validate on save.
+
 ## Toolbox
 
 `creator.toolbox` is a `QuestionToolbox` instance.
@@ -75,7 +106,20 @@ reference. `toolbox.orderedQuestions` exists in the source but is undocumented �
 ### Subitems
 
 For presets that should appear in an item's hover menu rather than as top-level items, use
-subitems: [Manage Toolbox Subitems](https://surveyjs.io/survey-creator/documentation/toolbox-customization.md#manage-toolbox-subitems).
+subitems: [Manage Toolbox Subitems](https://surveyjs.io/survey-creator/documentation/toolbox-customization.md#manage-toolbox-subitems)
+and the runnable [Manage Toolbox Subitems](https://surveyjs.io/survey-creator/examples/manage-toolbox-subitems/documentation.md)
+example.
+
+- **Built-in subitem IDs.** Generated subitems take the choice value as ID, except the one whose
+  value equals the parent item's name, which gets a `-default` suffix. The plain Text subitem of
+  Single-Line Input is therefore `"text-default"`, not the `"text"` the docs list.
+  [`getSubitem()`](https://surveyjs.io/survey-creator/documentation/api-reference/questiontoolboxitem.md#getSubitem)
+  and `removeSubitem()` match by ID, so `"text"` silently finds nothing.
+- **Defaults for one subitem** (a mask on Phone Number only): assign a new object to that
+  subitem's `json` — `textItem.getSubitem("tel").json = { type: "text", inputType: "tel", … }`.
+  Subitems copy the parent's `json` when they are created, so editing the parent's `json`
+  afterwards does not reach them. Replace rather than mutate: Creator regenerates subitem JSON
+  on toolbox refresh and skips only subitems whose `json` object was replaced.
 
 The compact toolbox does not show subitems. Creator switches to compact mode on its own when
 space is narrow, so presets vanish from the toolbox on smaller screens. They stay available in

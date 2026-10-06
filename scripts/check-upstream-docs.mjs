@@ -91,7 +91,20 @@ const WATCHED = {
   ],
   "https://surveyjs.io/survey-creator/documentation/api-reference/survey-creator.md": [
     "surveyjs-creator-customization/SKILL.md",
-    "surveyjs-creator-customization/references/renamed-api.md"
+    "surveyjs-creator-customization/references/renamed-api.md",
+    "surveyjs-creator-customization/references/customization.md"
+  ],
+  "https://surveyjs.io/survey-creator/documentation/api-reference/icreatoroptions.md": [
+    "surveyjs-creator-customization/references/customization.md"
+  ],
+  "https://surveyjs.io/survey-creator/examples/limit-number-of-survey-elements/documentation.md": [
+    "surveyjs-creator-customization/references/customization.md"
+  ],
+  "https://surveyjs.io/survey-creator/documentation/api-reference/questiontoolboxitem.md": [
+    "surveyjs-creator-customization/references/customization.md"
+  ],
+  "https://surveyjs.io/survey-creator/examples/manage-toolbox-subitems/documentation.md": [
+    "surveyjs-creator-customization/references/customization.md"
   ],
   "https://surveyjs.io/survey-creator/documentation/toolbox-customization.md": [
     "surveyjs-creator-customization/references/customization.md"
